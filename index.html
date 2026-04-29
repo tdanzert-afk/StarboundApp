@@ -278,6 +278,8 @@
     .logo { width: 46px; height: 46px; border: 1px solid rgba(6, 182, 212, 0.55); border-radius: 14px; display: grid; place-items: center; background: rgba(6, 182, 212, 0.12); font-size: 24px; }
     h1 { margin: 0; letter-spacing: 0.18em; text-transform: uppercase; font-size: 28px; line-height: 1; }
     .subtitle { margin-top: 5px; color: #a5f3fc; text-transform: uppercase; letter-spacing: 0.22em; font-size: 11px; font-weight: bold; }
+    .brand-logo-img { display: block; width: clamp(180px, 28vw, 320px); height: auto; filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.18)); }
+    .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     .actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .actions.collapsed { display: none !important; }
     .controls-toggle { margin-left: auto; }
@@ -668,23 +670,12 @@
 
     .mobile-optimized .brand {
       gap: 10px;
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
-    .mobile-optimized .logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      font-size: 20px;
-    }
-
-    .mobile-optimized h1 {
-      font-size: 20px;
-      letter-spacing: 0.13em;
-    }
-
-    .mobile-optimized .subtitle {
-      font-size: 9px;
-      letter-spacing: 0.15em;
+    .mobile-optimized .brand-logo-img {
+      width: min(220px, 62vw);
     }
 
     .mobile-optimized .actions {
@@ -1282,6 +1273,203 @@
       body.mobile-view-mode .combat-quick-panel { margin-bottom: 10px; }
     }
 
+
+    /* Desktop cleanup layer: same clean dashboard/navigation idea as mobile */
+    @media (min-width: 721px) {
+      .mobile-optimized main {
+        max-width: 1180px;
+        padding-top: 18px;
+      }
+
+      .mobile-character-status {
+        display: block;
+        margin: 0 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255,255,255,.96);
+        box-shadow: 0 12px 30px rgba(15,23,42,.08);
+        overflow: hidden;
+      }
+
+      .theme-dark .mobile-character-status {
+        background: rgba(15,23,42,.96);
+        border-color: #334155;
+        box-shadow: 0 12px 30px rgba(0,0,0,.28);
+      }
+
+      .mobile-status-main {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        padding: 14px 18px;
+        align-items: center;
+      }
+
+      .mobile-status-name {
+        font-size: 22px;
+        font-weight: 950;
+        line-height: 1.05;
+        letter-spacing: .03em;
+        text-transform: uppercase;
+      }
+
+      .mobile-status-meta {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+      }
+
+      .theme-dark .mobile-status-meta { color: #94a3b8; }
+
+      .mobile-status-level {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 10px 16px;
+        text-align: center;
+        font-weight: 950;
+        color: var(--accent-dark);
+        background: var(--soft);
+        min-width: 82px;
+      }
+
+      .theme-dark .mobile-status-level {
+        background: #020617;
+        border-color: #334155;
+        color: #67e8f9;
+      }
+
+      .mobile-status-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--line);
+      }
+
+      .theme-dark .mobile-status-grid { border-color: #334155; }
+
+      .mobile-status-stat {
+        padding: 12px 8px;
+        text-align: center;
+        border-right: 1px solid var(--line);
+      }
+
+      .mobile-status-stat:last-child { border-right: 0; }
+
+      .theme-dark .mobile-status-stat { border-color: #334155; }
+
+      .mobile-status-label {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 950;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+      }
+
+      .theme-dark .mobile-status-label { color: #94a3b8; }
+
+      .mobile-status-value {
+        display: block;
+        margin-top: 4px;
+        font-size: 22px;
+        font-weight: 950;
+      }
+
+      .mobile-group-nav {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .mobile-group-nav button {
+        background: white;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        font-size: 12px;
+        min-height: 48px;
+        box-shadow: 0 6px 16px rgba(15,23,42,.05);
+      }
+
+      .theme-dark .mobile-group-nav button {
+        background: #0f172a;
+        color: #cbd5e1;
+        border-color: #334155;
+        box-shadow: 0 6px 16px rgba(0,0,0,.22);
+      }
+
+      .mobile-group-nav button.active {
+        background: var(--dark);
+        color: #a5f3fc;
+        border-color: var(--accent);
+      }
+
+      .theme-dark .mobile-group-nav button.active {
+        background: #083344;
+        color: #ecfeff;
+        box-shadow: 0 0 0 2px rgba(6,182,212,.18);
+      }
+
+      .tabs {
+        display: none !important;
+      }
+
+      .mobile-group-page-note {
+        display: block;
+        margin: 0 0 12px;
+      }
+
+      .top-grid,
+      .identity-bar {
+        max-width: none;
+        margin-bottom: 12px;
+      }
+
+      body.mobile-view-mode .top-grid,
+      body.mobile-view-mode .identity-bar,
+      body.mobile-view-mode .ability-preview,
+      body.mobile-view-mode .template-picker-wrap,
+      body.mobile-view-mode .ability-picker,
+      body.mobile-view-mode .device-picker,
+      body.mobile-view-mode .quick-filter-grid,
+      body.mobile-view-mode .tag-filter-row,
+      body.mobile-view-mode .delete-btn,
+      body.mobile-view-mode .add-btn,
+      body.mobile-view-mode .panel-title-toggle {
+        display: none !important;
+      }
+
+      body.mobile-view-mode textarea {
+        min-height: 92px;
+      }
+
+      body.mobile-view-mode .panel {
+        margin-bottom: 12px;
+      }
+
+      .panel.mobile-collapsed > .panel-body {
+        display: none !important;
+      }
+
+      .panel-title.is-accordion-title {
+        min-height: 44px;
+      }
+
+      .tab-page.active {
+        animation: desktopCleanFade .14s ease-out;
+      }
+
+      @keyframes desktopCleanFade {
+        from { opacity: .65; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+
     @media print {
       .mobile-character-status,
       .mobile-group-nav,
@@ -1296,7 +1484,7 @@
 <body class="mobile-optimized">
   <header>
     <div class="header-inner">
-      <div class="brand"><div class="logo">✦</div><div><h1>Starbound</h1><div class="subtitle">Digital Character Sheet</div></div></div>
+      <div class="brand" aria-label="Starbound Digital Character Sheet"><img src="starbound-logo.png" alt="Starbound logo" class="brand-logo-img" /><div class="visually-hidden"><h1>Starbound</h1><div class="subtitle">Digital Character Sheet</div></div></div>
       <button id="controlsToggle" class="secondary controls-toggle" type="button" onclick="toggleHeaderActions()" aria-expanded="false" aria-controls="headerActions">Controls <span class="toggle-icon">▾</span></button>
       <div id="headerActions" class="actions collapsed">
         <div class="theme-switcher" role="group" aria-label="Theme mode">
@@ -1304,8 +1492,8 @@
           <button id="themeDarkButton" class="theme-button" type="button" onclick="setThemeMode('dark')">Dark</button>
           <button id="themePrintButton" class="theme-button" type="button" onclick="setThemeMode('print')">Print</button>
         </div>
-        <div class="mobile-view-toggle-row" role="group" aria-label="Mobile view mode">
-          <button id="mobileViewModeButton" class="active" type="button" onclick="setMobileAppMode('view')">View Mode</button>
+        <div class="mobile-view-toggle-row" role="group" aria-label="App view mode">
+          <button id="mobileViewModeButton" class="active" type="button" onclick="setMobileAppMode('view')">Clean View</button>
           <button id="mobileEditModeButton" type="button" onclick="setMobileAppMode('edit')">Edit Mode</button>
         </div>
         <div class="save-slot-manager" aria-label="Local save slots">
@@ -7179,10 +7367,10 @@
     }
 
     function applyMobileGrouping(){
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
-      if (isMobile === mobileLayoutState.isMobile) return;
-      mobileLayoutState.isMobile = isMobile;
-      if (isMobile) {
+      const shouldGroup = true;
+      if (shouldGroup === mobileLayoutState.isMobile) return;
+      mobileLayoutState.isMobile = shouldGroup;
+      if (shouldGroup) {
         movePanelToMobile('#combat > .panel:nth-of-type(2)', 'mobileGearWeapons');
         document.querySelectorAll('#devices > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearDevices')?.appendChild(panel); });
         document.querySelectorAll('#inventory > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearInventory')?.appendChild(panel); });
@@ -7190,9 +7378,6 @@
         document.querySelectorAll('#npc > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGmNpc')?.appendChild(panel); });
         document.querySelectorAll('#encounter > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGmEncounter')?.appendChild(panel); });
         showMobileGroup(mobileLayoutState.lastGroup || 'core', false);
-      } else {
-        restoreMobileMovedNodes();
-        document.querySelectorAll('.mobile-group-nav button').forEach(btn => btn.classList.remove('active'));
       }
     }
 
@@ -7216,7 +7401,6 @@
         title.setAttribute('role', 'button');
         title.setAttribute('tabindex', '0');
         const toggle = () => {
-          if (!window.matchMedia('(max-width: 720px)').matches) return;
           panel.classList.toggle('mobile-collapsed');
         };
         title.addEventListener('click', toggle);
