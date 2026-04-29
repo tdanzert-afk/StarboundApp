@@ -1236,6 +1236,8 @@
       .theme-dark .mobile-status-meta { color: #94a3b8; }
       .mobile-status-level { border: 1px solid var(--line); border-radius: 14px; padding: 7px 10px; text-align: center; font-weight: 950; color: var(--accent-dark); background: var(--soft); }
       .theme-dark .mobile-status-level { background: #020617; border-color: #334155; color: #67e8f9; }
+      .mobile-status-actions { display: grid; gap: 5px; justify-items: end; }
+      .compact-edit-button { min-height: 30px; padding: 6px 8px; border-radius: 10px; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
       .mobile-status-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
       .theme-dark .mobile-status-grid { border-color: #334155; }
       .mobile-status-stat { padding: 8px 5px; text-align: center; border-right: 1px solid var(--line); }
@@ -1334,6 +1336,21 @@
         background: var(--soft);
         min-width: 82px;
       }
+      .mobile-status-actions {
+        display: grid;
+        gap: 6px;
+        justify-items: end;
+      }
+
+      .compact-edit-button {
+        min-height: 32px;
+        padding: 7px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+
 
       .theme-dark .mobile-status-level {
         background: #020617;
@@ -1470,6 +1487,60 @@
       }
     }
 
+
+    .character-info-edit-head {
+      display: none;
+      grid-column: 1 / -1;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--soft);
+      padding: 12px;
+    }
+
+    body.mobile-edit-mode .character-info-edit-head {
+      display: flex;
+    }
+
+    .mini-section-title {
+      font-size: 13px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+
+    .mini-section-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .compact-done-button {
+      min-width: 120px;
+      min-height: 38px;
+    }
+
+    .theme-dark .character-info-edit-head {
+      background: #020617;
+      border-color: #334155;
+    }
+
+    /* Character info must always be reachable in Edit Mode */
+    body.mobile-edit-mode .top-grid,
+    body.mobile-edit-mode .identity-bar {
+      display: grid !important;
+    }
+
+    @media (max-width: 720px) {
+      body.mobile-edit-mode .top-grid,
+      body.mobile-edit-mode .identity-bar {
+        display: grid !important;
+      }
+    }
+
     @media print {
       .mobile-character-status,
       .mobile-group-nav,
@@ -1515,7 +1586,14 @@
     </div>
   </header>
   <main>
-    <section class="top-grid">
+    <section class="top-grid character-info-edit-grid">
+      <div class="character-info-edit-head">
+        <div>
+          <div class="mini-section-title">Character Info</div>
+          <div class="mini-section-subtitle">Edit your name, species, class, level, and basic identity.</div>
+        </div>
+        <button class="secondary compact-done-button" type="button" onclick="returnToCleanView()">Done Editing</button>
+      </div>
       <label><span class="label-text">Character Name</span><input id="characterName" /></label>
       <label><span class="label-text">Player Name</span><input id="playerName" /></label>
       <label><span class="label-text">Species</span><select id="race"></select></label>
@@ -7333,7 +7411,10 @@
             <div class="mobile-status-name">${escapeHtml(name)}</div>
             <div class="mobile-status-meta">${escapeHtml(speciesName)} • ${escapeHtml(klass)} • ${escapeHtml(backgroundName)}</div>
           </div>
-          <div class="mobile-status-level">LV ${level}</div>
+          <div class="mobile-status-actions">
+            <div class="mobile-status-level">LV ${level}</div>
+            <button class="secondary compact-edit-button" type="button" onclick="openCharacterInfoEditor()">Edit Info</button>
+          </div>
         </div>
         <div class="mobile-status-grid">
           <div class="mobile-status-stat"><span class="mobile-status-label">HP</span><span class="mobile-status-value">${hp}</span></div>
@@ -7341,6 +7422,27 @@
           <div class="mobile-status-stat"><span class="mobile-status-label">DEF</span><span class="mobile-status-value">${defense}</span></div>
           <div class="mobile-status-stat"><span class="mobile-status-label">Reserve</span><span class="mobile-status-value">${reserveTotal}</span></div>
         </div>`;
+    }
+
+    function openCharacterInfoEditor(){
+      setMobileAppMode("edit");
+      showMobileGroup("core", true);
+      const topGrid = document.querySelector(".top-grid");
+      if (topGrid) {
+        topGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setTimeout(() => {
+        const input = document.getElementById("characterName");
+        if (input) input.focus();
+      }, 150);
+    }
+
+    function returnToCleanView(){
+      saveLocal();
+      renderAll();
+      setMobileAppMode("view");
+      const status = document.getElementById("mobileCharacterStatus");
+      if (status) status.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function rememberNode(node){
