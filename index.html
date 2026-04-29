@@ -399,6 +399,8 @@
     .weapon-row { grid-template-columns: 1fr; }
     .weapon-top-grid { display: grid; grid-template-columns: 1.2fr 1.2fr 1fr 1.4fr 1fr auto; gap: 8px; align-items: end; }
     .protection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .protection-picker-wrap { margin-bottom: 12px; }
+    .protection-filter-grid { grid-template-columns: 180px 1fr; }
     .protection-notes { margin-top: 10px; }
     .protection-rules {
       margin-top: 12px;
@@ -442,6 +444,87 @@
     .protection-detail-box ul {
       margin: 6px 0 0;
       padding-left: 18px;
+    }
+    .protection-apply-button {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #001018;
+      cursor: pointer;
+    }
+    .protection-apply-button:hover {
+      filter: brightness(1.08);
+    }
+    .device-pick-button,
+    .device-blank-button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #001018;
+      cursor: pointer;
+    }
+
+    .device-blank-button {
+      width: 100%;
+      margin-top: 10px;
+      background: transparent;
+      color: var(--accent-dark);
+      border: 1px solid var(--line);
+    }
+
+    .device-pick-button:hover,
+    .device-blank-button:hover {
+      filter: brightness(1.08);
+    }
+
+    .theme-dark .device-pick-button {
+      background: #22d3ee;
+      color: #001018;
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.18);
+    }
+
+    .theme-dark .device-blank-button {
+      color: #a5f3fc;
+      border-color: #164e63;
+      background: transparent;
+    }
+    .theme-dark .protection-apply-button {
+      background: #22d3ee;
+      color: #001018;
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.18);
+    }
+    .protection-applied-summary {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--soft);
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .protection-applied-summary strong {
+      color: var(--accent-dark);
+      font-size: 14px;
+    }
+    .theme-dark .protection-applied-summary {
+      background: #020617;
+      border-color: #334155;
+      color: #e2e8f0;
+    }
+    .theme-dark .protection-applied-summary strong {
+      color: #67e8f9;
     }
     .device-top { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; }
     .device-integrated-label { display: flex; gap: 8px; align-items: center; font-weight: bold; font-size: 14px; color: var(--ink); }
@@ -913,6 +996,7 @@
     .mobile-optimized .npc-grid .half,
     .mobile-optimized .npc-grid .wide { grid-column: auto; }
 
+    .mobile-optimized .protection-filter-grid,
     .mobile-optimized .small-grid,
     .mobile-optimized .grid-2,
     .mobile-optimized .level-grid,
@@ -1460,6 +1544,14 @@
       body.mobile-view-mode .panel-title-toggle {
         display: none !important;
       }
+      body.mobile-view-mode .device-picker-panel .template-picker-wrap,
+      body.mobile-view-mode .device-picker-panel .quick-filter-grid,
+      body.mobile-view-mode .device-picker-panel .tag-filter-row {
+        display: grid !important;
+      }
+      body.mobile-view-mode .device-picker-panel .tag-filter-row {
+        display: flex !important;
+      }
 
       body.mobile-view-mode textarea {
         min-height: 92px;
@@ -1522,6 +1614,41 @@
       min-width: 120px;
       min-height: 38px;
     }
+    .character-info-edit-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .notes-save-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    .notes-save-bar span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .theme-dark .notes-save-bar {
+      background: #0f172a;
+      border-color: #334155;
+    }
+
+    .theme-dark .notes-save-bar span {
+      color: #94a3b8;
+    }
+
 
     .theme-dark .character-info-edit-head {
       background: #020617;
@@ -1535,10 +1662,29 @@
     }
 
     @media (max-width: 720px) {
+      .notes-save-bar,
+      .character-info-edit-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .notes-save-bar button,
+      .character-info-edit-actions button {
+        width: 100%;
+      }
       body.mobile-edit-mode .top-grid,
       body.mobile-edit-mode .identity-bar {
         display: grid !important;
       }
+    }
+
+    /* Device picker should remain available in Clean View because devices are combat choices */
+    body.mobile-view-mode .device-picker-panel .template-picker-wrap,
+    body.mobile-view-mode .device-picker-panel .quick-filter-grid {
+      display: grid !important;
+    }
+    body.mobile-view-mode .device-picker-panel .tag-filter-row {
+      display: flex !important;
     }
 
     @media print {
@@ -1592,7 +1738,10 @@
           <div class="mini-section-title">Character Info</div>
           <div class="mini-section-subtitle">Edit your name, species, class, level, and basic identity.</div>
         </div>
-        <button class="secondary compact-done-button" type="button" onclick="returnToCleanView()">Done Editing</button>
+        <div class="character-info-edit-actions">
+          <button class="secondary compact-done-button" type="button" onclick="syncLevelChanges()">Apply Level Changes</button>
+          <button class="secondary compact-done-button" type="button" onclick="returnToCleanView()">Done Editing</button>
+        </div>
       </div>
       <label><span class="label-text">Character Name</span><input id="characterName" /></label>
       <label><span class="label-text">Player Name</span><input id="playerName" /></label>
@@ -1701,6 +1850,17 @@
         </div>
         <div id="weapons" class="row-list"></div><button class="add-btn" onclick="addWeapon()">+ Add Blank Weapon</button></div></div>
       <div class="panel"><div class="panel-title">Protection</div><div class="panel-body">
+        <div class="template-picker-wrap protection-picker-wrap">
+          <div class="template-picker-row">
+            <label><span class="label-text">Choose Protection</span><select id="protectionTemplateSelect" onchange="previewSelectedProtection()"></select></label>
+            <button class="add-btn" type="button" onclick="applySelectedProtection()">Use Selected Protection</button>
+          </div>
+          <div class="quick-filter-grid protection-filter-grid">
+            <label><span class="label-text">Category</span><select id="protectionTemplateCategoryFilter" onchange="populateProtectionTemplates()"></select></label>
+            <label><span class="label-text">Search</span><input id="protectionTemplateSearch" placeholder="Jacket, exosuit, stealth, powered..." oninput="populateProtectionTemplates()" /></label>
+          </div>
+          <div id="protectionTemplatePreview" class="template-preview-card active">Select protection to preview it here.</div>
+        </div>
         <div class="protection-grid">
           <label><span class="label-text">Protection Name</span><input id="protectionName" placeholder="Ex: Reinforced Spacer Jacket" /></label>
           <label><span class="label-text">Protection Category</span>
@@ -1721,10 +1881,13 @@
           <div class="protection-detail-box" id="protectionDetails">Protection category rules and examples will appear here.</div>
         </div>
 
-        <button class="add-btn" type="button" onclick="applyProtectionAc()">Apply Calculated AC to Defense / AC</button>
+        <button class="protection-apply-button" type="button" onclick="applyProtectionEffects()">Apply Protection Effects to Defense</button>
+        <div id="protectionAppliedSummary" class="protection-applied-summary">No protection effects applied to Defense yet.</div>
 
         <label class="protection-notes"><span class="label-text">Protection Description / Notes</span><textarea id="protectionDescription" placeholder="Armor traits, penalties, upgrades, shield rules, special effects, device interaction..."></textarea></label>
       </div></div>
+      <div id="combatDevices">
+      </div>
     </section>
     <section id="abilities" class="tab-page">
       <div class="panel"><div class="panel-title">Ability Power & Power Reserve</div><div class="panel-body">
@@ -1783,22 +1946,18 @@
       <div class="level-grid" id="abilityLevels"></div>
     </section>
     <section id="gear" class="tab-page mobile-group-page">
-      <p class="mobile-group-page-note">Gear combines weapons, devices, inventory, and ship info on mobile.</p>
-      <div id="mobileGearWeapons"></div>
-      <div id="mobileGearDevices"></div>
+      <p class="mobile-group-page-note">Gear keeps your non-combat equipment together: inventory, cargo, credits, and ship info.</p>
       <div id="mobileGearInventory"></div>
       <div id="mobileGearShip"></div>
     </section>
     <section id="devices" class="tab-page">
-      <div class="panel device-add-panel">
-        <button class="panel-title-toggle" type="button" onclick="toggleDeviceAddPanel()" aria-expanded="false" aria-controls="deviceAddPanelBody">
-          <span>Add Device From List</span><span id="deviceAddPanelIcon" class="collapse-icon">▾</span>
-        </button>
-        <div id="deviceAddPanelBody" class="panel-body device-add-panel-body collapsed">
+      <div class="panel device-add-panel device-picker-panel">
+        <div class="panel-title">Choose Device</div>
+        <div id="deviceAddPanelBody" class="panel-body device-add-panel-body">
           <div class="template-picker-wrap">
             <div class="template-picker-row">
               <label><span class="label-text">Search Devices</span><input id="deviceSearchInput" placeholder="Type name, passive, reaction, field, scanner, etc..." autocomplete="off" /></label>
-              <button class="add-btn" type="button" onclick="addSelectedDevice()">+ Add Selected Device</button>
+              <button class="device-pick-button" type="button" onclick="addSelectedDevice()">Add Selected Device</button>
             </div>
             <div class="quick-filter-grid" data-filter-group="device">
               <label><span class="label-text">Device Type</span><select id="deviceDisciplineFilter"></select></label>
@@ -1812,14 +1971,14 @@
               <label class="tag-chip"><input type="checkbox" id="deviceTagMovement" value="movement" /> Movement</label>
               <label class="tag-chip"><input type="checkbox" id="deviceTagControl" value="control" /> Control</label>
             </div>
-            <label><span class="label-text">Matching Devices</span><select id="deviceTemplateSelect" class="template-search-list" size="6"></select></label>
-            <div id="deviceTemplatePreview" class="template-preview-card">Select a device to preview it here.</div>
+            <label><span class="label-text">Matching Devices</span><select id="deviceTemplateSelect" class="template-search-list" size="6" onchange="renderDeviceTemplatePreview()"></select></label>
+            <div id="deviceTemplatePreview" class="template-preview-card active">Select a device to preview it here.</div>
           </div>
         </div>
       </div>
-      <div class="panel"><div class="panel-title">Devices</div><div class="panel-body">
+      <div class="panel"><div class="panel-title">Equipped / Integrated Devices</div><div class="panel-body">
         <div id="devicesList" class="row-list"></div>
-        <button class="add-btn" onclick="addDevice()">+ Add Blank Device</button>
+        <button class="device-blank-button" onclick="addDevice()">+ Add Blank Device</button>
       </div></div>
     </section>
     <section id="inventory" class="tab-page">
@@ -1971,6 +2130,10 @@
     </section>
 
     <section id="notes" class="tab-page">
+      <div class="notes-save-bar">
+        <button type="button" onclick="saveNotesNow()">Save Notes</button>
+        <span id="notesSaveStatus">Notes autosave as you type.</span>
+      </div>
       <div class="panel"><div class="panel-title">Traits / Ideals / Bonds / Flaws</div><div class="panel-body"><textarea id="traits" placeholder="Personality traits, ideals, bonds, flaws, crew ties..."></textarea></div></div>
       <div class="panel"><div class="panel-title">Mission Log</div><div class="panel-body mission-log-grid">
         <label class="wide"><span class="label-text">Current Mission</span><textarea id="currentMission" placeholder="Primary objective, immediate danger, mission giver, success condition..."></textarea></label>
@@ -7018,6 +7181,189 @@
     };
 
 
+    const protectionTemplates = [
+      {
+        name: "Spacer Jacket",
+        category: "Light Defense",
+        properties: "Light, flexible, concealable",
+        notes: "AC 12 + Dex modifier",
+        description: "A reinforced jacket used by travelers, smugglers, and station crews. Easy to wear and good for characters who rely on mobility."
+      },
+      {
+        name: "Tactical Stealth Suit",
+        category: "Light Defense",
+        properties: "Light, stealth-friendly, sealed weave",
+        notes: "AC 12 + Dex modifier",
+        description: "A low-profile stealth suit with quiet fabric, matte plating, and basic environmental sealing. Best for scouts, infiltrators, and saboteurs."
+      },
+      {
+        name: "Nano-Fiber Weave",
+        category: "Light Defense",
+        properties: "Light, hidden under clothing",
+        notes: "AC 12 + Dex modifier",
+        description: "A flexible protective weave worn beneath normal clothing. Good for diplomats, captains, and anyone who wants protection without looking armored."
+      },
+      {
+        name: "Hardlight Guard",
+        category: "Light Defense",
+        properties: "Light, projected defense field",
+        notes: "AC 12 + Dex modifier",
+        description: "A compact hardlight emitter that forms brief protective plates around the wearer. Sleek, futuristic, and useful for tech-forward characters."
+      },
+      {
+        name: "Combat Harness",
+        category: "Medium Defense",
+        properties: "Medium, modular, gear mounts",
+        notes: "AC 14 + Dex modifier",
+        description: "A tactical harness with reinforced chest, shoulder, and thigh plating. Common among mercenaries, bounty hunters, and security teams."
+      },
+      {
+        name: "Riot Armor",
+        category: "Medium Defense",
+        properties: "Medium, impact resistant",
+        notes: "AC 14 + Dex modifier",
+        description: "Durable armor made for close-quarters station fighting. Good against blunt force, crowd-control hazards, and chaotic boarding actions."
+      },
+      {
+        name: "Reinforced Exoskeleton",
+        category: "Medium Defense",
+        properties: "Medium, assisted movement",
+        notes: "AC 14 + Dex modifier",
+        description: "A partial exoskeleton with reinforced plating and movement support. Good for engineers, soldiers, and explorers hauling heavy kit."
+      },
+      {
+        name: "Hardened Tactical Plating",
+        category: "Medium Defense",
+        properties: "Medium, battlefield plating",
+        notes: "AC 14 + Dex modifier",
+        description: "A balanced armor system with enough plating to matter without fully sacrificing mobility."
+      },
+      {
+        name: "Hydraulic Exosuit",
+        category: "Heavy Defense",
+        properties: "Heavy, disadvantage on Stealth",
+        notes: "AC 16",
+        description: "A rugged exosuit with powered joints and heavy armor plates. Built for frontline combat and hazardous work zones."
+      },
+      {
+        name: "Siege Plating",
+        category: "Heavy Defense",
+        properties: "Heavy, disadvantage on Stealth",
+        notes: "AC 16",
+        description: "Bulky armor designed to withstand heavy fire. Best for soldiers, cyber knights, and anyone expecting to be shot first."
+      },
+      {
+        name: "Corporate Enforcement Armor",
+        category: "Heavy Defense",
+        properties: "Heavy, intimidating, disadvantage on Stealth",
+        notes: "AC 16",
+        description: "Standardized heavy armor used by megacorp enforcers and elite private security forces."
+      },
+      {
+        name: "Warframe Shell",
+        category: "Heavy Defense",
+        properties: "Heavy, sealed combat frame, disadvantage on Stealth",
+        notes: "AC 16",
+        description: "A heavy shell built for hostile worlds and boarding actions. Loud, obvious, and hard to bring down."
+      },
+      {
+        name: "Powered Armor",
+        category: "Powered Defense",
+        properties: "Powered, Strength 15 requirement, disadvantage on Stealth",
+        notes: "AC 20",
+        description: "Full powered armor with servo-assist, sealed plating, and integrated support systems. Expensive, obvious, and terrifying."
+      },
+      {
+        name: "Small Mech Suit",
+        category: "Powered Defense",
+        properties: "Powered, vehicle-like, Strength 15 requirement, disadvantage on Stealth",
+        notes: "AC 20",
+        description: "A compact mechanized suit used for hazardous combat, industrial breach work, and extreme exploration."
+      },
+      {
+        name: "Gravity Amplification Array",
+        category: "Powered Defense",
+        properties: "Powered, gravity stabilizers, Strength 15 requirement, disadvantage on Stealth",
+        notes: "AC 20",
+        description: "A powered defense rig that uses gravity fields to redirect impacts and stabilize the wearer under heavy fire."
+      }
+    ];
+
+    function filteredProtectionTemplates(){
+      const category = document.getElementById("protectionTemplateCategoryFilter")?.value || "all";
+      const query = (document.getElementById("protectionTemplateSearch")?.value || "").toLowerCase().trim();
+      return protectionTemplates.filter(item => {
+        const matchesCategory = category === "all" || item.category === category;
+        const haystack = `${item.name} ${item.category} ${item.properties} ${item.notes} ${item.description}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        return matchesCategory && matchesQuery;
+      });
+    }
+
+    function populateProtectionCategoryFilter(){
+      const select = document.getElementById("protectionTemplateCategoryFilter");
+      if (!select || select.dataset.ready) return;
+      const categories = ["all", ...Object.keys(protectionCategories)];
+      select.innerHTML = categories.map(category => `<option value="${escapeHtml(category)}">${category === "all" ? "All Categories" : escapeHtml(category)}</option>`).join("");
+      select.dataset.ready = "true";
+    }
+
+    function populateProtectionTemplates(){
+      populateProtectionCategoryFilter();
+      const select = document.getElementById("protectionTemplateSelect");
+      if (!select) return;
+      const items = filteredProtectionTemplates();
+      select.innerHTML = items.length
+        ? items.map((item, index) => `<option value="${index}">${escapeHtml(item.name)} — ${escapeHtml(item.category)}</option>`).join("")
+        : `<option value="">No matching protection</option>`;
+      previewSelectedProtection();
+    }
+
+    function getSelectedProtectionTemplate(){
+      const select = document.getElementById("protectionTemplateSelect");
+      if (!select) return null;
+      const items = filteredProtectionTemplates();
+      const index = Number(select.value || 0);
+      return items[index] || null;
+    }
+
+    function previewSelectedProtection(){
+      const preview = document.getElementById("protectionTemplatePreview");
+      if (!preview) return;
+      const item = getSelectedProtectionTemplate();
+      if (!item) {
+        preview.classList.add("active");
+        preview.innerHTML = "No matching protection. Clear the search or choose another category.";
+        return;
+      }
+      const rules = protectionCategories[item.category];
+      preview.classList.add("active");
+      preview.innerHTML = `
+        <div class="template-preview-title">${escapeHtml(item.name)}</div>
+        <div class="template-preview-meta">${escapeHtml(item.category)} • ${escapeHtml(item.notes)}</div>
+        <div class="template-preview-description">${escapeHtml(item.description)}</div>
+        <div class="template-preview-description" style="margin-top:8px;"><strong>Properties:</strong> ${escapeHtml(item.properties || "None")}</div>
+        ${rules ? `<div class="template-preview-description" style="margin-top:8px;"><strong>Rules:</strong> ${rules.rules.map(escapeHtml).join("; ")}</div>` : ""}
+      `;
+    }
+
+    function applySelectedProtection(){
+      const item = getSelectedProtectionTemplate();
+      if (!item) {
+        alert("Choose a protection option first.");
+        return;
+      }
+      character.protectionName = item.name;
+      character.protectionCategory = item.category;
+      character.protectionProperties = item.properties || "";
+      character.protectionDefense = item.notes || "";
+      character.protectionDescription = item.description || "";
+      ["protectionName", "protectionCategory", "protectionProperties", "protectionDefense", "protectionDescription"].forEach(id => setValue(id, character[id]));
+      applyProtectionAc();
+      saveLocal();
+      renderDynamic();
+    }
+
     const classSetupDefinitions = {
       "Captain": { hitDie: "1d8", hitDieAverage: 5, saveProficiencies: ["dexterity", "charisma"], skillChoices: 3, recommendedSkills: ["persuasion", "insight", "perception"], protectionProficiencies: ["Light Defense"], weaponProficiencies: ["Light Weapons"], powerAbility: "Charisma", deviceSlots: 3, setupNote: "Leader/support role. Strong social presence, tactical coordination, and crew-wide buffs." },
       "Cyber Knight": { hitDie: "1d10", hitDieAverage: 6, saveProficiencies: ["strength", "wisdom"], skillChoices: 2, recommendedSkills: ["athletics", "intimidation"], protectionProficiencies: ["Light Defense", "Medium Defense", "Heavy Defense"], weaponProficiencies: ["Light Melee", "Medium Melee", "Heavy Melee", "Light Ranged"], powerAbility: "Wisdom", deviceSlots: 3, setupNote: "Front-line discipline fighter. Best for melee pressure, defense, and cybernetic combat techniques." },
@@ -7437,9 +7783,29 @@
       }, 150);
     }
 
-    function returnToCleanView(){
+    function syncLevelChanges(){
+      const beforeProf = Number(character.proficiencyBonus || 0);
+      applyClassProgression({ silent: true, addAllFeaturesThroughLevel: true });
       saveLocal();
       renderAll();
+      const box = document.getElementById("levelUpSummary");
+      if (box) {
+        const prof = Number(character.proficiencyBonus || 0);
+        box.innerHTML = `<strong>Level changes applied.</strong><ul><li>Level: ${Number(character.level || 1)}</li><li>Proficiency Bonus: +${prof}${beforeProf && beforeProf !== prof ? ` <small>(was +${beforeProf})</small>` : ""}</li><li>Class setup, Power Reserve, saving throws, HP estimate, and derived stats were synced.</li></ul>`;
+      }
+    }
+
+    function saveNotesNow(){
+      saveLocal();
+      const status = document.getElementById("notesSaveStatus");
+      if (status) {
+        const time = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+        status.textContent = `Notes saved at ${time}.`;
+      }
+    }
+
+    function returnToCleanView(){
+      syncLevelChanges();
       setMobileAppMode("view");
       const status = document.getElementById("mobileCharacterStatus");
       if (status) status.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -7473,8 +7839,7 @@
       if (shouldGroup === mobileLayoutState.isMobile) return;
       mobileLayoutState.isMobile = shouldGroup;
       if (shouldGroup) {
-        movePanelToMobile('#combat > .panel:nth-of-type(2)', 'mobileGearWeapons');
-        document.querySelectorAll('#devices > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearDevices')?.appendChild(panel); });
+        document.querySelectorAll('#devices > .panel').forEach(panel => { rememberNode(panel); document.getElementById('combatDevices')?.appendChild(panel); });
         document.querySelectorAll('#inventory > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearInventory')?.appendChild(panel); });
         document.querySelectorAll('#ship > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearShip')?.appendChild(panel); });
         document.querySelectorAll('#npc > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGmNpc')?.appendChild(panel); });
@@ -7535,7 +7900,7 @@
       if (tabPage && shouldScroll) tabPage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    function initialize(){ if (!character) character = loadLocal(); loadThemeMode(); initializeMobileCleanup(); populateSelect("race", species); populateSelect("className", classes); populateSelect("background", backgrounds); updateClassPathOptions(); initializeAdvancedFilterOptions(); populateDeviceTemplates(); populateWeaponTemplates(); populateInventoryTemplates(); populateFeatureTemplates(); populateAbilityTemplates(); ["characterName","playerName","race","className","experience","background","classPath","characterDescription","recovery","protectionName","protectionCategory","protectionDefense","protectionProperties","protectionDescription","powerSource","traits","currentMission","crewMembers","contacts","factions","planetsVisited","shipsStations","activeJobs","debtsObligations","reputationNotes","shipName","shipClass","shipSpeed","shipNotes","npcName","npcSpecies","npcRole","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"].forEach(id => bindValue(id, id)); ["level","proficiencyBonus","armorClass","initiativeBonus","speed","maxHp","currentHp","tempHp","shield","maxShield","credits","shipHull","shipMaxHull","shipShields","shipFuel","shipJumpCharges","npcDefense","npcHp","npcMaxHp"].forEach(id => bindValue(id, id, "number")); document.getElementById("notesField").addEventListener("input", e => { character.notes = e.target.value; saveLocal(); }); document.querySelectorAll(".tab").forEach(btn => { btn.addEventListener("click", () => showTab(btn.dataset.tab)); }); document.getElementById("importFile").addEventListener("change", importCharacter);
+    function initialize(){ if (!character) character = loadLocal(); loadThemeMode(); initializeMobileCleanup(); populateSelect("race", species); populateSelect("className", classes); populateSelect("background", backgrounds); updateClassPathOptions(); initializeAdvancedFilterOptions(); populateDeviceTemplates(); populateWeaponTemplates(); populateInventoryTemplates(); populateFeatureTemplates(); populateProtectionTemplates(); populateAbilityTemplates(); ["characterName","playerName","race","className","experience","background","classPath","characterDescription","recovery","protectionName","protectionCategory","protectionDefense","protectionProperties","protectionDescription","powerSource","traits","currentMission","crewMembers","contacts","factions","planetsVisited","shipsStations","activeJobs","debtsObligations","reputationNotes","shipName","shipClass","shipSpeed","shipNotes","npcName","npcSpecies","npcRole","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"].forEach(id => bindValue(id, id)); ["level","proficiencyBonus","armorClass","initiativeBonus","speed","maxHp","currentHp","tempHp","shield","maxShield","credits","shipHull","shipMaxHull","shipShields","shipFuel","shipJumpCharges","npcDefense","npcHp","npcMaxHp"].forEach(id => bindValue(id, id, "number")); document.getElementById("notesField").addEventListener("input", e => { character.notes = e.target.value; saveLocal(); }); document.querySelectorAll(".tab").forEach(btn => { btn.addEventListener("click", () => showTab(btn.dataset.tab)); }); document.getElementById("importFile").addEventListener("change", importCharacter);
       const artInput = document.getElementById("characterArtInput");
       if (artInput) artInput.addEventListener("change", importCharacterArt);
       renderAll(); }
@@ -7592,7 +7957,7 @@
             </div>
             <div class="combat-quick-small">after temp HP</div>
           </div>
-          <div class="combat-quick-stat"><div class="combat-quick-label">Defense</div><div class="combat-quick-value" data-combat-readout="defense">${Number(character.armorClass || 0)}</div><div class="combat-quick-small">AC / Defense</div></div>
+          <div class="combat-quick-stat"><div class="combat-quick-label">Defense</div><div class="combat-quick-value" data-combat-readout="defense">${Number(character.armorClass || 0)}</div><div class="combat-quick-small">${escapeHtml(character.protectionAppliedName || character.protectionName || "AC / Defense")}</div></div>
           <div class="combat-quick-stat"><div class="combat-quick-label">Initiative</div><div class="combat-quick-value" data-combat-readout="initiative">${signed(initiativeTotal)}</div><div class="combat-quick-small">total bonus</div></div>
           <div class="combat-quick-stat"><div class="combat-quick-label">Speed</div><div class="combat-quick-value" data-combat-readout="speed">${Number(character.speed || 0)}</div><div class="combat-quick-small">feet</div></div>
         </div>
@@ -7606,7 +7971,7 @@
           <button class="secondary" type="button" onclick="quickShortRest()">Short Rest</button>
           <button class="secondary" type="button" onclick="quickLongRest()">Long Rest</button>
         </div>
-        <div class="combat-quick-weapon">${weaponText}<br><strong>Power Reserve</strong><br>${powerReserveSummary()}</div>
+        <div class="combat-quick-weapon">${weaponText}<br><strong>Protection</strong><br>${escapeHtml(character.protectionAppliedName || character.protectionName || "No protection applied")} ${character.protectionCategory ? `• ${escapeHtml(character.protectionCategory)}` : ""} ${Number(character.armorClass || 0) ? `• Defense ${Number(character.armorClass || 0)}` : ""}<br><strong>Power Reserve</strong><br>${powerReserveSummary()}</div>
       `;
     }
 
@@ -7820,7 +8185,10 @@
       const powerLabel = abilityNames[powerKey];
       const dc = 8 + Number(character.proficiencyBonus || 0) + mod(character.attributes[powerKey]);
       const atk = Number(character.proficiencyBonus || 0) + mod(character.attributes[powerKey]);
-      document.getElementById("derivedStats").innerHTML = `Passive Perception: ${passive}<br>Initiative Total: ${signed(init)}<br>Power Ability: ${powerLabel}`;
+      const defenseSource = character.protectionAppliedName
+        ? `<br>Defense Source: ${escapeHtml(character.protectionAppliedName)}`
+        : (character.protectionName ? `<br>Defense Source: ${escapeHtml(character.protectionName)}${character.protectionCategory ? " (" + escapeHtml(character.protectionCategory) + ")" : ""}` : "");
+      document.getElementById("derivedStats").innerHTML = `Passive Perception: ${passive}<br>Initiative Total: ${signed(init)}<br>Power Ability: ${powerLabel}<br>Defense: ${Number(character.armorClass || 0)}${defenseSource}`;
       document.getElementById("abilityDc").innerHTML = `Ability Save DC<br><span style="font-size:24px">${dc}</span><br><small>8 + Prof + ${abilityAbbrev(powerKey)}</small>`;
       document.getElementById("abilityAttack").innerHTML = `Ability Attack<br><span style="font-size:24px">${signed(atk)}</span><br><small>Prof + ${abilityAbbrev(powerKey)}</small>`;
     }
@@ -7852,6 +8220,24 @@
     function addWeapon(){ character.weapons.push({ name:"", type:"", damage:"", properties:"", range:"", description:"" }); renderDynamic(); }
     function deleteWeapon(i){ character.weapons.splice(i,1); renderDynamic(); }
 
+    function protectionEffectSummaryHtml(){
+      const category = character.protectionCategory;
+      const data = protectionCategories[category];
+      const summary = document.getElementById("protectionAppliedSummary");
+      if (!summary) return;
+      if (!data) {
+        summary.innerHTML = "No protection effects applied to Defense yet.";
+        return;
+      }
+      const calculated = data.calculate();
+      const appliedDefense = Number(character.armorClass || 0);
+      const protectionName = character.protectionName || category;
+      const isApplied = appliedDefense === calculated;
+      summary.innerHTML = isApplied
+        ? `<strong>Applied to Defense:</strong> ${escapeHtml(protectionName)} • ${escapeHtml(category)} • Defense ${calculated}<br><small>${escapeHtml(data.acText)}${character.protectionProperties ? " • " + escapeHtml(character.protectionProperties) : ""}</small>`
+        : `<strong>Ready to apply:</strong> ${escapeHtml(protectionName)} would set Defense to ${calculated}. Current Defense is ${appliedDefense || 0}.`;
+    }
+
     function renderProtection(){
       const category = character.protectionCategory;
       const data = protectionCategories[category];
@@ -7862,11 +8248,12 @@
       if (!data) {
         acBox.innerHTML = "Choose a protection category";
         details.innerHTML = "Protection category rules and examples will appear here.";
+        protectionEffectSummaryHtml();
         return;
       }
 
       const calculated = data.calculate();
-      acBox.innerHTML = `<span class="label-text">Calculated AC</span><span class="big-number">${calculated}</span><span>${data.acText}</span>`;
+      acBox.innerHTML = `<span class="label-text">Calculated Defense</span><span class="big-number">${calculated}</span><span>${data.acText}</span>`;
 
       details.innerHTML = `
         <strong>${category}</strong>
@@ -7874,17 +8261,28 @@
         <ul>${data.rules.map(rule => `<li>${rule}</li>`).join("")}</ul>
         <div style="margin-top:8px"><b>Examples / flavor only:</b> ${data.examples.join(", ")}</div>
       `;
+      protectionEffectSummaryHtml();
     }
 
-    function applyProtectionAc(){
+    function applyProtectionEffects(){
       const data = protectionCategories[character.protectionCategory];
       if (!data) {
         alert("Choose a protection category first.");
         return;
       }
-      character.armorClass = data.calculate();
+      const calculated = data.calculate();
+      character.armorClass = calculated;
+      character.protectionAppliedDefense = calculated;
+      character.protectionAppliedName = character.protectionName || character.protectionCategory;
+      character.protectionAppliedCategory = character.protectionCategory;
+      character.protectionAppliedText = data.acText;
       setValue("armorClass", character.armorClass);
+      saveLocal();
       renderDynamic();
+    }
+
+    function applyProtectionAc(){
+      applyProtectionEffects();
     }
 
     function renderPowerReserve(){ document.getElementById("powerReserve").innerHTML = [0,1,2,3,4,5].map(lvl => `<label><span class="label-text">Level ${lvl} Reserve</span><input type="number" value="${character.powerReserve[lvl]}" oninput="character.powerReserve[${lvl}]=Number(this.value); saveLocal()" /></label>`).join(""); }
@@ -8781,7 +9179,8 @@
 
       if (!character.features || !Array.isArray(character.features)) character.features = [];
       const existingFeatureNames = new Set(character.features.map(feature => String(feature.name || "").toLowerCase()));
-      data.features.filter(feature => feature.level === 1).forEach(feature => {
+      const featureLevelLimit = options.addAllFeaturesThroughLevel ? level : 1;
+      data.features.filter(feature => feature.level <= featureLevelLimit).forEach(feature => {
         const key = String(feature.name || "").toLowerCase();
         if (!existingFeatureNames.has(key)) { character.features.push({ name: feature.name, description: `[${feature.source || character.className} — Level ${feature.level}]\n${feature.description || ""}` }); existingFeatureNames.add(key); }
       });
