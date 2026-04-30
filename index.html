@@ -181,6 +181,9 @@
       box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.22), 0 0 14px rgba(34, 211, 238, 0.18);
     }
 
+    body.theme-dark .npc-list-open { background: #22d3ee; color: #001018; }
+    body.theme-dark .npc-list-remove { background: #3f121c; color: #fecdd3; border-color: #7f1d1d; }
+
     body.theme-dark .npc-list-name {
       color: #ffffff;
     }
@@ -313,6 +316,23 @@
     .ability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .skills-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .skills-grid .check-row { margin-bottom: 0; }
+    .skills-toolbar { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 2px; }
+    .skills-toolbar .auto-calc-note { margin: 0; flex: 1 1 260px; }
+    .skills-summary-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 9px 10px; background: white; font-size: 14px; }
+    .skills-summary-flags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .skill-pill { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 2px 7px; font-size: 10px; font-weight: 900; color: var(--accent-dark); background: var(--soft); letter-spacing: 0.06em; text-transform: uppercase; }
+    .skill-total-badge { font-size: 18px; font-weight: 900; color: var(--accent-dark); }
+    .ability-toolbar, .health-toolbar { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 2px; }
+    .ability-toolbar .auto-calc-note, .health-toolbar .auto-calc-note { margin: 0; flex: 1 1 260px; }
+    .ability-summary-card, .health-summary-card { border: 1px solid var(--line); border-radius: 14px; background: var(--soft); padding: 12px; text-align: center; }
+    .ability-summary-name, .health-summary-label { color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
+    .ability-summary-score, .health-summary-value { margin-top: 4px; font-size: 24px; font-weight: 900; line-height: 1; }
+    .ability-summary-mod, .health-summary-sub { margin-top: 4px; color: var(--accent-dark); font-size: 13px; font-weight: 900; }
+    .health-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .health-edit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: end; }
+    .health-edit-actions { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    body.theme-dark .skills-summary-row, body.theme-dark .ability-summary-card, body.theme-dark .health-summary-card { background: #020617; color: var(--ink); }
+    body.theme-dark .skill-pill { background: #0b1b2e; border-color: #1e7490; color: #a5f3fc; }
     .ability-card { background: var(--soft); border: 1px solid var(--line); border-radius: 18px; padding: 14px; text-align: center; }
     .ability-card input[type="number"] { text-align: center; border: 0; background: transparent; font-size: 34px; font-weight: 900; padding: 4px; }
     .ability-save-label { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; font-weight: bold; color: var(--muted); }
@@ -367,7 +387,7 @@
     .combat-quick-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
     .combat-quick-title { font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; font-size: 13px; }
     .combat-quick-subtitle { color: #a5f3fc; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; }
-    .combat-quick-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+    .combat-quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
     .combat-quick-stat { border: 1px solid rgba(203, 213, 225, 0.25); background: rgba(248, 250, 252, 0.09); border-radius: 16px; padding: 10px; text-align: center; min-height: 72px; display: grid; align-content: center; }
     .combat-quick-label { color: #a5f3fc; font-size: 9px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
     .combat-quick-value { font-size: 24px; line-height: 1; font-weight: 900; margin-top: 6px; }
@@ -591,8 +611,13 @@
     .npc-library-panel { border: 1px solid var(--line); border-radius: 18px; background: var(--soft); padding: 12px; display: grid; gap: 10px; }
     .npc-filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .npc-list { display: grid; gap: 8px; max-height: 520px; overflow: auto; padding-right: 2px; }
-    .npc-list-item { width: 100%; text-align: left; border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--ink); padding: 10px; display: grid; gap: 4px; }
+    .npc-list-item { width: 100%; text-align: left; border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--ink); padding: 10px; display: grid; gap: 7px; cursor: pointer; }
     .npc-list-item.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.16); }
+    .npc-list-main { display: grid; gap: 4px; }
+    .npc-list-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+    .npc-list-open, .npc-list-remove { min-height: 34px; padding: 7px 10px; border-radius: 10px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .npc-list-open { background: var(--accent); color: #001018; }
+    .npc-list-remove { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
     .npc-list-name { font-weight: 900; }
     .npc-list-meta { color: var(--muted); font-size: 12px; line-height: 1.35; }
     .npc-folder-pills { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -600,6 +625,11 @@
     .npc-pill.active { background: var(--dark); color: #a5f3fc; border-color: var(--dark); }
     .npc-editor-panel { min-width: 0; }
     .npc-toolbar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .npc-edit-note { border: 1px solid var(--line); border-radius: 14px; background: var(--soft); padding: 10px 12px; margin-bottom: 12px; color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.4; }
+    .npc-edit-note strong { color: var(--accent-dark); }
+    .npc-grid.npc-locked input, .npc-grid.npc-locked textarea { opacity: 0.86; cursor: not-allowed; }
+    body.theme-dark .npc-edit-note { background: #020617; border-color: #334155; color: #bae6fd; }
+    body.theme-dark .npc-edit-note strong { color: #67e8f9; }
     .npc-grid textarea { min-height: 140px; }
     .npc-grid .wide textarea { min-height: 155px; }
     .template-search-list { min-height: 150px; padding: 8px; }
@@ -728,7 +758,7 @@
     .ability-power-reserve-grid .label-text { font-size: 8px; letter-spacing: 0.08em; text-align: center; }
     .level-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .footer-note { color: var(--muted); font-size: 12px; text-align: center; padding: 24px 0; }
-    @media (max-width: 900px) { .top-grid, .small-grid, .ability-grid, .grid-2, .level-grid, .reserve-grid, .ability-detail-grid, .ability-header-grid, .weapon-top-grid, .protection-grid { grid-template-columns: 1fr; } .weapon-row, .device-top, .inventory-top, .feature-top, .character-detail-grid, .credits-box, .protection-grid, .protection-rules, .ability-power-compact { grid-template-columns: 1fr; } .ability-power-reserve-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } header { position: static; } }
+    @media (max-width: 900px) { .top-grid, .small-grid, .ability-grid, .grid-2, .level-grid, .reserve-grid, .ability-detail-grid, .ability-header-grid, .weapon-top-grid, .protection-grid, .health-grid, .health-edit-grid { grid-template-columns: 1fr; } .weapon-row, .device-top, .inventory-top, .feature-top, .character-detail-grid, .credits-box, .protection-grid, .protection-rules, .ability-power-compact { grid-template-columns: 1fr; } .ability-power-reserve-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } header { position: static; } }
     @media (max-width: 560px) { .skills-grid { grid-template-columns: 1fr; } }
 
 
@@ -1687,6 +1717,12 @@
       display: flex !important;
     }
 
+    /* Clean equipment revision */
+    #devices, #inventory, #ship { display: none !important; }
+    .equipment-helper-text { color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.45; margin-bottom: 10px; }
+    .gear-section-spacer { margin-bottom: 16px; }
+    @media (min-width: 721px) { .mobile-group-nav { display: none !important; } }
+
     @media print {
       .mobile-character-status,
       .mobile-group-nav,
@@ -1695,6 +1731,24 @@
       .mobile-group-page-note { display: none !important; }
       .panel.mobile-collapsed > .panel-body { display: block !important; }
     }
+
+
+
+
+    /* v7 equipment fixes */
+    .remove-device-btn { background: #fee2e2; color: #991b1b; padding: 8px 10px; border: 0; border-radius: 12px; font-weight: 900; cursor: pointer; }
+    .remove-device-btn:hover { filter: brightness(1.04); }
+    .weapon-slot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: end; }
+    .dual-wield-note { color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.4; margin-top: 8px; }
+    body.theme-dark .remove-device-btn { background: #3f1d2a; color: #fecdd3; border: 1px solid #7f1d1d; }
+    @media (max-width: 720px) { .weapon-slot-grid { grid-template-columns: 1fr; } }
+
+    .auto-grant-badge { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 2px 7px; margin-left: 6px; font-size: 9px; font-weight: 900; color: var(--accent-dark); background: var(--soft); letter-spacing: 0.06em; text-transform: uppercase; }
+    body.theme-dark .auto-grant-badge { background: #0b1b2e; border-color: #1e7490; color: #a5f3fc; }
+
+    /* Navigation fix: keep the grouped navigation visible on desktop and mobile. */
+    .mobile-group-nav { display: grid !important; }
+    @media (min-width: 721px) { .mobile-group-nav { display: grid !important; } }
 
   </style>
 </head>
@@ -1736,7 +1790,7 @@
       <div class="character-info-edit-head">
         <div>
           <div class="mini-section-title">Character Info</div>
-          <div class="mini-section-subtitle">Edit your name, species, class, level, and basic identity.</div>
+          <div class="mini-section-subtitle">Edit your name, race, class, level, and basic identity.</div>
         </div>
         <div class="character-info-edit-actions">
           <button class="secondary compact-done-button" type="button" onclick="syncLevelChanges()">Apply Level Changes</button>
@@ -1745,7 +1799,11 @@
       </div>
       <label><span class="label-text">Character Name</span><input id="characterName" /></label>
       <label><span class="label-text">Player Name</span><input id="playerName" /></label>
-      <label><span class="label-text">Species</span><select id="race"></select></label>
+      <label><span class="label-text">Race</span><select id="race"></select></label>
+      <label id="speciesVariantLabel"><span class="label-text">Race Option / Subrace</span><select id="speciesVariant"></select></label>
+      <label id="speciesAbilityBonusOneLabel"><span class="label-text">Race Ability Bonus 1</span><select id="speciesAbilityBonusOne"></select></label>
+      <label id="speciesAbilityBonusTwoLabel"><span class="label-text">Race Ability Bonus 2</span><select id="speciesAbilityBonusTwo"></select></label>
+      <label id="speciesAbilityBonusThreeLabel"><span class="label-text">Race Ability Bonus 3</span><select id="speciesAbilityBonusThree"></select></label>
       <label><span class="label-text">Class</span><select id="className"></select></label>
       <label><span class="label-text">Level</span><input id="level" type="number" /></label>
       <label><span class="label-text">Experience</span><input id="experience" /></label>
@@ -1770,7 +1828,7 @@
       <div class="combat-quick-head">
         <div>
           <div class="combat-quick-title">Combat Quick Panel</div>
-          <div class="combat-quick-subtitle">Table-ready HP, defense, shield, weapon, and reserve tracker</div>
+          <div class="combat-quick-subtitle">Table-ready HP, defense, weapon, and reserve tracker</div>
         </div>
         <button class="secondary" type="button" onclick="showTab('combat')">Open Combat Tab</button>
       </div>
@@ -1778,12 +1836,14 @@
     </section>
 
     <nav class="tabs">
-      <button class="tab active" data-tab="core">Core</button><button class="tab" data-tab="combat">Combat</button><button class="tab" data-tab="abilities">Abilities</button><button class="tab mobile-group-tab" data-tab="gear">Gear</button><button class="tab" data-tab="devices">Devices</button><button class="tab" data-tab="inventory">Inventory</button><button class="tab" data-tab="ship">Ship</button><button class="tab mobile-group-tab" data-tab="gm">GM</button><button class="tab" data-tab="npc">NPC</button><button class="tab" data-tab="encounter">Encounter</button><button class="tab" data-tab="notes">Notes</button>
+      <button class="tab active" data-tab="core">Core</button><button class="tab" data-tab="combat">Combat</button><button class="tab" data-tab="abilities">Abilities</button><button class="tab" data-tab="gear">Gear</button><button class="tab" data-tab="gm">GM</button><button class="tab" data-tab="notes">Notes</button>
     </nav>
 
     <section class="ability-preview" id="abilityPreview" aria-label="Ability score quick preview"></section>
     <section id="core" class="tab-page active">
-      <div class="panel"><div class="panel"><div class="panel-title">Ability Scores</div><div class="panel-body ability-grid" id="abilityScores"></div></div><div class="panel"><div class="panel-title">Skills</div><div class="panel-body skills-grid" id="skills"></div></div></div>
+      <div class="panel"><div class="panel-title">Ability Scores</div><div class="panel-body ability-grid" id="abilityScores"></div></div>
+      <div class="panel"><div class="panel-title">Health</div><div class="panel-body" id="characterHealthTracker"></div></div>
+      <div class="panel"><div class="panel-title">Skills</div><div class="panel-body skills-grid" id="skills"></div></div>
       <div class="panel"><div class="panel-title">Auto Class Features</div><div class="panel-body">
         <div id="autoClassSummary" class="stat-box" style="margin-bottom: 10px;"></div><button class="add-btn" type="button" onclick="applyClassProgression()">Apply Full Class Setup</button>
         <div class="level-up-panel">
@@ -1799,7 +1859,7 @@
       <div class="panel"><div class="panel-title">Features & Talents</div><div class="panel-body">
         <div class="template-picker-wrap">
           <div class="template-picker-row">
-            <label><span class="label-text">Search Features / Talents</span><input id="featureSearchInput" placeholder="Type a class, species, level, source, or feature name..." autocomplete="off" /></label>
+            <label><span class="label-text">Search Features / Talents</span><input id="featureSearchInput" placeholder="Type a class, race, level, source, or feature name..." autocomplete="off" /></label>
             <button class="add-btn" type="button" onclick="addSelectedFeatureTemplate()">+ Add Selected Feature</button>
           </div>
           <div class="quick-filter-grid" data-filter-group="feature">
@@ -1833,19 +1893,26 @@
             </label>
             <button class="delete-btn" type="button" onclick="removeCharacterArt()">Remove Art</button>
           </div>
-          <label><span class="label-text">Character Description</span><textarea id="characterDescription" placeholder="Appearance, personality snapshot, crew role, homeworld, reputation..."></textarea></label>
+          <div style="display:grid; gap:12px; align-content:start;">
+            <div class="health-summary-card">
+              <div class="health-summary-label">HP Snapshot</div>
+              <div class="health-summary-value" id="characterDetailHpReadout">0 / 0</div>
+              <div class="health-summary-sub">Edit HP from the Health panel above or the Combat tab.</div>
+            </div>
+            <label><span class="label-text">Character Description</span><textarea id="characterDescription" placeholder="Appearance, personality snapshot, crew role, homeworld, reputation..."></textarea></label>
+          </div>
         </div>
       </div></div>
     </section>
     <section id="combat" class="tab-page">
-      <div class="panel"><div class="panel-title">Combat Stats</div><div class="panel-body small-grid"><label><span class="label-text">Defense / AC</span><input id="armorClass" type="number" /></label><label><span class="label-text">Initiative Bonus</span><input id="initiativeBonus" type="number" /></label><label><span class="label-text">Speed</span><input id="speed" type="number" /></label><label><span class="label-text">Max HP</span><input id="maxHp" type="number" /></label><label><span class="label-text">Current HP</span><input id="currentHp" type="number" /></label><label><span class="label-text">Temp HP</span><input id="tempHp" type="number" /></label><label><span class="label-text">Shield</span><input id="shield" type="number" /></label><label><span class="label-text">Max Shield</span><input id="maxShield" type="number" /></label><label><span class="label-text">Recovery</span><input id="recovery" /></label><div class="stat-box" id="derivedStats"></div></div></div>
+      <div class="panel"><div class="panel-title">Combat Stats</div><div class="panel-body small-grid"><label><span class="label-text">Defense / AC</span><input id="armorClass" type="number" /></label><label><span class="label-text">Initiative Bonus</span><input id="initiativeBonus" type="number" /></label><label><span class="label-text">Speed</span><input id="speed" type="number" /></label><label><span class="label-text">Max HP</span><input id="maxHp" type="number" /></label><label><span class="label-text">Current HP</span><input id="currentHp" type="number" /></label><label><span class="label-text">Temp HP</span><input id="tempHp" type="number" /></label><label><span class="label-text">Recovery</span><input id="recovery" /></label><div class="stat-box" id="derivedStats"></div></div></div>
       <div class="panel"><div class="panel-title">Weapons & Attacks</div><div class="panel-body">
         <div class="template-picker-wrap">
           <div class="template-picker-row">
-            <label><span class="label-text">Search Weapons</span><input id="weaponSearchInput" placeholder="Type name, melee, ranged, category, damage, or property..." autocomplete="off" /></label>
-            <button class="add-btn" type="button" onclick="addSelectedWeaponTemplate()">+ Add Selected Weapon</button>
+            <label><span class="label-text">Search Weapon Categories</span><input id="weaponSearchInput" placeholder="Light melee, heavy ranged, tech weapons..." autocomplete="off" /></label>
+            <button class="add-btn" type="button" onclick="addSelectedWeaponTemplate()">+ Add Weapon Category</button>
           </div>
-          <label><span class="label-text">Matching Weapons</span><select id="weaponTemplateSelect" class="template-search-list" size="6"></select></label>
+          <label><span class="label-text">Matching Weapon Categories</span><select id="weaponTemplateSelect" class="template-search-list" size="6"></select></label>
           <div id="weaponTemplatePreview" class="template-preview-card">Select a weapon to preview it here.</div>
         </div>
         <div id="weapons" class="row-list"></div><button class="add-btn" onclick="addWeapon()">+ Add Blank Weapon</button></div></div>
@@ -1857,12 +1924,11 @@
           </div>
           <div class="quick-filter-grid protection-filter-grid">
             <label><span class="label-text">Category</span><select id="protectionTemplateCategoryFilter" onchange="populateProtectionTemplates()"></select></label>
-            <label><span class="label-text">Search</span><input id="protectionTemplateSearch" placeholder="Jacket, exosuit, stealth, powered..." oninput="populateProtectionTemplates()" /></label>
+            <label><span class="label-text">Search</span><input id="protectionTemplateSearch" placeholder="Light Defense, Medium Defense, Heavy Defense..." oninput="populateProtectionTemplates()" /></label>
           </div>
           <div id="protectionTemplatePreview" class="template-preview-card active">Select protection to preview it here.</div>
         </div>
         <div class="protection-grid">
-          <label><span class="label-text">Protection Name</span><input id="protectionName" placeholder="Ex: Reinforced Spacer Jacket" /></label>
           <label><span class="label-text">Protection Category</span>
             <select id="protectionCategory">
               <option value="">Choose category</option>
@@ -1872,7 +1938,7 @@
               <option value="Powered Defense">Powered Defense</option>
             </select>
           </label>
-          <label><span class="label-text">Properties</span><input id="protectionProperties" placeholder="Ex: Disadvantage on Stealth" /></label>
+          <label><span class="label-text">Category Notes</span><input id="protectionProperties" placeholder="Category-only notes" /></label>
           <label><span class="label-text">Notes</span><input id="protectionDefense" placeholder="Custom AC / bonus notes" /></label>
         </div>
 
@@ -1884,7 +1950,7 @@
         <button class="protection-apply-button" type="button" onclick="applyProtectionEffects()">Apply Protection Effects to Defense</button>
         <div id="protectionAppliedSummary" class="protection-applied-summary">No protection effects applied to Defense yet.</div>
 
-        <label class="protection-notes"><span class="label-text">Protection Description / Notes</span><textarea id="protectionDescription" placeholder="Armor traits, penalties, upgrades, shield rules, special effects, device interaction..."></textarea></label>
+        <label class="protection-notes"><span class="label-text">Protection Notes</span><textarea id="protectionDescription" placeholder="Optional table notes or custom protection details..."></textarea></label>
       </div></div>
       <div id="combatDevices">
       </div>
@@ -1946,9 +2012,10 @@
       <div class="level-grid" id="abilityLevels"></div>
     </section>
     <section id="gear" class="tab-page mobile-group-page">
-      <p class="mobile-group-page-note">Gear keeps your non-combat equipment together: inventory, cargo, credits, and ship info.</p>
-      <div id="mobileGearInventory"></div>
-      <div id="mobileGearShip"></div>
+      <p class="mobile-group-page-note">Gear is your equipment hub: select and equip protection, weapons, devices, and carried inventory.</p>
+      <div id="gearWeaponsProtection"></div>
+      <div id="gearDevices"></div>
+      <div id="gearInventory"></div>
     </section>
     <section id="devices" class="tab-page">
       <div class="panel device-add-panel device-picker-panel">
@@ -2054,10 +2121,10 @@
         <div class="npc-manager-grid">
           <aside class="npc-library-panel">
             <div class="npc-toolbar">
-              <button type="button" onclick="createNpc()">+ New</button>
-              <button class="secondary" type="button" onclick="duplicateNpc()">Duplicate</button>
-              <button class="secondary" type="button" onclick="clearNpcForm()">Clear</button>
-              <button class="delete-btn" type="button" onclick="deleteActiveNpc()">Delete</button>
+              <button type="button" onclick="createNpc()">+ Add NPC</button>
+              <button class="secondary" type="button" onclick="duplicateNpc()">Duplicate NPC</button>
+              <button class="secondary" type="button" onclick="clearNpcForm()">Clear Current</button>
+              <button class="delete-btn" type="button" onclick="deleteActiveNpc()">Remove NPC</button>
             </div>
             <div class="npc-filter-grid">
               <label><span class="label-text">Search NPCs</span><input id="npcSearch" placeholder="Name, role, faction, notes..." oninput="renderNpcList()" /></label>
@@ -2070,14 +2137,19 @@
           <div class="npc-editor-panel">
             <div class="npc-status-grid" id="npcStatusSummary"></div>
             <div class="npc-action-row">
+              <button type="button" onclick="createNpc()">+ Add NPC</button>
+              <button class="secondary" type="button" id="npcEditButton" onclick="editActiveNpc()">Edit NPC</button>
+              <button type="button" id="npcDoneButton" onclick="doneEditingNpc()">Done Editing</button>
+              <button class="delete-btn" type="button" onclick="deleteActiveNpc()">Remove Current NPC</button>
               <button type="button" onclick="applyNpcDamage()">Apply Damage</button>
               <button type="button" onclick="applyNpcHealing()">Apply Healing</button>
               <button class="secondary" type="button" onclick="adjustNpcHp(-1)">-1 HP</button>
               <button class="secondary" type="button" onclick="adjustNpcHp(1)">+1 HP</button>
             </div>
-            <div class="npc-grid">
+            <div id="npcEditNote" class="npc-edit-note"></div>
+            <div class="npc-grid" id="npcEditorFields">
               <label class="half"><span class="label-text">Name</span><input id="npcName" placeholder="Ex: Vanthek Dock Enforcer" /></label>
-              <label><span class="label-text">Species</span><input id="npcSpecies" placeholder="Terran / Synthetic / Virex..." /></label>
+              <label><span class="label-text">Race</span><input id="npcSpecies" placeholder="Terran / Synthetic / Virex..." /></label>
               <label><span class="label-text">Role</span><input id="npcRole" placeholder="Rival / Minion / Boss / Contact" /></label>
               <label><span class="label-text">Defense</span><input id="npcDefense" type="number" /></label>
               <label><span class="label-text">Current HP</span><input id="npcHp" type="number" /></label>
@@ -2154,6 +2226,32 @@
     const species = ["Terran", "Chromari", "Synthetic", "Virex", "Brutor", "Spilkin", "Kyrrim", "Mycoren", "Hybrid"];
     const classes = ["Captain", "Cyber Knight", "Engineer", "Gunslinger", "Starblade", "Saboteur", "Technomancer", "Void Dancer", "Xeno Adept"];
     const backgrounds = ["Scavenger", "Corporate Operative", "Frontier Colonist", "Mercenary", "Smuggler", "Researcher", "Pirate", "Bounty Hunter", "Drifter"];
+    const speciesVariantOptions = {
+      "Terran": [
+        { id: "standard", name: "Standard Terran", speed: 30 }
+      ],
+      "Chromari": [
+        { id: "desert", name: "Environmental Adaptation: Desert", speed: 30, feature: { name: "Desert Adaptation", description: "Resistance to fire damage. Immune to heat exhaustion." } },
+        { id: "arctic", name: "Environmental Adaptation: Arctic", speed: 30, feature: { name: "Arctic Adaptation", description: "Resistance to cold damage. Immune to freezing exhaustion." } },
+        { id: "jungle", name: "Environmental Adaptation: Jungle", speed: 30, skillGrants: ["stealth", "acrobatics"], feature: { name: "Jungle Adaptation", description: "Gain proficiency in Stealth and Acrobatics." } },
+        { id: "ocean", name: "Environmental Adaptation: Ocean", speed: 30, feature: { name: "Ocean Adaptation", description: "You gain a 30 ft. swim speed, and you can hold your breath for 5 minutes multiplied by your Constitution modifier, minimum of 1." } },
+        { id: "mountain", name: "Environmental Adaptation: Mountain", speed: 30, skillGrants: ["athletics"], feature: { name: "Mountain Adaptation", description: "Gain proficiency in Athletics. You have resistance to falling damage." } },
+        { id: "urban", name: "Environmental Adaptation: Urban", speed: 30, feature: { name: "Urban Adaptation", description: "You have advantage on Investigation and Perception checks." } }
+      ],
+      "Synthetic": [
+        { id: "standard", name: "Standard Synthetic", speed: 30 }
+      ],
+      "Virex": [{ id: "standard", name: "Standard Virex", speed: 30 }],
+      "Brutor": [{ id: "standard", name: "Standard Brutor", speed: 30 }],
+      "Spilkin": [{ id: "standard", name: "Standard Spilkin", speed: 35 }],
+      "Kyrrim": [{ id: "standard", name: "Standard Kyrrim", speed: 25 }],
+      "Mycoren": [
+        { id: "true", name: "True Form", speed: 10, feature: { name: "True Form", description: "Size: Tiny. Speed: 10 ft.\n\nSquishy Physiology: You have resistance to bludgeoning damage, but disadvantage on Strength checks and saving throws.\n\nSpore Sense: You have blindsight out to 10 ft., representing vibration and spore-based awareness.\n\nHard to Kill: When reduced to 0 HP in your true form, you are not knocked unconscious. Instead, you become incapacitated and immobile for 1 minute. If you take fire or radiant damage during this time, you die. Otherwise, you stabilize automatically at the end of the minute." } },
+        { id: "host", name: "Host-Bound Form", speed: 30, feature: { name: "Host-Bound Form", description: "Size: Your size becomes the host’s size. Speed: 30 ft.\n\nNecro-Symbiotic Bond: You can inhabit and animate the body of a fallen humanoid creature, Medium or Small, that has died within the last 24 hours.\n\nHost Body: Your Strength, Dexterity, and Constitution become 10 unless already higher. You retain your Intelligence, Wisdom, and Charisma. You cannot benefit from racial traits of the host species.\n\nReinforced Husk: While host-bound, you gain temporary hit points equal to your level + your Constitution modifier. Fire or radiant damage dealt to the host bypasses temporary HP.\n\nUnnatural Movement: You have disadvantage on Deception checks to pass as a living creature upon close inspection.\n\nFungal Adaptability: Once per long rest, while host-bound, choose one adaptation for the duration of the bond: Sporeguard, Mycelial Reinforcement, or Reactive Growth.\n\nDecay Limitation: You can remain in a single host for 8 hours. After 8 hours, the body collapses and becomes unusable." } }
+      ],
+      "Hybrid": [{ id: "standard", name: "Standard Hybrid", speed: 30 }]
+    };
+
     const captainPaths = ["Path of the Diplomat", "Path of the Commander", "Path of the Skipper"];
     const captainLevelTable = {
       "1": {
@@ -2598,21 +2696,22 @@
       { name: 'Holo-Emitter', type: 'Activated (Action)', effect: 'As an action, you project a visual illusion within a 10-foot cube that lasts for up to 1 minute. The illusion is silent and ends if physically interacted with.\n\nOnce used, this Device cannot be used again until you complete a short or long rest.' },
       { name: 'Suppression Field', type: 'Activated (Action)', effect: 'As an action, you create a 10-foot-radius zone centered on yourself that lasts for 1 minute. The area is difficult terrain for hostile creatures.\n\nOnce used, this Device cannot be used again until you complete a long rest.' },
       { name: 'Capacitor Reserve', type: 'Conditional', effect: 'Once per long rest, when you use a Level 1 Ability, you may immediately use it again without expending a Reserve Slot.' },
-      { name: 'Species Amplifier', type: 'Passive', effect: 'Choose one racial trait you possess that has limited uses per long rest. That trait gains one additional use per long rest.' },
+      { name: 'Race Amplifier', type: 'Passive', effect: 'Choose one racial trait you possess that has limited uses per long rest. That trait gains one additional use per long rest.' },
       { name: 'Tactical Scanner', type: 'Activated (Bonus Action)', effect: 'As a bonus action, you scan one creature you can see within 60 feet. Until the end of your next turn, attack rolls made against that creature have advantage.\n\nOnce used, this Device cannot be used again until you complete a long rest.' },
       { name: 'Grav-Anchor Field', type: 'Activated (Reaction)', effect: 'When a creature within 5 feet of you attempts to move away, you may use your reaction to reduce its speed to 0 until the end of its turn.\n\nOnce used, this Device cannot be used again until you complete a short or long rest.' },
       { name: 'Emergency Reboot Module', type: 'Conditional', effect: 'When you are reduced to 0 hit points but not killed outright, you may drop to 1 hit point instead.\n\nOnce this Device activates, it cannot do so again until you complete a long rest.' }
     ];
     const weaponTemplates = [
-      { name: "Light Pistol", type: "Ranged - Light", damage: "1d6 energy", range: "40/120", properties: "Light, sidearm", description: "A compact ranged weapon for close quarters, backup fire, and quick draws." },
-      { name: "Heavy Pistol", type: "Ranged - Medium", damage: "1d8 kinetic", range: "50/150", properties: "Sidearm, loud", description: "A stronger sidearm with more punch and recoil." },
-      { name: "Pulse Rifle", type: "Ranged - Medium", damage: "1d10 energy", range: "80/240", properties: "Two-handed, reliable", description: "A standard battlefield rifle with steady energy output." },
-      { name: "Scatter Blaster", type: "Ranged - Scatter", damage: "2d6 kinetic", range: "20/60", properties: "Close range, spread", description: "A short-range weapon that excels in tight corridors and boarding actions." },
-      { name: "Precision Rail Rifle", type: "Ranged - Sniper/Precision", damage: "1d12 kinetic", range: "150/600", properties: "Two-handed, precision", description: "A long-range weapon designed for aimed shots and overwatch." },
-      { name: "Arc Cutter", type: "Melee - Light", damage: "1d6 lightning", range: "Melee", properties: "Light, tech", description: "A compact energized blade useful as a tool or close-combat weapon." },
-      { name: "Mono-Edge Blade", type: "Melee - Medium", damage: "1d8 slashing", range: "Melee", properties: "Finesse", description: "A balanced melee weapon with a molecular cutting edge." },
-      { name: "Gravity Hammer", type: "Melee - Heavy", damage: "1d12 bludgeoning", range: "Melee", properties: "Heavy, two-handed", description: "A massive impact weapon that uses gravity-assisted force." },
-      { name: "Shock Spear", type: "Melee - Reach", damage: "1d8 lightning", range: "Reach", properties: "Reach, two-handed", description: "A polearm fitted with a directed electrical discharge tip." }
+      { name: "Light Melee", type: "Light Melee", damage: "1d6", range: "Melee", properties: "Light melee category", description: "Light melee weapon category. Damage auto-fills on the combat card." },
+      { name: "Medium Melee", type: "Medium Melee", damage: "1d8", range: "Melee", properties: "Medium melee category", description: "Medium melee weapon category. Damage auto-fills on the combat card." },
+      { name: "Heavy Melee", type: "Heavy Melee", damage: "1d12", range: "Melee", properties: "Heavy, two-handed", description: "Heavy melee weapon category. Damage auto-fills on the combat card." },
+      { name: "Light Ranged", type: "Light Ranged", damage: "1d6", range: "Ranged", properties: "Light ranged category", description: "Light ranged weapon category. Damage auto-fills on the combat card." },
+      { name: "Medium Ranged", type: "Medium Ranged", damage: "1d8", range: "Ranged", properties: "Medium ranged category", description: "Medium ranged weapon category. Damage auto-fills on the combat card." },
+      { name: "Heavy Ranged", type: "Heavy Ranged", damage: "1d10", range: "Ranged", properties: "Heavy ranged category", description: "Heavy ranged weapon category. Damage auto-fills on the combat card." },
+      { name: "Tech Weapons", type: "Tech Weapons", damage: "1d8", range: "Varies", properties: "Tech weapon category", description: "Tech weapon category. Damage auto-fills on the combat card." },
+      { name: "Natural Weapons", type: "Natural Weapons", damage: "1d6", range: "Varies", properties: "Natural weapon category", description: "Natural weapon category. Damage auto-fills on the combat card." },
+      { name: "All Melee", type: "All Melee", damage: "By melee category", range: "Melee", properties: "Category group", description: "Covers light, medium, and heavy melee weapon categories. Pick a specific melee weight for exact damage." },
+      { name: "All Ranged", type: "All Ranged", damage: "By ranged category", range: "Ranged", properties: "Category group", description: "Covers light, medium, and heavy ranged weapon categories. Pick a specific ranged weight for exact damage." }
     ];
 
     const inventoryTemplates = [
@@ -7156,13 +7255,13 @@
     const protectionCategories = {
       "Light Defense": {
         acText: "12 + Dex modifier",
-        calculate: () => 12 + mod(character.attributes.dexterity),
+        calculate: () => 12 + abilityMod("dexterity"),
         rules: ["AC: 12 + Dex modifier"],
         examples: ["Tactical stealth suit", "Reinforced spacer jacket", "Nano-fiber weave", "Hardlight generator"]
       },
       "Medium Defense": {
         acText: "14 + Dex modifier",
-        calculate: () => 14 + mod(character.attributes.dexterity),
+        calculate: () => 14 + abilityMod("dexterity"),
         rules: ["Base AC: 14 + Dex modifier"],
         examples: ["Combat harness", "Reinforced exoskeleton", "Riot armor", "Hardened tactical plating"]
       },
@@ -7181,113 +7280,13 @@
     };
 
 
-    const protectionTemplates = [
-      {
-        name: "Spacer Jacket",
-        category: "Light Defense",
-        properties: "Light, flexible, concealable",
-        notes: "AC 12 + Dex modifier",
-        description: "A reinforced jacket used by travelers, smugglers, and station crews. Easy to wear and good for characters who rely on mobility."
-      },
-      {
-        name: "Tactical Stealth Suit",
-        category: "Light Defense",
-        properties: "Light, stealth-friendly, sealed weave",
-        notes: "AC 12 + Dex modifier",
-        description: "A low-profile stealth suit with quiet fabric, matte plating, and basic environmental sealing. Best for scouts, infiltrators, and saboteurs."
-      },
-      {
-        name: "Nano-Fiber Weave",
-        category: "Light Defense",
-        properties: "Light, hidden under clothing",
-        notes: "AC 12 + Dex modifier",
-        description: "A flexible protective weave worn beneath normal clothing. Good for diplomats, captains, and anyone who wants protection without looking armored."
-      },
-      {
-        name: "Hardlight Guard",
-        category: "Light Defense",
-        properties: "Light, projected defense field",
-        notes: "AC 12 + Dex modifier",
-        description: "A compact hardlight emitter that forms brief protective plates around the wearer. Sleek, futuristic, and useful for tech-forward characters."
-      },
-      {
-        name: "Combat Harness",
-        category: "Medium Defense",
-        properties: "Medium, modular, gear mounts",
-        notes: "AC 14 + Dex modifier",
-        description: "A tactical harness with reinforced chest, shoulder, and thigh plating. Common among mercenaries, bounty hunters, and security teams."
-      },
-      {
-        name: "Riot Armor",
-        category: "Medium Defense",
-        properties: "Medium, impact resistant",
-        notes: "AC 14 + Dex modifier",
-        description: "Durable armor made for close-quarters station fighting. Good against blunt force, crowd-control hazards, and chaotic boarding actions."
-      },
-      {
-        name: "Reinforced Exoskeleton",
-        category: "Medium Defense",
-        properties: "Medium, assisted movement",
-        notes: "AC 14 + Dex modifier",
-        description: "A partial exoskeleton with reinforced plating and movement support. Good for engineers, soldiers, and explorers hauling heavy kit."
-      },
-      {
-        name: "Hardened Tactical Plating",
-        category: "Medium Defense",
-        properties: "Medium, battlefield plating",
-        notes: "AC 14 + Dex modifier",
-        description: "A balanced armor system with enough plating to matter without fully sacrificing mobility."
-      },
-      {
-        name: "Hydraulic Exosuit",
-        category: "Heavy Defense",
-        properties: "Heavy, disadvantage on Stealth",
-        notes: "AC 16",
-        description: "A rugged exosuit with powered joints and heavy armor plates. Built for frontline combat and hazardous work zones."
-      },
-      {
-        name: "Siege Plating",
-        category: "Heavy Defense",
-        properties: "Heavy, disadvantage on Stealth",
-        notes: "AC 16",
-        description: "Bulky armor designed to withstand heavy fire. Best for soldiers, cyber knights, and anyone expecting to be shot first."
-      },
-      {
-        name: "Corporate Enforcement Armor",
-        category: "Heavy Defense",
-        properties: "Heavy, intimidating, disadvantage on Stealth",
-        notes: "AC 16",
-        description: "Standardized heavy armor used by megacorp enforcers and elite private security forces."
-      },
-      {
-        name: "Warframe Shell",
-        category: "Heavy Defense",
-        properties: "Heavy, sealed combat frame, disadvantage on Stealth",
-        notes: "AC 16",
-        description: "A heavy shell built for hostile worlds and boarding actions. Loud, obvious, and hard to bring down."
-      },
-      {
-        name: "Powered Armor",
-        category: "Powered Defense",
-        properties: "Powered, Strength 15 requirement, disadvantage on Stealth",
-        notes: "AC 20",
-        description: "Full powered armor with servo-assist, sealed plating, and integrated support systems. Expensive, obvious, and terrifying."
-      },
-      {
-        name: "Small Mech Suit",
-        category: "Powered Defense",
-        properties: "Powered, vehicle-like, Strength 15 requirement, disadvantage on Stealth",
-        notes: "AC 20",
-        description: "A compact mechanized suit used for hazardous combat, industrial breach work, and extreme exploration."
-      },
-      {
-        name: "Gravity Amplification Array",
-        category: "Powered Defense",
-        properties: "Powered, gravity stabilizers, Strength 15 requirement, disadvantage on Stealth",
-        notes: "AC 20",
-        description: "A powered defense rig that uses gravity fields to redirect impacts and stabilize the wearer under heavy fire."
-      }
-    ];
+    const protectionTemplates = Object.keys(protectionCategories).map(category => ({
+      name: category,
+      category,
+      properties: "Category only",
+      notes: "",
+      description: `${category} category. Specific protection item names are intentionally left to your table.`
+    }));
 
     function filteredProtectionTemplates(){
       const category = document.getElementById("protectionTemplateCategoryFilter")?.value || "all";
@@ -7353,12 +7352,11 @@
         alert("Choose a protection option first.");
         return;
       }
-      character.protectionName = item.name;
       character.protectionCategory = item.category;
-      character.protectionProperties = item.properties || "";
-      character.protectionDefense = item.notes || "";
+      character.protectionProperties = "Category only";
+      character.protectionDefense = "";
       character.protectionDescription = item.description || "";
-      ["protectionName", "protectionCategory", "protectionProperties", "protectionDefense", "protectionDescription"].forEach(id => setValue(id, character[id]));
+      ["protectionCategory", "protectionProperties", "protectionDefense", "protectionDescription"].forEach(id => setValue(id, character[id]));
       applyProtectionAc();
       saveLocal();
       renderDynamic();
@@ -7396,7 +7394,61 @@
       `;
     }
 
-    const blank = { characterName: "", playerName: "", race: "Terran", className: "Captain", level: 1, experience: "", background: "Scavenger", classPath: "Path of the Diplomat", characterDescription: "", characterArt: "", proficiencyBonus: 2, attributes: { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 }, saves: { strength: false, dexterity: false, constitution: false, intelligence: false, wisdom: false, charisma: false }, skills: Object.fromEntries(skills.map(([key]) => [key, false])), skillsExpertise: Object.fromEntries(skills.map(([key]) => [key, false])), armorClass: 10, initiativeBonus: 0, speed: 30, maxHp: 8, currentHp: 8, tempHp: 0, shield: 0, maxShield: 0, recovery: "1d8", weapons: [{ name: "", type: "", damage: "", properties: "", range: "", description: "" }], protectionName: "", protectionCategory: "", protectionDefense: "", protectionProperties: "", protectionDescription: "", powerSource: "", powerReserve: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, abilities: { 0: [{ name: "Flick", discipline: "Force", useTime: "Bonus Action", range: "30 feet", target: "One unattended object of Medium size or smaller, or an unsecured loose item held by a creature", duration: "Instantaneous", description: "You deliver a sharp impulse to a nearby object, causing it to fly up to 10 feet in a direction of your choosing. If the object was held by a creature, that creature must succeed on a Strength saving throw against your Ability Save DC or drop the object." }], 1: [emptyAbility()], 2: [emptyAbility()], 3: [emptyAbility()], 4: [emptyAbility()], 5: [emptyAbility()] }, devices: [{ name: "", category: "", integrated: false, effect: "" }], inventoryItems: [{ name: "", quantity: 1, category: "", weight: "", description: "" }], credits: 0,
+
+    const speciesGrantedTraits = Object.fromEntries(species.map(name => [name, {
+      name: `${name} Race Trait`,
+      description: `Record the ${name} racial/race trait granted by your Starbound rules here.`
+    }]));
+    speciesGrantedTraits.Terran = {
+      name: "Terran Traits",
+      description: "Adaptive Talent: Gain proficiency in two skills of your choice.\n\nVersatile Mind: Once per long rest, reroll a failed ability check.\n\nAbility Score Bonus: Choose two different ability scores. Each chosen score increases by +2. Use the Race Ability Bonus dropdowns above to apply this automatically."
+    };
+    speciesGrantedTraits.Chromari = {
+      name: "Chromari Traits",
+      description: "Thriving Identity: Gain proficiency in one skill appropriate to your environment.\n\nChromatic Variation: Your appearance reflects your environment.\n\nAbility Score Bonus: Choose one ability score. That score increases by +2. Use the Race Ability Bonus dropdown above to apply this automatically."
+    };
+    speciesGrantedTraits.Synthetic = {
+      name: "Synthetic Traits",
+      description: "Integrated Systems: You are immune to poison, disease, and radiation.\n\nMechanical Recovery: During a short rest, regain an additional 1d4 HP per level.\n\nDigital Interface: Gain proficiency in Engineering or Hacking.\n\nAbility Score Bonus: Choose three different ability scores. Each chosen score increases by +1. Use the Race Ability Bonus dropdowns above to apply this automatically."
+    };
+    speciesGrantedTraits.Virex = {
+      name: "Virex Traits",
+      description: "Telepathic Link: You have telepathy within 30 ft.\n\nMind Shield: You have advantage on saving throws against fear and charm effects.\n\nInnate Calm: You have advantage on Insight checks.\n\nAbility Score Bonus: Choose Wisdom or Charisma. The chosen score increases by +2. Use the Race Ability Bonus dropdown above to apply this automatically."
+    };
+    speciesGrantedTraits.Mycoren = {
+      name: "Mycoren Traits",
+      description: "Symbiotic Existence: You exist in two interchangeable forms: True Form and Host-Bound Form. Use the Race Option / Form dropdown to choose your current form.\n\nAbility Score Bonus: Choose Intelligence or Wisdom. The chosen score increases by +2. Your Constitution increases by +1 automatically."
+    };
+    speciesGrantedTraits.Hybrid = {
+      name: "Hybrid Traits",
+      description: "Blended Lineage: You are a blend of any two races. Choose the size of one of your parent races.\n\nInherited Abilities: Choose any three racial traits from between your parent races, with GM discretion. Record those chosen traits in Features.\n\nAbility Score Bonus: Choose two different ability scores. Each chosen score increases by +1. Use the Race Ability Bonus dropdowns above to apply this automatically."
+    };
+    speciesGrantedTraits.Brutor = {
+      name: "Brutor Traits",
+      description: "Natural Armor: Your AC equals 13 + your Dexterity modifier if you are not wearing armor.\n\nBattleborn: Once per long rest, reduce damage from one hit by 1d12.\n\nBrute Strength: You have advantage on Strength (Athletics) checks.\n\nAbility Score Bonus: Your Strength increases by +2 and your Constitution increases by +1. This is applied automatically by the app."
+    };
+    speciesGrantedTraits.Spilkin = {
+      name: "Spilkin Traits",
+      description: "Reptilian Agility: You have a climbing speed equal to your walking speed.\n\nAmphibious: You can breathe underwater as though it were air.\n\nChameleon Shift: You have advantage on Stealth checks when in natural environments or underwater.\n\nAbility Score Bonus: Your Dexterity increases by +2 and your Intelligence increases by +1. This is applied automatically by the app."
+    };
+    speciesGrantedTraits.Kyrrim = {
+      name: "Kyrrim Traits",
+      description: "Chitin Armor: Your AC equals 13 + your Dexterity modifier when you are not wearing armor.\n\nDefensive Position: You can spend a bonus action to cover yourself with your natural armor. Doing this grants an additional +3 to AC until you move again.\n\nUnyielding: When reduced to 0 HP, you drop to 1 HP instead. You can use this once per long rest.\n\nBurly Bugger: You count as one size larger when pushing, dragging, or lifting.\n\nCompound Eyes: You have advantage on Perception checks relying on sight.\n\nAbility Score Bonus: Your Constitution increases by +2. This is applied automatically by the app."
+    };
+
+    const backgroundGrantedContent = {
+      "Scavenger": { feature: { name: "Scavenger Background Feature", description: "You know how to find value in wreckage, ruins, and forgotten stations. Replace this placeholder with the exact rule text." }, device: { name: "Salvage Scanner", effect: "Background device. Helps locate usable components, hidden compartments, or tech worth recovering. Edit to match your rules." } },
+      "Corporate Operative": { feature: { name: "Corporate Operative Background Feature", description: "You understand corporate procedure, access culture, and office politics. Replace this placeholder with the exact rule text." }, device: { name: "Credential Spike", effect: "Background device. A corporate access or identity aid. Edit to match your rules." } },
+      "Frontier Colonist": { feature: { name: "Frontier Colonist Background Feature", description: "You are used to rough settlements, improvised repairs, and dangerous border worlds. Replace this placeholder with the exact rule text." }, device: { name: "Frontier Survival Kit", effect: "Background device. Practical survival equipment for remote colonies. Edit to match your rules." } },
+      "Mercenary": { feature: { name: "Mercenary Background Feature", description: "You know contracts, threat assessment, and how armed professionals operate. Replace this placeholder with the exact rule text." }, device: { name: "Tactical Contract Uplink", effect: "Background device. Stores contracts, targets, squad channels, or battlefield intel. Edit to match your rules." } },
+      "Smuggler": { feature: { name: "Smuggler Background Feature", description: "You know hidden routes, customs blind spots, and how to move cargo quietly. Replace this placeholder with the exact rule text." }, device: { name: "Concealed Cargo Tagger", effect: "Background device. Helps mask, track, or identify smuggled goods. Edit to match your rules." } },
+      "Researcher": { feature: { name: "Researcher Background Feature", description: "You know academic systems, field notes, and how to chase answers through data. Replace this placeholder with the exact rule text." }, device: { name: "Field Analysis Scanner", effect: "Background device. Assists with samples, readings, and research notes. Edit to match your rules." } },
+      "Pirate": { feature: { name: "Pirate Background Feature", description: "You understand raider codes, intimidation, boarding actions, and black-market crews. Replace this placeholder with the exact rule text." }, device: { name: "Black Flag Transponder", effect: "Background device. Helps spoof, signal, or identify underworld contacts. Edit to match your rules." } },
+      "Bounty Hunter": { feature: { name: "Bounty Hunter Background Feature", description: "You know how to track marks, read warrants, and work bounty networks. Replace this placeholder with the exact rule text." }, device: { name: "Bounty Tracker", effect: "Background device. Stores target data, biometrics, warrants, or tracking notes. Edit to match your rules." } },
+      "Drifter": { feature: { name: "Drifter Background Feature", description: "You know how to survive between jobs, stations, and crews with few resources. Replace this placeholder with the exact rule text." }, device: { name: "Patchwork Multitool", effect: "Background device. A worn, adaptable tool for travel and survival. Edit to match your rules." } }
+    };
+
+    const blank = { characterName: "", playerName: "", race: "Terran", speciesVariant: "standard", speciesAbilityBonusOne: "", speciesAbilityBonusTwo: "", speciesAbilityBonusThree: "", autoSpeciesSkillGrants: [], className: "Captain", level: 1, experience: "", background: "Scavenger", classPath: "Path of the Diplomat", characterDescription: "", characterArt: "", proficiencyBonus: 2, attributes: { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 }, saves: { strength: false, dexterity: false, constitution: false, intelligence: false, wisdom: false, charisma: false }, skills: Object.fromEntries(skills.map(([key]) => [key, false])), skillsExpertise: Object.fromEntries(skills.map(([key]) => [key, false])), armorClass: 10, initiativeBonus: 0, speed: 30, maxHp: 8, currentHp: 8, tempHp: 0, shield: 0, maxShield: 0, recovery: "1d8", weapons: [{ name: "", type: "", damage: "", properties: "", range: "", description: "", combatSlot: "main" }], protectionName: "", protectionCategory: "", protectionDefense: "", protectionProperties: "", protectionDescription: "", powerSource: "", powerReserve: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, abilities: { 0: [{ name: "Flick", discipline: "Force", useTime: "Bonus Action", range: "30 feet", target: "One unattended object of Medium size or smaller, or an unsecured loose item held by a creature", duration: "Instantaneous", description: "You deliver a sharp impulse to a nearby object, causing it to fly up to 10 feet in a direction of your choosing. If the object was held by a creature, that creature must succeed on a Strength saving throw against your Ability Save DC or drop the object." }], 1: [emptyAbility()], 2: [emptyAbility()], 3: [emptyAbility()], 4: [emptyAbility()], 5: [emptyAbility()] }, devices: [{ name: "", category: "", integrated: false, effect: "" }], inventoryItems: [{ name: "", quantity: 1, category: "", weight: "", description: "" }], credits: 0,
       shipName: "", shipClass: "", shipHull: 0, shipMaxHull: 0, shipShields: 0, shipSpeed: "", shipFuel: 0, shipJumpCharges: 0, shipNotes: "",
       shipWeapons: [{ name: "", type: "", damage: "", range: "", description: "" }],
       shipCrewRoles: [{ role: "Captain", character: "", notes: "" }, { role: "Pilot", character: "", notes: "" }, { role: "Engineer", character: "", notes: "" }],
@@ -7406,6 +7458,10 @@
       npcActiveId: "", npcs: [], encounter: { name: "", notes: "", activeTurn: 0, round: 1, combatants: [] }, npcName: "", npcSpecies: "", npcRole: "", npcDefense: 10, npcHp: 1, npcMaxHp: 1, npcSpeed: "30 ft", npcFolder: "Unsorted", npcLocation: "", npcFaction: "", npcTags: "", npcAttacks: "", npcAbilities: "", npcTactics: "", npcLoot: "", npcNotes: "",
       traits: "", currentMission: "", crewMembers: "", contacts: "", factions: "", planetsVisited: "", shipsStations: "", activeJobs: "", debtsObligations: "", reputationNotes: "", features: [{ name: "Versatile Mind", description: "Once per long rest, reroll a failed ability check." }], inventory: "", notes: "" };
     let character = null;
+    let skillsViewMode = "view";
+    let abilityScoresViewMode = "view";
+    let healthViewMode = "view";
+    let npcViewMode = "view";
     function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
     function mod(score){ return Math.floor((Number(score || 0) - 10) / 2); }
     function signed(num){ return num >= 0 ? `+${num}` : `${num}`; }
@@ -7569,7 +7625,30 @@
       return merged;
     }
     function normalizeAbility(a){ if (a.description === undefined && (a.effect !== undefined || a.cost !== undefined)) return { name: a.name || "", discipline: a.discipline || "", useTime: a.useTime || "", range: a.range || "", target: a.target || "", duration: a.duration || "", description: a.effect || "" }; return { ...emptyAbility(), ...a }; }
-    function normalizeWeapon(w){ return { name: w?.name || "", type: w?.type || w?.weaponType || "", damage: w?.damage || "", properties: w?.properties || w?.notes || "", range: w?.range || "", description: w?.description || "", bonus: w?.bonus || "" }; }
+    function getWeaponTemplateByType(type){
+      const target = String(type || "").trim().toLowerCase();
+      return weaponTemplates.find(t => String(t.type || t.name || "").trim().toLowerCase() === target) || null;
+    }
+
+    function normalizeWeapon(w){
+      const rawType = w?.type || w?.weaponType || w?.name || "";
+      const template = getWeaponTemplateByType(rawType);
+      const legacyEquipped = Boolean(w?.equipped);
+      let combatSlot = w?.combatSlot || w?.slot || "";
+      if (!combatSlot && legacyEquipped) combatSlot = "main";
+      if (!["", "main", "offhand"].includes(combatSlot)) combatSlot = "";
+      return {
+        name: w?.name || template?.type || "",
+        type: rawType || template?.type || "",
+        damage: w?.damage || template?.damage || "",
+        properties: w?.properties || w?.notes || template?.properties || "",
+        range: w?.range || template?.range || "",
+        description: w?.description || "",
+        bonus: w?.bonus || "",
+        combatSlot,
+        equipped: combatSlot === "main" || legacyEquipped
+      };
+    }
     function normalizeInventoryItem(item){ return { name: item?.name || "", quantity: Number(item?.quantity || 1), category: item?.category || "", weight: item?.weight || "", description: item?.description || item?.notes || "" }; }
     function normalizeFeature(feature){ return { name: feature?.name || "", description: feature?.description || feature?.notes || "" }; }
     function normalizeShipWeapon(w){ return { name: w?.name || "", type: w?.type || "", damage: w?.damage || "", range: w?.range || "", description: w?.description || w?.notes || "" }; }
@@ -7664,17 +7743,21 @@
     }
 
     function populateSelect(id, options){ const select = document.getElementById(id); select.innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join(""); }
-    function setValue(id, value){ document.getElementById(id).value = value ?? ""; }
+    function setValue(id, value){ const el = document.getElementById(id); if (el) el.value = value ?? ""; }
     function bindValue(id, key, type = "text"){
       const el = document.getElementById(id);
       if (!el) return;
-      el.addEventListener("input", () => {
+      const updateFromField = () => {
+        const previousValue = character[key];
         character[key] = type === "number" ? Number(el.value) : el.value;
-        if (key === "className") updateClassPathOptions();
-        if (key.startsWith("npc")) syncActiveNpcFromFields();
+        if (["race", "speciesVariant", "background", "className", "classPath"].includes(key) && previousValue !== character[key]) handleCharacterChoiceChange(key, previousValue);
+        if (key === "maxHp") syncMaxHpDetailField();
+        if (key.startsWith("npc") && npcViewMode === "edit") syncActiveNpcFromFields();
         saveLocal();
         renderDynamic();
-      });
+      };
+      el.addEventListener("input", updateFromField);
+      el.addEventListener("change", updateFromField);
     }
     function setThemeMode(mode){
       const safeMode = ["light", "dark", "print"].includes(mode) ? mode : "light";
@@ -7744,11 +7827,10 @@
       if (!box || !character) return;
       const name = character.characterName || "Unnamed Character";
       const klass = character.className || "Class";
-      const speciesName = character.race || "Species";
+      const speciesName = character.race || "Race";
       const backgroundName = character.background || "Background";
       const level = Number(character.level || 1);
       const hp = `${Number(character.currentHp || 0)}/${Number(character.maxHp || 0)}`;
-      const shield = Number(character.shield || 0);
       const defense = Number(character.armorClass || 0);
       const reserveTotal = Object.values(character.powerReserve || {}).reduce((sum, value) => sum + Number(value || 0), 0);
       box.innerHTML = `
@@ -7764,7 +7846,6 @@
         </div>
         <div class="mobile-status-grid">
           <div class="mobile-status-stat"><span class="mobile-status-label">HP</span><span class="mobile-status-value">${hp}</span></div>
-          <div class="mobile-status-stat"><span class="mobile-status-label">Shield</span><span class="mobile-status-value">${shield}</span></div>
           <div class="mobile-status-stat"><span class="mobile-status-label">DEF</span><span class="mobile-status-value">${defense}</span></div>
           <div class="mobile-status-stat"><span class="mobile-status-label">Reserve</span><span class="mobile-status-value">${reserveTotal}</span></div>
         </div>`;
@@ -7834,14 +7915,299 @@
       mobileLayoutState.moved = [];
     }
 
+
+    function consolidateGearLayout(){
+      const gearWeaponsProtection = document.getElementById("gearWeaponsProtection");
+      const gearDevices = document.getElementById("gearDevices");
+      const gearInventory = document.getElementById("gearInventory");
+      if (!gearWeaponsProtection || !gearDevices || !gearInventory) return;
+      const weaponPanel = document.querySelector('#combat .panel:nth-of-type(2)');
+      const protectionPanel = document.querySelector('#combat .panel:nth-of-type(3)');
+      [weaponPanel, protectionPanel].forEach(panel => {
+        if (panel && panel.parentNode !== gearWeaponsProtection) { rememberNode(panel); gearWeaponsProtection.appendChild(panel); }
+      });
+      document.querySelectorAll('#devices > .panel').forEach(panel => {
+        if (panel.parentNode !== gearDevices) { rememberNode(panel); gearDevices.appendChild(panel); }
+      });
+      document.querySelectorAll('#inventory > .panel').forEach(panel => {
+        if (panel.parentNode !== gearInventory) { rememberNode(panel); gearInventory.appendChild(panel); }
+      });
+      document.querySelectorAll('.tab[data-tab="devices"], .tab[data-tab="inventory"], .tab[data-tab="ship"]').forEach(btn => btn.remove());
+    }
+
+    function abilitySelectOptions(selectedValue = "", excludeValue = ""){
+      const blankOption = `<option value="">Choose ability</option>`;
+      return blankOption + Object.entries(abilityNames).map(([key,label]) => {
+        const disabled = excludeValue && key === excludeValue && key !== selectedValue ? " disabled" : "";
+        const selected = key === selectedValue ? " selected" : "";
+        return `<option value="${key}"${selected}${disabled}>${label}</option>`;
+      }).join("");
+    }
+
+    function getSpeciesAbilityBonus(key){
+      if (!character) return 0;
+      const one = character.speciesAbilityBonusOne || "";
+      const two = character.speciesAbilityBonusTwo || "";
+      const three = character.speciesAbilityBonusThree || "";
+      let bonus = 0;
+      if (character.race === "Terran") {
+        if (one === key) bonus += 2;
+        if (two === key && two !== one) bonus += 2;
+      } else if (character.race === "Chromari") {
+        if (one === key) bonus += 2;
+      } else if (character.race === "Synthetic") {
+        const choices = [one, two, three].filter(Boolean);
+        if (choices.includes(key)) bonus += 1;
+      } else if (character.race === "Virex") {
+        if ((one === "wisdom" || one === "charisma") && one === key) bonus += 2;
+      } else if (character.race === "Brutor") {
+        if (key === "strength") bonus += 2;
+        if (key === "constitution") bonus += 1;
+      } else if (character.race === "Spilkin") {
+        if (key === "dexterity") bonus += 2;
+        if (key === "intelligence") bonus += 1;
+      } else if (character.race === "Kyrrim") {
+        if (key === "constitution") bonus += 2;
+      } else if (character.race === "Mycoren") {
+        if ((one === "intelligence" || one === "wisdom") && one === key) bonus += 2;
+        if (key === "constitution") bonus += 1;
+      } else if (character.race === "Hybrid") {
+        if (one === key) bonus += 1;
+        if (two === key && two !== one) bonus += 1;
+      }
+      return bonus;
+    }
+
+    function effectiveAbilityScore(key){
+      return Number(character?.attributes?.[key] || 0) + getSpeciesAbilityBonus(key);
+    }
+
+    function abilityMod(key){
+      return mod(effectiveAbilityScore(key));
+    }
+
+    function updateSpeciesAbilityBonus(which, value){
+      if (!character) return;
+      const keyMap = { one: "speciesAbilityBonusOne", two: "speciesAbilityBonusTwo", three: "speciesAbilityBonusThree" };
+      const key = keyMap[which] || "speciesAbilityBonusOne";
+      character[key] = value || "";
+      if (character[key]) {
+        Object.values(keyMap).forEach(otherKey => {
+          if (otherKey !== key && character[otherKey] === character[key]) character[otherKey] = "";
+        });
+      }
+      saveLocal();
+      syncSpeciesAbilityBonusControls();
+      renderDynamic();
+      renderDerived();
+      updateCombatQuickReadouts();
+    }
+
+    function syncSpeciesAbilityBonusControls(){
+      if (!character) return;
+      const raceName = character.race || "";
+      const usesOne = raceName === "Terran" || raceName === "Chromari" || raceName === "Synthetic" || raceName === "Virex" || raceName === "Mycoren" || raceName === "Hybrid";
+      const usesTwo = raceName === "Terran" || raceName === "Synthetic" || raceName === "Hybrid";
+      const usesThree = raceName === "Synthetic";
+      const oneLabel = document.getElementById("speciesAbilityBonusOneLabel");
+      const twoLabel = document.getElementById("speciesAbilityBonusTwoLabel");
+      const threeLabel = document.getElementById("speciesAbilityBonusThreeLabel");
+      const oneText = oneLabel?.querySelector(".label-text");
+      const twoText = twoLabel?.querySelector(".label-text");
+      const threeText = threeLabel?.querySelector(".label-text");
+      const one = document.getElementById("speciesAbilityBonusOne");
+      const two = document.getElementById("speciesAbilityBonusTwo");
+      const three = document.getElementById("speciesAbilityBonusThree");
+      if (oneLabel) oneLabel.style.display = usesOne ? "block" : "none";
+      if (twoLabel) twoLabel.style.display = usesTwo ? "block" : "none";
+      if (threeLabel) threeLabel.style.display = usesThree ? "block" : "none";
+      const bonusText = (raceName === "Synthetic" || raceName === "Hybrid") ? "+1" : "+2";
+      if (oneText) {
+        if (raceName === "Chromari") oneText.textContent = `Race Ability Bonus (${bonusText})`;
+        else if (raceName === "Virex") oneText.textContent = "Race Ability Bonus (+2 Wisdom or Charisma)";
+        else if (raceName === "Mycoren") oneText.textContent = "Race Ability Bonus (+2 Intelligence or Wisdom)";
+        else if (raceName === "Hybrid") oneText.textContent = "Race Ability Bonus 1 (+1)";
+        else oneText.textContent = `Race Ability Bonus 1 (${bonusText})`;
+      }
+      if (twoText) twoText.textContent = `Race Ability Bonus 2 (${bonusText})`;
+      if (threeText) threeText.textContent = `Race Ability Bonus 3 (${bonusText})`;
+      if (!usesOne) character.speciesAbilityBonusOne = "";
+      if (!usesTwo) character.speciesAbilityBonusTwo = "";
+      if (!usesThree) character.speciesAbilityBonusThree = "";
+      const allowedRaceBonusKeys = raceName === "Virex" ? ["wisdom", "charisma"] : raceName === "Mycoren" ? ["intelligence", "wisdom"] : Object.keys(abilityNames);
+      if ((raceName === "Virex" || raceName === "Mycoren") && character.speciesAbilityBonusOne && !allowedRaceBonusKeys.includes(character.speciesAbilityBonusOne)) character.speciesAbilityBonusOne = "";
+      const selected = {
+        one: character.speciesAbilityBonusOne || "",
+        two: character.speciesAbilityBonusTwo || "",
+        three: character.speciesAbilityBonusThree || ""
+      };
+      if (one) {
+        const exclude = [selected.two, selected.three].filter(Boolean);
+        one.innerHTML = abilitySelectOptionsMulti(selected.one, exclude, allowedRaceBonusKeys);
+        one.value = selected.one;
+      }
+      if (two) {
+        const exclude = [selected.one, selected.three].filter(Boolean);
+        two.innerHTML = abilitySelectOptionsMulti(selected.two, exclude, allowedRaceBonusKeys);
+        two.value = selected.two;
+      }
+      if (three) {
+        const exclude = [selected.one, selected.two].filter(Boolean);
+        three.innerHTML = abilitySelectOptionsMulti(selected.three, exclude, allowedRaceBonusKeys);
+        three.value = selected.three;
+      }
+    }
+
+    function abilitySelectOptionsMulti(selectedValue = "", excludeValues = [], allowedKeys = Object.keys(abilityNames)){
+      const excluded = new Set((Array.isArray(excludeValues) ? excludeValues : [excludeValues]).filter(Boolean));
+      const blankOption = `<option value="">Choose ability</option>`;
+      const allowed = new Set(Array.isArray(allowedKeys) && allowedKeys.length ? allowedKeys : Object.keys(abilityNames));
+      return blankOption + Object.entries(abilityNames).filter(([key]) => allowed.has(key)).map(([key,label]) => {
+        const disabled = excluded.has(key) && key !== selectedValue ? " disabled" : "";
+        const selected = key === selectedValue ? " selected" : "";
+        return `<option value="${key}"${selected}${disabled}>${label}</option>`;
+      }).join("");
+    }
+
+    function getSpeciesVariantList(speciesName){
+      return speciesVariantOptions[speciesName] || [{ id: "standard", name: "Standard " + (speciesName || "Race"), speed: 30, feature: { name: (speciesName || "Race") + " Standard Option", description: "Standard race option. Replace this placeholder with your exact rule text." } }];
+    }
+
+    function getSelectedSpeciesVariant(){
+      const list = getSpeciesVariantList(character?.race);
+      return list.find(option => option.id === character?.speciesVariant) || list[0];
+    }
+
+    function updateSpeciesVariantOptions(){
+      const select = document.getElementById("speciesVariant");
+      const label = document.getElementById("speciesVariantLabel");
+      if (!select || !character) return;
+      const options = getSpeciesVariantList(character.race);
+      const current = character.speciesVariant;
+      select.innerHTML = options.map(option => "<option value=\"" + escapeHtml(option.id) + "\">" + escapeHtml(option.name) + "</option>").join("");
+      if (options.some(option => option.id === current)) select.value = current;
+      else { character.speciesVariant = options[0]?.id || "standard"; select.value = character.speciesVariant; }
+      if (label) { const hasRealOptions = options.length > 1 || options.some(option => option.feature || option.device || (Array.isArray(option.skillGrants) && option.skillGrants.length)); label.style.display = hasRealOptions ? "block" : "none"; }
+      syncSpeciesAbilityBonusControls();
+    }
+
+    function isAutoGrantedFeature(feature, type){
+      if (!feature) return false;
+      if (feature.autoGrant && (!type || feature.grantType === type)) return true;
+      const description = String(feature.description || "");
+      const name = String(feature.name || "");
+      const legacyRaceFeatureName = /^(Terran Traits|Adaptive Talent|Versatile Mind|Chromari Traits|Synthetic Traits|Virex Traits|Brutor Traits|Spilkin Traits|Kyrrim Traits|Mycoren Traits|Hybrid Traits)$/i.test(name);
+      if (type === "species") {
+        return /^\[(Race Trait|Race Option|Subrace|Adaptive Form|Race Form) — /i.test(description)
+          || /^\[(Species Trait|Species Option) — /i.test(description)
+          || legacyRaceFeatureName;
+      }
+      if (type === "background") return /^\[Background Feature — /i.test(description);
+      if (type === "class") {
+        const escaped = classes.map(name => name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+        return new RegExp("^\\[(" + escaped + "|Path of [^\\]]+|[^\\]]+ Path) — Level \\d+\\]", "i").test(description);
+      }
+      return feature.autoGrant
+        || /^\[(Race Trait|Race Option|Subrace|Adaptive Form|Race Form|Background Feature) — /i.test(description)
+        || /^\[(Species Trait|Species Option) — /i.test(description)
+        || legacyRaceFeatureName;
+    }
+
+    function isAutoGrantedDevice(device, type){
+      if (!device) return false;
+      if (device.autoGrant && (!type || device.grantType === type)) return true;
+      const category = String(device.category || "");
+      if (type === "background") return /^Background Device — /i.test(category);
+      if (type === "species") return /^Race Device — /i.test(category);
+      return device.autoGrant || /^(Background|Species|Race) Device — /i.test(category);
+    }
+
+    function clearAutoGrantedContent(types = ["species", "background", "class"]){
+      const wanted = new Set(Array.isArray(types) ? types : [types]);
+      if (Array.isArray(character.features)) character.features = character.features.filter(feature => ![...wanted].some(type => isAutoGrantedFeature(feature, type)));
+      if (Array.isArray(character.devices)) character.devices = character.devices.filter(device => ![...wanted].some(type => isAutoGrantedDevice(device, type)));
+    }
+
+    function clearAutoSpeciesSkillGrants(){
+      if (!character || !character.skills) return;
+      const prior = Array.isArray(character.autoSpeciesSkillGrants) ? character.autoSpeciesSkillGrants : [];
+      prior.forEach(key => {
+        if (character.skills[key] && !(character.skillsExpertise && character.skillsExpertise[key])) character.skills[key] = false;
+      });
+      character.autoSpeciesSkillGrants = [];
+    }
+
+    function applyAutoSpeciesSkillGrants(keys = []){
+      if (!character) return;
+      if (!character.skills) character.skills = {};
+      if (!Array.isArray(character.autoSpeciesSkillGrants)) character.autoSpeciesSkillGrants = [];
+      keys.forEach(key => {
+        character.skills[key] = true;
+        if (!character.autoSpeciesSkillGrants.includes(key)) character.autoSpeciesSkillGrants.push(key);
+      });
+    }
+
+    function syncGrantedContent(types = ["species", "background"]){
+      if (!character) return;
+      if (!Array.isArray(character.features)) character.features = [];
+      if (!Array.isArray(character.devices)) character.devices = [];
+      const wanted = new Set(Array.isArray(types) ? types : [types]);
+      clearAutoGrantedContent([...wanted]);
+      const addFeatureGrant = (grantType, grantKey, name, description) => { if (name) character.features.push({ name, description, autoGrant: true, grantType, grantKey }); };
+      const addDeviceGrant = (grantType, grantKey, name, category, effect) => { if (name) character.devices.push({ name, category, integrated: false, expended: false, effect, autoGrant: true, grantType, grantKey }); };
+      if (wanted.has("species")) {
+        clearAutoSpeciesSkillGrants();
+        const speciesTrait = speciesGrantedTraits[character.race];
+        if (speciesTrait) addFeatureGrant("species", "species:" + character.race, speciesTrait.name, "[Race Trait — " + character.race + "]\n" + speciesTrait.description);
+        const variant = getSelectedSpeciesVariant();
+        if (variant) {
+          if (variant.speed !== undefined && variant.speed !== null && variant.speed !== "") character.speed = Number(variant.speed) || variant.speed;
+          if (Array.isArray(variant.skillGrants)) applyAutoSpeciesSkillGrants(variant.skillGrants);
+          if (variant.feature) {
+            const variantLabel = character.race === "Mycoren" ? "Race Form" : "Race Option";
+            addFeatureGrant("species", "species:" + character.race + ":" + variant.id, variant.feature.name, "[" + variantLabel + " — " + character.race + ": " + variant.name + "]\n" + variant.feature.description);
+          }
+          if (variant.device) addDeviceGrant("species", "species:" + character.race + ":" + variant.id, variant.device.name, "Race Device — " + character.race, variant.device.effect || "");
+        }
+      }
+      if (wanted.has("background")) {
+        const backgroundGrant = backgroundGrantedContent[character.background];
+        if (backgroundGrant) {
+          if (backgroundGrant.feature) addFeatureGrant("background", "background:" + character.background, backgroundGrant.feature.name, "[Background Feature — " + character.background + "]\n" + backgroundGrant.feature.description);
+          if (backgroundGrant.device) addDeviceGrant("background", "background:" + character.background, backgroundGrant.device.name, "Background Device — " + character.background, backgroundGrant.device.effect);
+        }
+      }
+    }
+
+    function handleCharacterChoiceChange(key, previousValue){
+      if (key === "race") { updateSpeciesVariantOptions(); syncSpeciesAbilityBonusControls(); syncGrantedContent(["species"]); }
+      else if (key === "speciesVariant") syncGrantedContent(["species"]);
+      else if (key === "background") syncGrantedContent(["background"]);
+      else if (key === "className" || key === "classPath") { clearAutoGrantedContent(["class"]); if (key === "className") updateClassPathOptions(); applyClassProgression({ silent: true, addAllFeaturesThroughLevel: true, skipRender: true }); }
+    }
+    function syncMaxHpDetailField(){
+      const details = document.getElementById("maxHpDetails");
+      if (details) details.value = character.maxHp ?? 0;
+    }
+
+    function bindMaxHpDetails(){
+      const details = document.getElementById("maxHpDetails");
+      if (!details || details.dataset.boundMaxHpDetails) return;
+      details.dataset.boundMaxHpDetails = "true";
+      details.addEventListener("input", () => {
+        character.maxHp = Number(details.value || 0);
+        setValue("maxHp", character.maxHp);
+        saveLocal();
+        renderDynamic();
+      });
+    }
+
     function applyMobileGrouping(){
       const shouldGroup = true;
       if (shouldGroup === mobileLayoutState.isMobile) return;
       mobileLayoutState.isMobile = shouldGroup;
       if (shouldGroup) {
-        document.querySelectorAll('#devices > .panel').forEach(panel => { rememberNode(panel); document.getElementById('combatDevices')?.appendChild(panel); });
-        document.querySelectorAll('#inventory > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearInventory')?.appendChild(panel); });
-        document.querySelectorAll('#ship > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGearShip')?.appendChild(panel); });
+        consolidateGearLayout();
         document.querySelectorAll('#npc > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGmNpc')?.appendChild(panel); });
         document.querySelectorAll('#encounter > .panel').forEach(panel => { rememberNode(panel); document.getElementById('mobileGmEncounter')?.appendChild(panel); });
         showMobileGroup(mobileLayoutState.lastGroup || 'core', false);
@@ -7900,20 +8266,32 @@
       if (tabPage && shouldScroll) tabPage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    function initialize(){ if (!character) character = loadLocal(); loadThemeMode(); initializeMobileCleanup(); populateSelect("race", species); populateSelect("className", classes); populateSelect("background", backgrounds); updateClassPathOptions(); initializeAdvancedFilterOptions(); populateDeviceTemplates(); populateWeaponTemplates(); populateInventoryTemplates(); populateFeatureTemplates(); populateProtectionTemplates(); populateAbilityTemplates(); ["characterName","playerName","race","className","experience","background","classPath","characterDescription","recovery","protectionName","protectionCategory","protectionDefense","protectionProperties","protectionDescription","powerSource","traits","currentMission","crewMembers","contacts","factions","planetsVisited","shipsStations","activeJobs","debtsObligations","reputationNotes","shipName","shipClass","shipSpeed","shipNotes","npcName","npcSpecies","npcRole","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"].forEach(id => bindValue(id, id)); ["level","proficiencyBonus","armorClass","initiativeBonus","speed","maxHp","currentHp","tempHp","shield","maxShield","credits","shipHull","shipMaxHull","shipShields","shipFuel","shipJumpCharges","npcDefense","npcHp","npcMaxHp"].forEach(id => bindValue(id, id, "number")); document.getElementById("notesField").addEventListener("input", e => { character.notes = e.target.value; saveLocal(); }); document.querySelectorAll(".tab").forEach(btn => { btn.addEventListener("click", () => showTab(btn.dataset.tab)); }); document.getElementById("importFile").addEventListener("change", importCharacter);
+    function initialize(){ if (!character) character = loadLocal(); if (character.speciesAbilityBonusOne === undefined) character.speciesAbilityBonusOne = ""; if (character.speciesAbilityBonusTwo === undefined) character.speciesAbilityBonusTwo = ""; if (character.speciesAbilityBonusThree === undefined) character.speciesAbilityBonusThree = ""; loadThemeMode(); initializeMobileCleanup(); populateSelect("race", species); populateSelect("className", classes); populateSelect("background", backgrounds); syncSpeciesAbilityBonusControls(); updateSpeciesVariantOptions(); updateClassPathOptions(); initializeAdvancedFilterOptions(); populateDeviceTemplates(); populateWeaponTemplates(); populateInventoryTemplates(); populateFeatureTemplates(); populateProtectionTemplates(); populateAbilityTemplates(); clearAutoGrantedContent(["species"]); syncGrantedContent(["species"]); ["characterName","playerName","race","speciesVariant","className","experience","background","classPath","characterDescription","recovery","protectionCategory","protectionDefense","protectionProperties","protectionDescription","powerSource","traits","currentMission","crewMembers","contacts","factions","planetsVisited","shipsStations","activeJobs","debtsObligations","reputationNotes","shipName","shipClass","shipSpeed","shipNotes","npcName","npcSpecies","npcRole","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"].forEach(id => bindValue(id, id)); ["level","proficiencyBonus","armorClass","initiativeBonus","speed","maxHp","currentHp","tempHp","credits","shipHull","shipMaxHull","shipShields","shipFuel","shipJumpCharges","npcDefense","npcHp","npcMaxHp"].forEach(id => bindValue(id, id, "number")); document.getElementById("notesField").addEventListener("input", e => { character.notes = e.target.value; saveLocal(); }); document.querySelectorAll(".tab").forEach(btn => { btn.addEventListener("click", () => showTab(btn.dataset.tab)); }); const speciesBonusOneEl = document.getElementById("speciesAbilityBonusOne"); if (speciesBonusOneEl) speciesBonusOneEl.addEventListener("change", e => updateSpeciesAbilityBonus("one", e.target.value)); const speciesBonusTwoEl = document.getElementById("speciesAbilityBonusTwo"); if (speciesBonusTwoEl) speciesBonusTwoEl.addEventListener("change", e => updateSpeciesAbilityBonus("two", e.target.value)); const speciesBonusThreeEl = document.getElementById("speciesAbilityBonusThree"); if (speciesBonusThreeEl) speciesBonusThreeEl.addEventListener("change", e => updateSpeciesAbilityBonus("three", e.target.value)); document.getElementById("importFile").addEventListener("change", importCharacter);
       const artInput = document.getElementById("characterArtInput");
       if (artInput) artInput.addEventListener("change", importCharacterArt);
-      renderAll(); }
+      bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
     let abilityViewMode = localStorage.getItem("starboundAbilityViewMode") || "edit";
     let abilityFolderLevel = localStorage.getItem("starboundAbilityFolderLevel") || "all";
 
-    function renderAll(){ Object.keys(character).forEach(key => { if (document.getElementById(key) && typeof character[key] !== "object") setValue(key, character[key]); }); updateClassPathOptions(); setValue("notesField", character.notes); renderSaveSlotControls(); renderDynamic(); }
-    function renderDynamic(){ renderMobileCharacterStatus(); renderAbilityPreview(); renderCombatQuickPanel(); renderAbilityScores(); renderSkills(); renderDerived(); renderWeapons(); renderProtection(); renderPowerReserve(); renderAbilityFolderBar(); renderAbilityLevels(); renderAbilityCardView(); renderAbilityViewMode(); renderDevices(); renderInventory(); renderAutoClassFeatures(); renderFeatures(); renderShip(); renderNpc(); renderEncounter(); renderCharacterArt(); saveLocal(); }
+    function renderAll(){ Object.keys(character).forEach(key => { if (document.getElementById(key) && typeof character[key] !== "object") setValue(key, character[key]); }); updateSpeciesVariantOptions(); updateClassPathOptions(); setValue("notesField", character.notes); syncMaxHpDetailField(); renderSaveSlotControls(); renderDynamic(); }
+    function renderDynamic(){ consolidateGearLayout(); renderMobileCharacterStatus(); renderAbilityPreview(); renderCombatQuickPanel(); renderAbilityScores(); renderCharacterHealthTracker(); renderSkills(); renderDerived(); renderWeapons(); renderProtection(); renderPowerReserve(); renderAbilityFolderBar(); renderAbilityLevels(); renderAbilityCardView(); renderAbilityViewMode(); renderDevices(); renderInventory(); renderAutoClassFeatures(); renderFeatures(); renderShip(); renderNpc(); renderEncounter(); renderCharacterArt(); syncMaxHpDetailField(); saveLocal(); }
 
+
+    function getCombatWeapons(){
+      if (!Array.isArray(character.weapons)) return { main: null, offhand: null };
+      const normalized = character.weapons.map(normalizeWeapon);
+      let main = normalized.find(w => w.combatSlot === "main" && (w.name || w.damage || w.type)) || null;
+      let offhand = normalized.find(w => w.combatSlot === "offhand" && (w.name || w.damage || w.type)) || null;
+      if (!main) {
+        const legacy = normalized.find(w => w.equipped && (w.name || w.damage || w.type));
+        if (legacy) main = legacy;
+      }
+      return { main, offhand };
+    }
 
     function getPrimaryWeapon(){
-      const weapon = (character.weapons || []).find(w => w && (w.name || w.damage || w.type));
-      return weapon ? normalizeWeapon(weapon) : null;
+      const weapons = getCombatWeapons();
+      return weapons.main || weapons.offhand || null;
     }
 
     function powerReserveSummary(){
@@ -7927,13 +8305,12 @@
       const maxHp = Number(character.maxHp || 0);
       const currentHp = Number(character.currentHp || 0);
       const tempHp = Number(character.tempHp || 0);
-      const shield = Number(character.shield || 0);
-      const maxShield = Number(character.maxShield || 0);
-      const initiativeTotal = mod(character.attributes.dexterity) + Number(character.initiativeBonus || 0);
-      const weapon = getPrimaryWeapon();
-      const weaponText = weapon
-        ? `<strong>Equipped / Primary Weapon</strong><br>${escapeHtml(weapon.name || "Unnamed Weapon")} ${weapon.damage ? `• ${escapeHtml(weapon.damage)}` : ""} ${weapon.range ? `• Range ${escapeHtml(weapon.range)}` : ""} ${weapon.type ? `<br>${escapeHtml(weapon.type)}` : ""}`
-        : `<strong>Equipped / Primary Weapon</strong><br>No weapon entered yet.`;
+      const initiativeTotal = abilityMod("dexterity") + Number(character.initiativeBonus || 0);
+      const combatWeapons = getCombatWeapons();
+      const weaponLine = (label, weapon) => weapon
+        ? `<b>${label}:</b> ${escapeHtml(weapon.type || weapon.name || "Unnamed Weapon")} — ${escapeHtml(weapon.damage || "Set by category")} ${weapon.range ? `• ${escapeHtml(weapon.range)}` : ""}${weapon.properties ? `<br><small>${escapeHtml(weapon.properties)}</small>` : ""}`
+        : `<b>${label}:</b> Not selected`;
+      const weaponText = `<strong>Equipped Weapons</strong><br>${weaponLine("Main hand", combatWeapons.main)}<br>${weaponLine("Off hand", combatWeapons.offhand)}`;
       panel.innerHTML = `
         <div class="combat-quick-grid">
           <div class="combat-quick-stat">
@@ -7949,15 +8326,7 @@
             <input class="combat-quick-stat-input single" type="number" min="0" value="${tempHp}" oninput="setQuickCombatStat('tempHp', this.value)" />
             <div class="combat-quick-small">absorbs first</div>
           </div>
-          <div class="combat-quick-stat">
-            <div class="combat-quick-label">Shield</div>
-            <div class="combat-quick-hp-edit">
-              <label><span class="combat-quick-mini-label">Current</span><input class="combat-quick-stat-input" type="number" min="0" value="${shield}" oninput="setQuickCombatStat('shield', this.value)" /></label>
-              <label><span class="combat-quick-mini-label">Max</span><input class="combat-quick-stat-input" type="number" min="0" value="${maxShield}" oninput="setQuickCombatStat('maxShield', this.value)" /></label>
-            </div>
-            <div class="combat-quick-small">after temp HP</div>
-          </div>
-          <div class="combat-quick-stat"><div class="combat-quick-label">Defense</div><div class="combat-quick-value" data-combat-readout="defense">${Number(character.armorClass || 0)}</div><div class="combat-quick-small">${escapeHtml(character.protectionAppliedName || character.protectionName || "AC / Defense")}</div></div>
+          <div class="combat-quick-stat"><div class="combat-quick-label">Defense</div><div class="combat-quick-value" data-combat-readout="defense">${Number(character.armorClass || 0)}</div><div class="combat-quick-small">${escapeHtml(character.protectionAppliedName || character.protectionCategory || "AC / Defense")}</div></div>
           <div class="combat-quick-stat"><div class="combat-quick-label">Initiative</div><div class="combat-quick-value" data-combat-readout="initiative">${signed(initiativeTotal)}</div><div class="combat-quick-small">total bonus</div></div>
           <div class="combat-quick-stat"><div class="combat-quick-label">Speed</div><div class="combat-quick-value" data-combat-readout="speed">${Number(character.speed || 0)}</div><div class="combat-quick-small">feet</div></div>
         </div>
@@ -7971,12 +8340,12 @@
           <button class="secondary" type="button" onclick="quickShortRest()">Short Rest</button>
           <button class="secondary" type="button" onclick="quickLongRest()">Long Rest</button>
         </div>
-        <div class="combat-quick-weapon">${weaponText}<br><strong>Protection</strong><br>${escapeHtml(character.protectionAppliedName || character.protectionName || "No protection applied")} ${character.protectionCategory ? `• ${escapeHtml(character.protectionCategory)}` : ""} ${Number(character.armorClass || 0) ? `• Defense ${Number(character.armorClass || 0)}` : ""}<br><strong>Power Reserve</strong><br>${powerReserveSummary()}</div>
+        <div class="combat-quick-weapon">${weaponText}<br><strong>Protection</strong><br>${escapeHtml(character.protectionAppliedName || character.protectionCategory || "No protection applied")} ${Number(character.armorClass || 0) ? `• Defense ${Number(character.armorClass || 0)}` : ""}<br><strong>Power Reserve</strong><br>${powerReserveSummary()}</div>
       `;
     }
 
     function setQuickCombatStat(key, value){
-      const allowed = ["currentHp", "maxHp", "tempHp", "shield", "maxShield"];
+      const allowed = ["currentHp", "maxHp", "tempHp"];
       if (!allowed.includes(key)) return;
       const numeric = Math.max(0, Number(value || 0));
       character[key] = numeric;
@@ -7986,11 +8355,6 @@
         character.currentHp = numeric;
         const currentField = document.getElementById("currentHp");
         if (currentField) currentField.value = numeric;
-      }
-      if (key === "maxShield" && numeric > 0 && Number(character.shield || 0) > numeric) {
-        character.shield = numeric;
-        const shieldField = document.getElementById("shield");
-        if (shieldField) shieldField.value = numeric;
       }
       saveLocal();
       renderDerived();
@@ -8003,7 +8367,7 @@
       const initiativeBox = panel.querySelector('[data-combat-readout="initiative"]');
       const speedBox = panel.querySelector('[data-combat-readout="speed"]');
       const defenseBox = panel.querySelector('[data-combat-readout="defense"]');
-      if (initiativeBox) initiativeBox.textContent = signed(mod(character.attributes.dexterity) + Number(character.initiativeBonus || 0));
+      if (initiativeBox) initiativeBox.textContent = signed(abilityMod("dexterity") + Number(character.initiativeBonus || 0));
       if (speedBox) speedBox.textContent = Number(character.speed || 0);
       if (defenseBox) defenseBox.textContent = Number(character.armorClass || 0);
     }
@@ -8015,9 +8379,6 @@
       const tempUsed = Math.min(Number(character.tempHp || 0), amount);
       character.tempHp = Number(character.tempHp || 0) - tempUsed;
       amount -= tempUsed;
-      const shieldUsed = Math.min(Number(character.shield || 0), amount);
-      character.shield = Number(character.shield || 0) - shieldUsed;
-      amount -= shieldUsed;
       character.currentHp = Math.max(0, Number(character.currentHp || 0) - amount);
       if (input) input.value = "";
       renderAll();
@@ -8085,10 +8446,9 @@
     function quickLongRest(){
       character.currentHp = Number(character.maxHp || 0);
       character.tempHp = 0;
-      if (Number(character.maxShield || 0) > 0) character.shield = Number(character.maxShield || 0);
       const reserveRestored = restorePowerReserveToMax();
       const resetDevices = resetExpendedDevices("long");
-      character.lastRestNote = `Long Rest: HP restored, temp HP cleared${Number(character.maxShield || 0) > 0 ? ", shield restored" : ""}${reserveRestored ? ", Power Reserve restored" : ""}, and ${resetDevices} expended device${resetDevices === 1 ? "" : "s"} reset.`;
+      character.lastRestNote = `Long Rest: HP restored, temp HP cleared${reserveRestored ? ", Power Reserve restored" : ""}, and ${resetDevices} expended device${resetDevices === 1 ? "" : "s"} reset.`;
       renderAll();
       alert(character.lastRestNote);
     }
@@ -8099,8 +8459,8 @@
       preview.innerHTML = Object.entries(abilityNames).map(([key, label]) => `
         <div class="preview-stat">
           <div class="preview-stat-name">${label.slice(0, 3)}</div>
-          <div class="preview-stat-score">${character.attributes[key]}</div>
-          <div class="preview-stat-mod">${signed(mod(character.attributes[key]))}</div>
+          <div class="preview-stat-score">${effectiveAbilityScore(key)}</div>
+          <div class="preview-stat-mod">${signed(abilityMod(key))}</div>
         </div>
       `).join("");
     }
@@ -8110,7 +8470,7 @@
     }
 
     function saveTotal(key){
-      return mod(character.attributes[key]) + (character.saves[key] ? Number(character.proficiencyBonus || 0) : 0);
+      return abilityMod(key) + (character.saves[key] ? Number(character.proficiencyBonus || 0) : 0);
     }
 
     function skillTotal(key, ability){
@@ -8118,7 +8478,7 @@
       const proficient = Boolean(character.skills[key]);
       const expert = Boolean(character.skillsExpertise?.[key]);
       const multiplier = expert ? 2 : proficient ? 1 : 0;
-      return mod(character.attributes[ability]) + (prof * multiplier);
+      return abilityMod(ability) + (prof * multiplier);
     }
 
     function getPowerAbilityKey(){
@@ -8129,24 +8489,136 @@
     }
 
     function renderAbilityScores(){
-      document.getElementById("abilityScores").innerHTML = Object.entries(abilityNames).map(([key,label]) => {
-        const abilityMod = mod(character.attributes[key]);
+      const container = document.getElementById("abilityScores");
+      if (!container) return;
+      const toolbar = `<div class="ability-toolbar">
+        <div class="auto-calc-note">Ability modifiers and saving throw totals update automatically.</div>
+        <button type="button" class="secondary" onclick="setAbilityScoresViewMode('${abilityScoresViewMode === "edit" ? "view" : "edit"}')">${abilityScoresViewMode === "edit" ? "Done" : "Edit Ability Scores"}</button>
+      </div>`;
+
+      if (abilityScoresViewMode !== "edit") {
+        const cards = Object.entries(abilityNames).map(([key,label]) => {
+          const abilityTotalMod = abilityMod(key);
+          const save = saveTotal(key);
+          const saveFlag = character.saves[key] ? `<span class="skill-pill">Save Proficient</span>` : `<span class="skill-pill">Normal Save</span>`;
+          return `<div class="ability-summary-card">
+            <div class="ability-summary-name">${label}</div>
+            <div class="ability-summary-score">${effectiveAbilityScore(key)}</div>
+            <div class="ability-summary-mod">${getSpeciesAbilityBonus(key) ? `Base ${Number(character.attributes[key] || 0)} + Race ${getSpeciesAbilityBonus(key)} • ` : ""}Mod ${signed(abilityTotalMod)} • Save ${signed(save)}</div>
+            <div class="skills-summary-flags" style="justify-content:center;">${saveFlag}</div>
+          </div>`;
+        }).join("");
+        container.innerHTML = toolbar + cards;
+        return;
+      }
+
+      const editToolbar = `<div class="ability-toolbar"><div class="auto-calc-note">Edit raw ability scores and saving throw proficiencies. Press Done to return to the clean score list.</div><button type="button" class="secondary" onclick="setAbilityScoresViewMode('view')">Done</button></div>`;
+      const cards = Object.entries(abilityNames).map(([key,label]) => {
+        const abilityTotalMod = abilityMod(key);
         const save = saveTotal(key);
         return `<div class="ability-card">
           <div class="label-text">${label}</div>
           <input type="number" value="${character.attributes[key]}" onchange="updateAttribute('${key}', this.value)" />
-          <div class="mod">${signed(abilityMod)}</div>
-          <div class="save-total">Save: ${signed(save)}</div>
+          <div class="mod">${getSpeciesAbilityBonus(key) ? `Total ${effectiveAbilityScore(key)} • ` : ""}${signed(abilityTotalMod)}</div>
+          <div class="save-total">Save: ${signed(save)}${getSpeciesAbilityBonus(key) ? ` • Species +${getSpeciesAbilityBonus(key)}` : ""}</div>
           <label class="ability-save-label"><input class="ability-save-checkbox" type="checkbox" ${character.saves[key] ? "checked" : ""} onchange="updateSave('${key}', this.checked)" /> Save Proficiency</label>
         </div>`;
       }).join("");
+      container.innerHTML = editToolbar + cards;
     }
 
-    function updateAttribute(key,value){ character.attributes[key] = Number(value); renderDynamic(); }
-    function updateSave(key,value){ character.saves[key] = value; renderDynamic(); }
+    function setAbilityScoresViewMode(mode){
+      abilityScoresViewMode = mode === "edit" ? "edit" : "view";
+      renderDynamic();
+    }
+
+    function updateAttribute(key,value){ character.attributes[key] = Number(value); saveLocal(); renderDynamic(); }
+    function updateSave(key,value){ character.saves[key] = value; saveLocal(); renderDynamic(); }
+
+    function renderCharacterHealthTracker(){
+      const container = document.getElementById("characterHealthTracker");
+      if (!container) return;
+      const current = Number(character.currentHp || 0);
+      const max = Number(character.maxHp || 0);
+      const temp = Number(character.tempHp || 0);
+      const detailReadout = document.getElementById("characterDetailHpReadout");
+      if (detailReadout) detailReadout.textContent = `${current} / ${max}`;
+
+      if (healthViewMode !== "edit") {
+        container.innerHTML = `<div class="health-toolbar">
+          <div class="auto-calc-note">HP is saved with the character. Temp HP absorbs damage before Current HP.</div>
+          <button type="button" class="secondary" onclick="setHealthViewMode('edit')">Edit HP</button>
+        </div>
+        <div class="health-grid">
+          <div class="health-summary-card"><div class="health-summary-label">Current HP</div><div class="health-summary-value">${current}</div><div class="health-summary-sub">active health</div></div>
+          <div class="health-summary-card"><div class="health-summary-label">Max HP</div><div class="health-summary-value">${max}</div><div class="health-summary-sub">maximum health</div></div>
+          <div class="health-summary-card"><div class="health-summary-label">Temp HP</div><div class="health-summary-value">${temp}</div><div class="health-summary-sub">absorbs first</div></div>
+        </div>`;
+        return;
+      }
+
+      container.innerHTML = `<div class="health-toolbar">
+        <div class="auto-calc-note">Change HP values here, then press Save HP.</div>
+      </div>
+      <div class="health-edit-grid">
+        <label><span class="label-text">Current HP</span><input id="healthCurrentInput" type="number" min="0" value="${current}" /></label>
+        <label><span class="label-text">Max HP</span><input id="healthMaxInput" type="number" min="0" value="${max}" /></label>
+        <label><span class="label-text">Temp HP</span><input id="healthTempInput" type="number" min="0" value="${temp}" /></label>
+        <div class="health-edit-actions">
+          <button class="secondary" type="button" onclick="setHealthViewMode('view')">Cancel</button>
+          <button type="button" onclick="saveHealthFromEditor()">Save HP</button>
+        </div>
+      </div>`;
+    }
+
+    function setHealthViewMode(mode){
+      healthViewMode = mode === "edit" ? "edit" : "view";
+      renderDynamic();
+    }
+
+    function saveHealthFromEditor(){
+      const currentInput = document.getElementById("healthCurrentInput");
+      const maxInput = document.getElementById("healthMaxInput");
+      const tempInput = document.getElementById("healthTempInput");
+      const maxHp = Math.max(0, Number(maxInput?.value || 0));
+      character.maxHp = maxHp;
+      character.currentHp = Math.min(maxHp, Math.max(0, Number(currentInput?.value || 0)));
+      character.tempHp = Math.max(0, Number(tempInput?.value || 0));
+      setValue("maxHp", character.maxHp);
+      setValue("currentHp", character.currentHp);
+      setValue("tempHp", character.tempHp);
+      healthViewMode = "view";
+      saveLocal();
+      renderDynamic();
+    }
 
     function renderSkills(){
-      const note = `<div class="auto-calc-note">Skill totals update automatically from the linked ability modifier plus proficiency. Check <strong>Prof</strong> for proficiency or <strong>Expert</strong> for double proficiency.</div>`;
+      const container = document.getElementById("skills");
+      if (!container) return;
+      const toolbar = `<div class="skills-toolbar">
+        <div class="auto-calc-note">Skill totals update automatically from the linked ability modifier plus proficiency.</div>
+        <button type="button" class="secondary" onclick="setSkillsViewMode('${skillsViewMode === "edit" ? "view" : "edit"}')">${skillsViewMode === "edit" ? "Done" : "Edit Skill Proficiencies"}</button>
+      </div>`;
+
+      if (skillsViewMode !== "edit") {
+        const rows = skills.map(([key,label,ability]) => {
+          const total = skillTotal(key, ability);
+          const proficient = Boolean(character.skills[key]);
+          const expert = Boolean(character.skillsExpertise?.[key]);
+          const flags = expert ? `<span class="skill-pill">Expertise</span>` : proficient ? `<span class="skill-pill">Proficient</span>` : `<span class="skill-pill">Untrained</span>`;
+          return `<div class="skills-summary-row">
+            <div>
+              <strong>${label}</strong> <span class="skill-meta">${abilityAbbrev(ability)}</span>
+              <div class="skills-summary-flags">${flags}</div>
+            </div>
+            <div class="skill-total-badge">${signed(total)}</div>
+          </div>`;
+        }).join("");
+        container.innerHTML = toolbar + rows;
+        return;
+      }
+
+      const editToolbar = `<div class="skills-toolbar"><div class="auto-calc-note">Check <strong>Prof</strong> for proficiency or <strong>Expert</strong> for double proficiency. Press Done to return to the modifier list.</div><button type="button" class="secondary" onclick="setSkillsViewMode('view')">Done</button></div>`;
       const rows = skills.map(([key,label,ability]) => {
         const total = skillTotal(key, ability);
         const proficient = Boolean(character.skills[key]);
@@ -8162,63 +8634,127 @@
           <strong>${signed(total)}</strong>
         </div>`;
       }).join("");
-      document.getElementById("skills").innerHTML = note + rows;
+      container.innerHTML = editToolbar + rows;
+    }
+
+    function setSkillsViewMode(mode){
+      skillsViewMode = mode === "edit" ? "edit" : "view";
+      renderDynamic();
     }
 
     function updateSkill(key,value){
+      if (!character.skills) character.skills = Object.fromEntries(skills.map(([skillKey]) => [skillKey, false]));
       character.skills[key] = value;
       if (!value && character.skillsExpertise) character.skillsExpertise[key] = false;
-      renderDynamic();
+      saveLocal();
+      renderSkills();
+      renderDerived();
     }
 
     function updateSkillExpertise(key,value){
-      if (!character.skillsExpertise) character.skillsExpertise = {};
+      if (!character.skills) character.skills = Object.fromEntries(skills.map(([skillKey]) => [skillKey, false]));
+      if (!character.skillsExpertise) character.skillsExpertise = Object.fromEntries(skills.map(([skillKey]) => [skillKey, false]));
       character.skillsExpertise[key] = value;
       if (value) character.skills[key] = true;
-      renderDynamic();
+      saveLocal();
+      renderSkills();
+      renderDerived();
     }
 
     function renderDerived(){
       const passive = 10 + skillTotal("perception", "wisdom");
-      const init = mod(character.attributes.dexterity) + Number(character.initiativeBonus || 0);
+      const init = abilityMod("dexterity") + Number(character.initiativeBonus || 0);
       const powerKey = getPowerAbilityKey();
       const powerLabel = abilityNames[powerKey];
-      const dc = 8 + Number(character.proficiencyBonus || 0) + mod(character.attributes[powerKey]);
-      const atk = Number(character.proficiencyBonus || 0) + mod(character.attributes[powerKey]);
+      const dc = 8 + Number(character.proficiencyBonus || 0) + abilityMod(powerKey);
+      const atk = Number(character.proficiencyBonus || 0) + abilityMod(powerKey);
       const defenseSource = character.protectionAppliedName
         ? `<br>Defense Source: ${escapeHtml(character.protectionAppliedName)}`
-        : (character.protectionName ? `<br>Defense Source: ${escapeHtml(character.protectionName)}${character.protectionCategory ? " (" + escapeHtml(character.protectionCategory) + ")" : ""}` : "");
+        : (character.protectionCategory ? `<br>Defense Source: ${escapeHtml(character.protectionCategory)}` : "");
       document.getElementById("derivedStats").innerHTML = `Passive Perception: ${passive}<br>Initiative Total: ${signed(init)}<br>Power Ability: ${powerLabel}<br>Defense: ${Number(character.armorClass || 0)}${defenseSource}`;
       document.getElementById("abilityDc").innerHTML = `Ability Save DC<br><span style="font-size:24px">${dc}</span><br><small>8 + Prof + ${abilityAbbrev(powerKey)}</small>`;
       document.getElementById("abilityAttack").innerHTML = `Ability Attack<br><span style="font-size:24px">${signed(atk)}</span><br><small>Prof + ${abilityAbbrev(powerKey)}</small>`;
     }
+    function updateWeaponCategory(index, type){
+      if (!Array.isArray(character.weapons) || !character.weapons[index]) return;
+      const template = getWeaponTemplateByType(type);
+      character.weapons[index] = normalizeWeapon({
+        ...character.weapons[index],
+        name: template?.type || type || "",
+        type: template?.type || type || "",
+        damage: template?.damage || "",
+        range: template?.range || "",
+        properties: template?.properties || ""
+      });
+      saveLocal();
+      renderDynamic();
+    }
+
+    function setWeaponCombatSlot(index, slot){
+      if (!Array.isArray(character.weapons)) return;
+      const normalizedSlot = ["", "main", "offhand"].includes(slot) ? slot : "";
+      character.weapons = character.weapons.map((weapon, i) => {
+        const normalized = normalizeWeapon(weapon);
+        if (i === index) {
+          normalized.combatSlot = normalizedSlot;
+          normalized.equipped = normalizedSlot === "main";
+        } else if (normalizedSlot && normalized.combatSlot === normalizedSlot) {
+          normalized.combatSlot = "";
+          normalized.equipped = false;
+        } else {
+          normalized.equipped = normalized.combatSlot === "main";
+        }
+        return normalized;
+      });
+      saveLocal();
+      renderDynamic();
+    }
+
+    function setPrimaryWeapon(index){ setWeaponCombatSlot(index, "main"); }
+
     function renderWeapons(){
-      document.getElementById("weapons").innerHTML = character.weapons.map((w,i) => {
+      const list = document.getElementById("weapons");
+      if (!list) return;
+      if (!Array.isArray(character.weapons)) character.weapons = [];
+      const categories = weaponTemplates.map(w => w.type);
+      list.innerHTML = character.weapons.map((w,i) => {
         const weapon = normalizeWeapon(w);
         character.weapons[i] = weapon;
+        const selected = weapon.type || weapon.name || "";
         return `<div class="weapon-row">
-          <div class="weapon-top-grid">
-            <label><span class="label-text">Weapon Name</span><input placeholder="Weapon name" value="${escapeHtml(weapon.name)}" oninput="character.weapons[${i}].name=this.value; saveLocal()" /></label>
-            <label><span class="label-text">Weapon Type</span><select onchange="character.weapons[${i}].type=this.value; saveLocal()">
-              <option value="" ${weapon.type === "" ? "selected" : ""}>Choose type</option>
-              <optgroup label="Melee">
-                ${["Melee - Light","Melee - Medium","Melee - Heavy","Melee - Reach"].map(type => `<option value="${type}" ${weapon.type === type ? "selected" : ""}>${type}</option>`).join("")}
-              </optgroup>
-              <optgroup label="Ranged">
-                ${["Ranged - Light","Ranged - Medium","Ranged - Heavy","Ranged - Sniper/Precision","Ranged - Scatter"].map(type => `<option value="${type}" ${weapon.type === type ? "selected" : ""}>${type}</option>`).join("")}
-              </optgroup>
+          <div class="weapon-top-grid" style="grid-template-columns: 1.2fr 0.8fr 0.8fr 1fr auto;">
+            <label><span class="label-text">Weapon Category</span><select onchange="updateWeaponCategory(${i}, this.value)">
+              <option value="" ${selected === "" ? "selected" : ""}>Choose category</option>
+              ${categories.map(type => `<option value="${escapeHtml(type)}" ${selected === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}
             </select></label>
-            <label><span class="label-text">Damage</span><input placeholder="Damage" value="${escapeHtml(weapon.damage)}" oninput="character.weapons[${i}].damage=this.value; saveLocal()" /></label>
-            <label><span class="label-text">Properties</span><input placeholder="Properties" value="${escapeHtml(weapon.properties)}" oninput="character.weapons[${i}].properties=this.value; saveLocal()" /></label>
-            <label><span class="label-text">Range</span><input placeholder="Range" value="${escapeHtml(weapon.range)}" oninput="character.weapons[${i}].range=this.value; saveLocal()" /></label>
+            <label><span class="label-text">Damage</span><input readonly value="${escapeHtml(weapon.damage || "")}" placeholder="Auto" /></label>
+            <label><span class="label-text">Range</span><input readonly value="${escapeHtml(weapon.range || "")}" placeholder="Auto" /></label>
+            <label><span class="label-text">Notes</span><input placeholder="Optional notes" value="${escapeHtml(weapon.description || "")}" oninput="character.weapons[${i}].description=this.value; saveLocal()" /></label>
             <button class="delete-btn" onclick="deleteWeapon(${i})">Delete</button>
           </div>
-          <label><span class="label-text">Weapon Description</span><textarea placeholder="Special rules, appearance, ammo, reload, critical effects, upgrades, or notes..." oninput="character.weapons[${i}].description=this.value; saveLocal()">${escapeHtml(weapon.description)}</textarea></label>
+          <div class="weapon-slot-grid">
+            <label><span class="label-text">Combat Card Slot</span><select onchange="setWeaponCombatSlot(${i}, this.value)">
+              <option value="" ${!weapon.combatSlot ? "selected" : ""}>Not shown</option>
+              <option value="main" ${weapon.combatSlot === "main" ? "selected" : ""}>Main hand</option>
+              <option value="offhand" ${weapon.combatSlot === "offhand" ? "selected" : ""}>Off hand / Dual wield</option>
+            </select></label>
+            <div class="stat-box"><span class="label-text">Combat Damage</span>${escapeHtml(weapon.damage || "Choose category")}</div>
+            <div class="dual-wield-note">Set one weapon as Main hand and one as Off hand to show dual wielding on the Combat card.</div>
+          </div>
         </div>`;
       }).join("");
     }
-    function addWeapon(){ character.weapons.push({ name:"", type:"", damage:"", properties:"", range:"", description:"" }); renderDynamic(); }
-    function deleteWeapon(i){ character.weapons.splice(i,1); renderDynamic(); }
+    function addWeapon(){
+      const hasMain = Array.isArray(character.weapons) && character.weapons.some(w => normalizeWeapon(w).combatSlot === "main");
+      character.weapons.push(normalizeWeapon({ name:"", type:"", damage:"", properties:"", range:"", description:"", combatSlot: hasMain ? "" : "main" }));
+      renderDynamic();
+    }
+    function deleteWeapon(i){
+      if (!Array.isArray(character.weapons)) return;
+      character.weapons.splice(i,1);
+      character.weapons = character.weapons.map(normalizeWeapon);
+      renderDynamic();
+    }
 
     function protectionEffectSummaryHtml(){
       const category = character.protectionCategory;
@@ -8231,11 +8767,10 @@
       }
       const calculated = data.calculate();
       const appliedDefense = Number(character.armorClass || 0);
-      const protectionName = character.protectionName || category;
       const isApplied = appliedDefense === calculated;
       summary.innerHTML = isApplied
-        ? `<strong>Applied to Defense:</strong> ${escapeHtml(protectionName)} • ${escapeHtml(category)} • Defense ${calculated}<br><small>${escapeHtml(data.acText)}${character.protectionProperties ? " • " + escapeHtml(character.protectionProperties) : ""}</small>`
-        : `<strong>Ready to apply:</strong> ${escapeHtml(protectionName)} would set Defense to ${calculated}. Current Defense is ${appliedDefense || 0}.`;
+        ? `<strong>Applied to Defense:</strong> ${escapeHtml(category)} • Defense ${calculated}<br><small>${escapeHtml(data.acText)}${character.protectionProperties ? " • " + escapeHtml(character.protectionProperties) : ""}</small>`
+        : `<strong>Ready to apply:</strong> ${escapeHtml(category)} would set Defense to ${calculated}. Current Defense is ${appliedDefense || 0}.`;
     }
 
     function renderProtection(){
@@ -8259,7 +8794,7 @@
         <strong>${category}</strong>
         <div><b>Rules:</b></div>
         <ul>${data.rules.map(rule => `<li>${rule}</li>`).join("")}</ul>
-        <div style="margin-top:8px"><b>Examples / flavor only:</b> ${data.examples.join(", ")}</div>
+        <div style="margin-top:8px"><b>Flavor examples:</b> ${data.examples.join(", ")}</div>
       `;
       protectionEffectSummaryHtml();
     }
@@ -8273,7 +8808,7 @@
       const calculated = data.calculate();
       character.armorClass = calculated;
       character.protectionAppliedDefense = calculated;
-      character.protectionAppliedName = character.protectionName || character.protectionCategory;
+      character.protectionAppliedName = character.protectionCategory;
       character.protectionAppliedCategory = character.protectionCategory;
       character.protectionAppliedText = data.acText;
       setValue("armorClass", character.armorClass);
@@ -8627,14 +9162,14 @@
     function getAbilityDcText(){
       const source = character.powerSource || "CHA";
       const key = abilityNameToKey(source);
-      const total = 8 + Number(character.proficiencyBonus || 0) + mod(character.attributes?.[key] || 10);
+      const total = 8 + Number(character.proficiencyBonus || 0) + abilityMod(key);
       return isFinite(total) ? String(total) : "—";
     }
 
     function getAbilityAttackText(){
       const source = character.powerSource || "CHA";
       const key = abilityNameToKey(source);
-      const total = Number(character.proficiencyBonus || 0) + mod(character.attributes?.[key] || 10);
+      const total = Number(character.proficiencyBonus || 0) + abilityMod(key);
       if (!isFinite(total)) return "—";
       return total >= 0 ? `+${total}` : String(total);
     }
@@ -8712,7 +9247,7 @@
         .map((weapon, index) => ({ weapon, index }))
         .filter(({ weapon }) => templateMatches(weapon, term));
       select.innerHTML = matches.length
-        ? matches.map(({ weapon, index }) => `<option value="${index}">${escapeHtml(weapon.name)} — ${escapeHtml(weapon.type)} — ${escapeHtml(weapon.damage)}</option>`).join("")
+        ? matches.map(({ weapon, index }) => `<option value="${index}">${escapeHtml(weapon.type)}</option>`).join("")
         : `<option value="">No matching weapons found</option>`;
       if (matches.length) select.selectedIndex = 0;
       renderWeaponTemplatePreview();
@@ -8723,8 +9258,8 @@
       const select = document.getElementById("weaponTemplateSelect");
       const template = select && select.value !== "" ? weaponTemplates[Number(select.value)] : null;
       setTemplatePreview("weaponTemplatePreview", template, "Select a weapon to preview it here.", template ? `
-        <div class="template-preview-title">${escapeHtml(template.name)}</div>
-        <div class="template-preview-meta"><b>Type:</b> ${escapeHtml(template.type)}<br><b>Damage:</b> ${escapeHtml(template.damage)}<br><b>Range:</b> ${escapeHtml(template.range)}<br><b>Properties:</b> ${escapeHtml(template.properties)}</div>
+        <div class="template-preview-title">${escapeHtml(template.type)}</div>
+        <div class="template-preview-meta"><b>Damage:</b> ${escapeHtml(template.damage || "Auto")} ${template.range ? `• <b>Range:</b> ${escapeHtml(template.range)}` : ""}<br><b>Category only:</b> no specific weapon item is required.</div>
         <div class="template-preview-description">${escapeHtml(template.description || "")}</div>
       ` : "");
     }
@@ -8734,7 +9269,9 @@
       if (!select || select.value === "") { alert("Choose a weapon first."); return; }
       const template = weaponTemplates[Number(select.value)];
       if (!template) { alert("Choose a weapon first."); return; }
-      character.weapons.push({ ...template });
+      const shouldUseMain = !Array.isArray(character.weapons) || !character.weapons.some(w => normalizeWeapon(w).combatSlot === "main");
+      const shouldUseOffhand = !shouldUseMain && Array.isArray(character.weapons) && !character.weapons.some(w => normalizeWeapon(w).combatSlot === "offhand");
+      character.weapons.push(normalizeWeapon({ name: template.type, type: template.type, damage: template.damage || "", properties: template.properties || "", range: template.range || "", description: "", combatSlot: shouldUseMain ? "main" : (shouldUseOffhand ? "offhand" : "") }));
       renderDynamic();
     }
 
@@ -8798,7 +9335,7 @@
       addList("Xeno Adept", xenoAdeptBaseFeatures);
       Object.entries(xenoAdeptArchetypeFeatures).forEach(([source, list]) => addList(source, list));
       species.forEach(name => entries.push({
-        name: `${name} Species Trait`,
+        name: `${name} Race Trait`,
         level: "Species",
         source: name,
         category: "Species",
@@ -8850,11 +9387,14 @@
     }
 
     function renderDevices(){
-      document.getElementById("devicesList").innerHTML = character.devices.map((d,i) => {
+      const list = document.getElementById("devicesList");
+      if (!list) return;
+      if (!Array.isArray(character.devices)) character.devices = [];
+      list.innerHTML = character.devices.length ? character.devices.map((d,i) => {
         const recovery = getDeviceRecoveryType(d);
         const recoveryLabel = recovery === "short" ? "Resets on short/long rest" : recovery === "long" ? "Resets on long rest" : "Manual reset";
-        return `<div class="device-row"><div class="device-top"><input placeholder="Device name" value="${escapeHtml(d.name)}" oninput="character.devices[${i}].name=this.value; saveLocal()" /><input placeholder="Type / Category" value="${escapeHtml(d.category || d.type || "")}" oninput="character.devices[${i}].category=this.value; saveLocal()" /><button class="delete-btn" onclick="deleteDevice(${i})">Delete</button></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;"><label class="device-integrated-label"><input class="device-integrated-checkbox" type="checkbox" ${d.integrated ? "checked" : ""} onchange="character.devices[${i}].integrated=this.checked; saveLocal()" /> Integrated</label><label class="device-integrated-label"><input class="device-integrated-checkbox" type="checkbox" ${d.expended ? "checked" : ""} onchange="character.devices[${i}].expended=this.checked; saveLocal(); renderCombatQuickPanel();" /> Used / Expended</label></div><div class="combat-quick-small" style="color: var(--muted);">${recoveryLabel}</div><textarea placeholder="Effect / integration notes" oninput="character.devices[${i}].effect=this.value; saveLocal()">${escapeHtml(d.effect)}</textarea></div>`;
-      }).join("");
+        return `<div class="device-row"><div class="device-top"><input placeholder="Device name" value="${escapeHtml(d.name || "")}" oninput="character.devices[${i}].name=this.value; saveLocal()" /><input placeholder="Type / Category" value="${escapeHtml(d.category || d.type || "")}" oninput="character.devices[${i}].category=this.value; saveLocal()" /><button class="remove-device-btn" type="button" onclick="deleteDevice(${i})">Remove Device</button></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;"><label class="device-integrated-label"><input class="device-integrated-checkbox" type="checkbox" ${d.integrated ? "checked" : ""} onchange="character.devices[${i}].integrated=this.checked; saveLocal()" /> Integrated</label><label class="device-integrated-label"><input class="device-integrated-checkbox" type="checkbox" ${d.expended ? "checked" : ""} onchange="character.devices[${i}].expended=this.checked; saveLocal(); renderCombatQuickPanel();" /> Used / Expended</label></div><div class="combat-quick-small" style="color: var(--muted);">${recoveryLabel}</div><textarea placeholder="Effect / integration notes" oninput="character.devices[${i}].effect=this.value; saveLocal()">${escapeHtml(d.effect || "")}</textarea></div>`;
+      }).join("") : `<div class="stat-box">No devices added yet. Use Add Selected Device or Add Blank Device below.</div>`;
     }
 
     function addSelectedDevice(){
@@ -8870,7 +9410,11 @@
     }
 
     function addDevice(){ character.devices.push({ name:"", category:"", integrated:false, expended:false, effect:"" }); renderDynamic(); }
-    function deleteDevice(i){ character.devices.splice(i,1); renderDynamic(); }
+    function deleteDevice(i){
+      if (!Array.isArray(character.devices)) return;
+      character.devices.splice(i,1);
+      renderDynamic();
+    }
     function renderCharacterArt(){
       const preview = document.getElementById("characterArtPreview");
       if (!preview) return;
@@ -9155,7 +9699,7 @@
       if (!data || !setup) { if (!options.silent) alert("Auto setup is currently available for the listed Starbound classes only."); return; }
 
       const level = Math.max(1, Math.min(20, Number(character.level || 1)));
-      const conMod = mod(character.attributes.constitution || 10);
+      const conMod = abilityMod("constitution");
       const hitDieMax = Number(String(setup.hitDie).replace(/[^0-9]/g, "")) || 8;
       const hpPerLevel = Math.max(1, Number(setup.hitDieAverage || Math.ceil(hitDieMax / 2 + 1)) + conMod);
       const calculatedMaxHp = Math.max(1, hitDieMax + conMod + ((level - 1) * hpPerLevel));
@@ -9182,11 +9726,11 @@
       const featureLevelLimit = options.addAllFeaturesThroughLevel ? level : 1;
       data.features.filter(feature => feature.level <= featureLevelLimit).forEach(feature => {
         const key = String(feature.name || "").toLowerCase();
-        if (!existingFeatureNames.has(key)) { character.features.push({ name: feature.name, description: `[${feature.source || character.className} — Level ${feature.level}]\n${feature.description || ""}` }); existingFeatureNames.add(key); }
+        if (!existingFeatureNames.has(key)) { character.features.push({ name: feature.name, description: `[${feature.source || character.className} — Level ${feature.level}]\n${feature.description || ""}`, autoGrant: true, grantType: "class", grantKey: `class:${character.className}:${feature.source || character.className}:${feature.level}:${feature.name}` }); existingFeatureNames.add(key); }
       });
 
       ["proficiencyBonus", "powerSource", "recovery", "maxHp", "currentHp", "protectionCategory"].forEach(id => setValue(id, character[id]));
-      renderDynamic();
+      if (!options.skipRender) renderDynamic();
     }
 
     function renderAutoClassFeatures(){
@@ -9235,10 +9779,10 @@
       list.innerHTML = character.features.map((feature, i) => `
         <div class="feature-row">
           <div class="feature-top">
-            <label><span class="label-text">Feature / Talent Name</span><input placeholder="Ex: Versatile Mind" value="${escapeHtml(feature.name)}" oninput="character.features[${i}].name=this.value; saveLocal()" /></label>
+            <label><span class="label-text">Feature / Talent Name</span><input placeholder="Ex: Versatile Mind" value="${escapeHtml(feature.name)}" oninput="character.features[${i}].name=this.value; character.features[${i}].autoGrant=false; saveLocal()" /></label>
             <button class="delete-btn" onclick="deleteFeature(${i})">Delete</button>
           </div>
-          <label><span class="label-text">Description</span><textarea placeholder="Ex: Once per long rest, reroll a failed ability check." oninput="character.features[${i}].description=this.value; saveLocal()">${escapeHtml(feature.description)}</textarea></label>
+          <label><span class="label-text">Description${feature.autoGrant ? `<span class="auto-grant-badge">Auto</span>` : ""}</span><textarea placeholder="Ex: Once per long rest, reroll a failed ability check." oninput="character.features[${i}].description=this.value; character.features[${i}].autoGrant=false; saveLocal()">${escapeHtml(feature.description)}</textarea></label>
         </div>
       `).join("");
     }
@@ -9309,9 +9853,32 @@
     }
 
     function loadNpc(id){
+      if (npcViewMode === "edit") syncActiveNpcFromFields();
       const npc = character.npcs.find(n => n.id === id);
       if (!npc) return;
       applyNpcToFields(npc);
+      npcViewMode = "view";
+      renderAll();
+    }
+
+    function editNpc(id){
+      if (id && character.npcActiveId !== id) {
+        const npc = character.npcs.find(n => n.id === id);
+        if (npc) applyNpcToFields(npc);
+      }
+      npcViewMode = "edit";
+      renderAll();
+    }
+
+    function editActiveNpc(){
+      npcViewMode = "edit";
+      renderAll();
+    }
+
+    function doneEditingNpc(){
+      syncActiveNpcFromFields();
+      npcViewMode = "view";
+      saveLocal();
       renderAll();
     }
 
@@ -9320,6 +9887,7 @@
       const npc = defaultNpc({ name: "New NPC", folder: character.npcFolder || "Unsorted" });
       character.npcs.push(npc);
       applyNpcToFields(npc);
+      npcViewMode = "edit";
       renderAll();
     }
 
@@ -9329,6 +9897,7 @@
       const copy = normalizeNpc({ ...current, id: createNpcId(), name: `${current.name || "Unnamed NPC"} Copy` });
       character.npcs.push(copy);
       applyNpcToFields(copy);
+      npcViewMode = "edit";
       renderAll();
     }
 
@@ -9338,16 +9907,31 @@
       const index = character.npcs.findIndex(n => n.id === current.id);
       character.npcs[index] = cleared;
       applyNpcToFields(cleared);
+      npcViewMode = "edit";
+      renderAll();
+    }
+
+    function removeNpcById(id){
+      if (!Array.isArray(character.npcs)) character.npcs = [];
+      if (!id && character.npcActiveId) id = character.npcActiveId;
+      if (!id) return;
+      syncActiveNpcFromFields();
+      character.npcs = character.npcs.filter(n => n.id !== id);
+      if (!character.npcs.length) {
+        const blank = defaultNpc({ name: "New NPC", folder: "Unsorted" });
+        character.npcs.push(blank);
+        applyNpcToFields(blank);
+      } else {
+        const next = character.npcs.find(n => n.id === character.npcActiveId) || character.npcs[0];
+        applyNpcToFields(next);
+      }
+      npcViewMode = "view";
+      saveLocal();
       renderAll();
     }
 
     function deleteActiveNpc(){
-      if (!Array.isArray(character.npcs) || !character.npcs.length) return;
-      if (character.npcs.length === 1) { clearNpcForm(); return; }
-      const currentId = character.npcActiveId;
-      character.npcs = character.npcs.filter(n => n.id !== currentId);
-      applyNpcToFields(character.npcs[0]);
-      renderAll();
+      removeNpcById(character.npcActiveId);
     }
 
     function setNpcFolderFilter(folder){
@@ -9371,6 +9955,26 @@
     function renderNpc(){
       renderNpcStatus();
       renderNpcList();
+      renderNpcEditorMode();
+    }
+
+    function renderNpcEditorMode(){
+      const locked = npcViewMode !== "edit";
+      const fieldIds = ["npcName","npcSpecies","npcRole","npcDefense","npcHp","npcMaxHp","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"];
+      fieldIds.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = locked; });
+      const grid = document.getElementById("npcEditorFields");
+      if (grid) grid.classList.toggle("npc-locked", locked);
+      const editBtn = document.getElementById("npcEditButton");
+      const doneBtn = document.getElementById("npcDoneButton");
+      if (editBtn) editBtn.style.display = locked ? "" : "none";
+      if (doneBtn) doneBtn.style.display = locked ? "none" : "";
+      const note = document.getElementById("npcEditNote");
+      if (note) {
+        const active = getActiveNpc();
+        note.innerHTML = locked
+          ? `<strong>View mode:</strong> ${escapeHtml(active.name || "This NPC")} is locked to prevent accidental edits. Use Edit NPC to make changes.`
+          : `<strong>Edit mode:</strong> Make your NPC changes, then hit Done Editing to lock this NPC again.`;
+      }
     }
 
     function renderNpcList(){
@@ -9402,12 +10006,18 @@
       list.innerHTML = filtered.map(n => {
         const meta = [n.role, n.species, n.faction, n.location].filter(Boolean).join(" • ");
         const hpText = `${Number(n.hp || 0)}${Number(n.maxHp || 0) ? `/${Number(n.maxHp || 0)}` : ""} HP`;
-        return `<button type="button" class="npc-list-item ${n.id === character.npcActiveId ? "active" : ""}" onclick="loadNpc('${escapeJs(n.id)}')">
-          <div class="npc-list-name">${escapeHtml(n.name || "Unnamed NPC")}</div>
-          <div class="npc-list-meta">${escapeHtml(n.folder || "Unsorted")} ${meta ? `— ${escapeHtml(meta)}` : ""}</div>
-          <div class="npc-list-meta">Defense ${escapeHtml(n.defense || "—")} • ${escapeHtml(hpText)} • Speed ${escapeHtml(n.speed || "—")}</div>
-          ${n.tags ? `<div class="npc-list-meta">Tags: ${escapeHtml(n.tags)}</div>` : ""}
-        </button>`;
+        return `<div class="npc-list-item ${n.id === character.npcActiveId ? "active" : ""}" onclick="loadNpc('${escapeJs(n.id)}')" role="button" tabindex="0">
+          <div class="npc-list-main">
+            <div class="npc-list-name">${escapeHtml(n.name || "Unnamed NPC")}</div>
+            <div class="npc-list-meta">${escapeHtml(n.folder || "Unsorted")} ${meta ? `— ${escapeHtml(meta)}` : ""}</div>
+            <div class="npc-list-meta">Defense ${escapeHtml(n.defense || "—")} • ${escapeHtml(hpText)} • Speed ${escapeHtml(n.speed || "—")}</div>
+            ${n.tags ? `<div class="npc-list-meta">Tags: ${escapeHtml(n.tags)}</div>` : ""}
+          </div>
+          <div class="npc-list-actions">
+            <button type="button" class="npc-list-open" onclick="event.stopPropagation(); editNpc('${escapeJs(n.id)}')">Edit</button>
+            <button type="button" class="npc-list-remove" onclick="event.stopPropagation(); removeNpcById('${escapeJs(n.id)}')">Remove</button>
+          </div>
+        </div>`;
       }).join("");
     }
 
@@ -9567,7 +10177,7 @@
 
     function addPlayerToEncounter(){
       const enc = ensureEncounter();
-      const dex = mod(character.attributes?.dexterity || 10);
+      const dex = abilityMod("dexterity");
       enc.combatants.push(defaultCombatant({ name: character.characterName || "Player Character", type: "Player", defense: Number(character.armorClass || 10), hp: Number(character.currentHp || character.maxHp || 1), maxHp: Number(character.maxHp || 1), shield: Number(character.shield || 0), speed: `${character.speed || 30} ft`, initiative: dex + Number(character.initiativeBonus || 0), attacks: (character.weapons || []).map(w => [w.name, w.damage].filter(Boolean).join(' — ')).filter(Boolean).join('\n'), notes: "Player character" }));
       renderAll();
     }
@@ -9615,7 +10225,7 @@
       renderAll();
     }
 
-    function setActiveEncounterTurn(index){ ensureEncounter().activeTurn = index; renderAll(); }
+    function setActiveEncounterTurn(index){ ensureEncounter().activeTurn = index; bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
     function adjustCombatantHp(index, amount){
       const c = ensureEncounter().combatants[index]; if (!c) return;
       c.hp = Math.max(0, Number(c.hp || 0) + Number(amount || 0));
@@ -9625,9 +10235,9 @@
     }
     function damageCombatant(index){ const amount = Number(prompt("Damage amount", "0") || 0); if (amount > 0) adjustCombatantHp(index, -amount); }
     function healCombatant(index){ const amount = Number(prompt("Healing amount", "0") || 0); if (amount > 0) adjustCombatantHp(index, amount); }
-    function toggleCombatantDefeated(index){ const c = ensureEncounter().combatants[index]; if (!c) return; c.defeated = !c.defeated; renderAll(); }
-    function deleteCombatant(index){ ensureEncounter().combatants.splice(index, 1); renderAll(); }
-    function clearEncounter(){ if (!confirm("Clear all combatants from this encounter?")) return; character.encounter = normalizeEncounter({ name: character.encounter?.name || "", notes: character.encounter?.notes || "" }); renderAll(); }
+    function toggleCombatantDefeated(index){ const c = ensureEncounter().combatants[index]; if (!c) return; c.defeated = !c.defeated; bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
+    function deleteCombatant(index){ ensureEncounter().combatants.splice(index, 1); bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
+    function clearEncounter(){ if (!confirm("Clear all combatants from this encounter?")) return; character.encounter = normalizeEncounter({ name: character.encounter?.name || "", notes: character.encounter?.notes || "" }); bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
 
     function renderShip(){
       renderShipStatus();
@@ -9806,7 +10416,7 @@
     window.exportSelectedJson = exportSelectedJson;
     window.saveCharacter = saveCharacter;
     function importCharacter(event){ const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = () => { try { character = mergeCharacter(clone(blank), JSON.parse(reader.result)); saveLocal(); renderAll(); event.target.value = ""; } catch { alert("That file could not be loaded."); } }; reader.readAsText(file); }
-    function resetCharacter(){ if (!confirm("Reset the current save slot?")) return; character = clone(blank); saveLocal(); renderAll(); }
+    function resetCharacter(){ if (!confirm("Reset the current save slot?")) return; character = clone(blank); saveLocal(); bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
     function escapeHtml(value){ return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
     function escapeJs(value){ return String(value ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/\n/g, " ").replace(/\r/g, " "); }
 
