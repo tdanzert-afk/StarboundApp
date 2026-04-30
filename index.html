@@ -2225,6 +2225,15 @@
   <script>
     const species = ["Terran", "Chromari", "Synthetic", "Virex", "Brutor", "Spilkin", "Kyrrim", "Mycoren", "Hybrid"];
     const classes = ["Captain", "Cyber Knight", "Engineer", "Gunslinger", "Starblade", "Saboteur", "Technomancer", "Void Dancer", "Xeno Adept"];
+    const classAttackProgression = {
+      "Cyber Knight": [{ level: 5, attacks: 2 }],
+      "Engineer": [{ level: 5, attacks: 2 }],
+      "Gunslinger": [{ level: 5, attacks: 2 }, { level: 11, attacks: 3 }],
+      "Starblade": [{ level: 5, attacks: 2 }, { level: 11, attacks: 3 }],
+      "Void Dancer": [{ level: 5, attacks: 2 }],
+      "Xeno Adept": [{ level: 5, attacks: 2 }]
+    };
+
     const backgrounds = ["Scavenger", "Corporate Operative", "Frontier Colonist", "Mercenary", "Smuggler", "Researcher", "Pirate", "Bounty Hunter", "Drifter"];
     const speciesVariantOptions = {
       "Terran": [
@@ -7448,7 +7457,7 @@
       "Drifter": { feature: { name: "Drifter Background Feature", description: "You know how to survive between jobs, stations, and crews with few resources. Replace this placeholder with the exact rule text." }, device: { name: "Patchwork Multitool", effect: "Background device. A worn, adaptable tool for travel and survival. Edit to match your rules." } }
     };
 
-    const blank = { characterName: "", playerName: "", race: "Terran", speciesVariant: "standard", speciesAbilityBonusOne: "", speciesAbilityBonusTwo: "", speciesAbilityBonusThree: "", autoSpeciesSkillGrants: [], className: "Captain", level: 1, experience: "", background: "Scavenger", classPath: "Path of the Diplomat", characterDescription: "", characterArt: "", proficiencyBonus: 2, attributes: { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 }, saves: { strength: false, dexterity: false, constitution: false, intelligence: false, wisdom: false, charisma: false }, skills: Object.fromEntries(skills.map(([key]) => [key, false])), skillsExpertise: Object.fromEntries(skills.map(([key]) => [key, false])), armorClass: 10, initiativeBonus: 0, speed: 30, maxHp: 8, currentHp: 8, tempHp: 0, shield: 0, maxShield: 0, recovery: "1d8", weapons: [{ name: "", type: "", damage: "", properties: "", range: "", description: "", combatSlot: "main" }], protectionName: "", protectionCategory: "", protectionDefense: "", protectionProperties: "", protectionDescription: "", powerSource: "", powerReserve: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, abilities: { 0: [{ name: "Flick", discipline: "Force", useTime: "Bonus Action", range: "30 feet", target: "One unattended object of Medium size or smaller, or an unsecured loose item held by a creature", duration: "Instantaneous", description: "You deliver a sharp impulse to a nearby object, causing it to fly up to 10 feet in a direction of your choosing. If the object was held by a creature, that creature must succeed on a Strength saving throw against your Ability Save DC or drop the object." }], 1: [emptyAbility()], 2: [emptyAbility()], 3: [emptyAbility()], 4: [emptyAbility()], 5: [emptyAbility()] }, devices: [{ name: "", category: "", integrated: false, effect: "" }], inventoryItems: [{ name: "", quantity: 1, category: "", weight: "", description: "" }], credits: 0,
+    const blank = { characterName: "", playerName: "", race: "Terran", speciesVariant: "standard", speciesAbilityBonusOne: "", speciesAbilityBonusTwo: "", speciesAbilityBonusThree: "", autoSpeciesSkillGrants: [], className: "Captain", level: 1, experience: "", background: "Scavenger", classPath: "Path of the Diplomat", characterDescription: "", characterArt: "", proficiencyBonus: 2, attributes: { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 }, saves: { strength: false, dexterity: false, constitution: false, intelligence: false, wisdom: false, charisma: false }, skills: Object.fromEntries(skills.map(([key]) => [key, false])), skillsExpertise: Object.fromEntries(skills.map(([key]) => [key, false])), armorClass: 10, initiativeBonus: 0, speed: 30, maxHp: 8, currentHp: 8, tempHp: 0, attacksPerAction: 1, attacksPerActionManual: false, shield: 0, maxShield: 0, recovery: "1d8", weapons: [{ name: "", type: "", damage: "", properties: "", range: "", description: "", combatSlot: "main" }], protectionName: "", protectionCategory: "", protectionDefense: "", protectionProperties: "", protectionDescription: "", powerSource: "", powerReserve: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, abilities: { 0: [{ name: "Flick", discipline: "Force", useTime: "Bonus Action", range: "30 feet", target: "One unattended object of Medium size or smaller, or an unsecured loose item held by a creature", duration: "Instantaneous", description: "You deliver a sharp impulse to a nearby object, causing it to fly up to 10 feet in a direction of your choosing. If the object was held by a creature, that creature must succeed on a Strength saving throw against your Ability Save DC or drop the object." }], 1: [emptyAbility()], 2: [emptyAbility()], 3: [emptyAbility()], 4: [emptyAbility()], 5: [emptyAbility()] }, devices: [{ name: "", category: "", integrated: false, effect: "" }], inventoryItems: [{ name: "", quantity: 1, category: "", weight: "", description: "" }], credits: 0,
       shipName: "", shipClass: "", shipHull: 0, shipMaxHull: 0, shipShields: 0, shipSpeed: "", shipFuel: 0, shipJumpCharges: 0, shipNotes: "",
       shipWeapons: [{ name: "", type: "", damage: "", range: "", description: "" }],
       shipCrewRoles: [{ role: "Captain", character: "", notes: "" }, { role: "Pilot", character: "", notes: "" }, { role: "Engineer", character: "", notes: "" }],
@@ -7630,6 +7639,39 @@
       return weaponTemplates.find(t => String(t.type || t.name || "").trim().toLowerCase() === target) || null;
     }
 
+    function defaultWeaponAttackAbility(type){
+      const label = String(type || "").toLowerCase();
+      if (label.includes("tech")) return "intelligence";
+      if (label.includes("ranged")) return "dexterity";
+      if (label.includes("light melee")) return "dexterity";
+      if (label.includes("natural")) return "strength";
+      if (label.includes("melee")) return "strength";
+      return "strength";
+    }
+
+    function weaponAttackAbility(weapon){
+      const chosen = weapon?.attackAbility || "";
+      if (chosen && abilityNames[chosen]) return chosen;
+      return defaultWeaponAttackAbility(weapon?.type || weapon?.name || "");
+    }
+
+    function weaponAttackModifier(weapon){
+      const abilityKey = weaponAttackAbility(weapon);
+      const prof = Number(character?.proficiencyBonus || 0);
+      const bonus = Number(weapon?.bonus || 0);
+      return abilityMod(abilityKey) + prof + bonus;
+    }
+
+    function weaponAttackSummary(weapon){
+      if (!weapon || !(weapon.name || weapon.type || weapon.damage)) return "";
+      const abilityKey = weaponAttackAbility(weapon);
+      const prof = Number(character?.proficiencyBonus || 0);
+      const bonus = Number(weapon?.bonus || 0);
+      const parts = [`${abilityAbbrev(abilityKey)} ${signed(abilityMod(abilityKey))}`, `Prof ${signed(prof)}`];
+      if (bonus) parts.push(`Bonus ${signed(bonus)}`);
+      return `${signed(weaponAttackModifier(weapon))} (${parts.join(" + ")})`;
+    }
+
     function normalizeWeapon(w){
       const rawType = w?.type || w?.weaponType || w?.name || "";
       const template = getWeaponTemplateByType(rawType);
@@ -7645,8 +7687,9 @@
         range: w?.range || template?.range || "",
         description: w?.description || "",
         bonus: w?.bonus || "",
+        attackAbility: w?.attackAbility || defaultWeaponAttackAbility(rawType || template?.type || ""),
         combatSlot,
-        equipped: combatSlot === "main" || legacyEquipped
+        equipped: combatSlot === "main"
       };
     }
     function normalizeInventoryItem(item){ return { name: item?.name || "", quantity: Number(item?.quantity || 1), category: item?.category || "", weight: item?.weight || "", description: item?.description || item?.notes || "" }; }
@@ -7957,7 +8000,7 @@
         if (one === key) bonus += 2;
       } else if (character.race === "Synthetic") {
         const choices = [one, two, three].filter(Boolean);
-        if (choices.includes(key)) bonus += 1;
+        if (choices.filter(choice => choice === key).length > 0) bonus += 1;
       } else if (character.race === "Virex") {
         if ((one === "wisdom" || one === "charisma") && one === key) bonus += 2;
       } else if (character.race === "Brutor") {
@@ -8021,6 +8064,7 @@
       if (oneLabel) oneLabel.style.display = usesOne ? "block" : "none";
       if (twoLabel) twoLabel.style.display = usesTwo ? "block" : "none";
       if (threeLabel) threeLabel.style.display = usesThree ? "block" : "none";
+      if (raceName === "Synthetic") { if (oneLabel) oneLabel.title = "Synthetic +1 bonus choice 1 of 3"; if (twoLabel) twoLabel.title = "Synthetic +1 bonus choice 2 of 3"; if (threeLabel) threeLabel.title = "Synthetic +1 bonus choice 3 of 3"; }
       const bonusText = (raceName === "Synthetic" || raceName === "Hybrid") ? "+1" : "+2";
       if (oneText) {
         if (raceName === "Chromari") oneText.textContent = `Race Ability Bonus (${bonusText})`;
@@ -8266,7 +8310,7 @@
       if (tabPage && shouldScroll) tabPage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    function initialize(){ if (!character) character = loadLocal(); if (character.speciesAbilityBonusOne === undefined) character.speciesAbilityBonusOne = ""; if (character.speciesAbilityBonusTwo === undefined) character.speciesAbilityBonusTwo = ""; if (character.speciesAbilityBonusThree === undefined) character.speciesAbilityBonusThree = ""; loadThemeMode(); initializeMobileCleanup(); populateSelect("race", species); populateSelect("className", classes); populateSelect("background", backgrounds); syncSpeciesAbilityBonusControls(); updateSpeciesVariantOptions(); updateClassPathOptions(); initializeAdvancedFilterOptions(); populateDeviceTemplates(); populateWeaponTemplates(); populateInventoryTemplates(); populateFeatureTemplates(); populateProtectionTemplates(); populateAbilityTemplates(); clearAutoGrantedContent(["species"]); syncGrantedContent(["species"]); ["characterName","playerName","race","speciesVariant","className","experience","background","classPath","characterDescription","recovery","protectionCategory","protectionDefense","protectionProperties","protectionDescription","powerSource","traits","currentMission","crewMembers","contacts","factions","planetsVisited","shipsStations","activeJobs","debtsObligations","reputationNotes","shipName","shipClass","shipSpeed","shipNotes","npcName","npcSpecies","npcRole","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"].forEach(id => bindValue(id, id)); ["level","proficiencyBonus","armorClass","initiativeBonus","speed","maxHp","currentHp","tempHp","credits","shipHull","shipMaxHull","shipShields","shipFuel","shipJumpCharges","npcDefense","npcHp","npcMaxHp"].forEach(id => bindValue(id, id, "number")); document.getElementById("notesField").addEventListener("input", e => { character.notes = e.target.value; saveLocal(); }); document.querySelectorAll(".tab").forEach(btn => { btn.addEventListener("click", () => showTab(btn.dataset.tab)); }); const speciesBonusOneEl = document.getElementById("speciesAbilityBonusOne"); if (speciesBonusOneEl) speciesBonusOneEl.addEventListener("change", e => updateSpeciesAbilityBonus("one", e.target.value)); const speciesBonusTwoEl = document.getElementById("speciesAbilityBonusTwo"); if (speciesBonusTwoEl) speciesBonusTwoEl.addEventListener("change", e => updateSpeciesAbilityBonus("two", e.target.value)); const speciesBonusThreeEl = document.getElementById("speciesAbilityBonusThree"); if (speciesBonusThreeEl) speciesBonusThreeEl.addEventListener("change", e => updateSpeciesAbilityBonus("three", e.target.value)); document.getElementById("importFile").addEventListener("change", importCharacter);
+    function initialize(){ if (!character) character = loadLocal(); if (character.speciesAbilityBonusOne === undefined) character.speciesAbilityBonusOne = ""; if (character.speciesAbilityBonusTwo === undefined) character.speciesAbilityBonusTwo = ""; if (character.speciesAbilityBonusThree === undefined) character.speciesAbilityBonusThree = ""; if (character.attacksPerAction === undefined) character.attacksPerAction = 1; if (character.attacksPerActionManual === undefined) character.attacksPerActionManual = false; loadThemeMode(); initializeMobileCleanup(); populateSelect("race", species); populateSelect("className", classes); populateSelect("background", backgrounds); syncSpeciesAbilityBonusControls(); updateSpeciesVariantOptions(); updateClassPathOptions(); initializeAdvancedFilterOptions(); populateDeviceTemplates(); populateWeaponTemplates(); populateInventoryTemplates(); populateFeatureTemplates(); populateProtectionTemplates(); populateAbilityTemplates(); clearAutoGrantedContent(["species"]); syncGrantedContent(["species"]); ["characterName","playerName","race","speciesVariant","className","experience","background","classPath","characterDescription","recovery","protectionCategory","protectionDefense","protectionProperties","protectionDescription","powerSource","traits","currentMission","crewMembers","contacts","factions","planetsVisited","shipsStations","activeJobs","debtsObligations","reputationNotes","shipName","shipClass","shipSpeed","shipNotes","npcName","npcSpecies","npcRole","npcSpeed","npcFolder","npcLocation","npcFaction","npcTags","npcAttacks","npcAbilities","npcTactics","npcLoot","npcNotes"].forEach(id => bindValue(id, id)); ["level","proficiencyBonus","armorClass","initiativeBonus","speed","maxHp","currentHp","tempHp","attacksPerAction","credits","shipHull","shipMaxHull","shipShields","shipFuel","shipJumpCharges","npcDefense","npcHp","npcMaxHp"].forEach(id => bindValue(id, id, "number")); document.getElementById("notesField").addEventListener("input", e => { character.notes = e.target.value; saveLocal(); }); document.querySelectorAll(".tab").forEach(btn => { btn.addEventListener("click", () => showTab(btn.dataset.tab)); }); const speciesBonusOneEl = document.getElementById("speciesAbilityBonusOne"); if (speciesBonusOneEl) speciesBonusOneEl.addEventListener("change", e => updateSpeciesAbilityBonus("one", e.target.value)); const speciesBonusTwoEl = document.getElementById("speciesAbilityBonusTwo"); if (speciesBonusTwoEl) speciesBonusTwoEl.addEventListener("change", e => updateSpeciesAbilityBonus("two", e.target.value)); const speciesBonusThreeEl = document.getElementById("speciesAbilityBonusThree"); if (speciesBonusThreeEl) speciesBonusThreeEl.addEventListener("change", e => updateSpeciesAbilityBonus("three", e.target.value)); document.getElementById("importFile").addEventListener("change", importCharacter);
       const artInput = document.getElementById("characterArtInput");
       if (artInput) artInput.addEventListener("change", importCharacterArt);
       bindMaxHpDetails(); syncGrantedContent(); consolidateGearLayout(); renderAll(); }
@@ -8274,7 +8318,7 @@
     let abilityFolderLevel = localStorage.getItem("starboundAbilityFolderLevel") || "all";
 
     function renderAll(){ Object.keys(character).forEach(key => { if (document.getElementById(key) && typeof character[key] !== "object") setValue(key, character[key]); }); updateSpeciesVariantOptions(); updateClassPathOptions(); setValue("notesField", character.notes); syncMaxHpDetailField(); renderSaveSlotControls(); renderDynamic(); }
-    function renderDynamic(){ consolidateGearLayout(); renderMobileCharacterStatus(); renderAbilityPreview(); renderCombatQuickPanel(); renderAbilityScores(); renderCharacterHealthTracker(); renderSkills(); renderDerived(); renderWeapons(); renderProtection(); renderPowerReserve(); renderAbilityFolderBar(); renderAbilityLevels(); renderAbilityCardView(); renderAbilityViewMode(); renderDevices(); renderInventory(); renderAutoClassFeatures(); renderFeatures(); renderShip(); renderNpc(); renderEncounter(); renderCharacterArt(); syncMaxHpDetailField(); saveLocal(); }
+    function renderDynamic(){ if (character && !character.attacksPerActionManual) character.attacksPerAction = getAutoAttacksPerAction(); syncSpeciesAbilityBonusControls(); consolidateGearLayout(); renderMobileCharacterStatus(); renderAbilityPreview(); renderCombatQuickPanel(); renderAbilityScores(); renderCharacterHealthTracker(); renderSkills(); renderDerived(); renderWeapons(); renderProtection(); renderPowerReserve(); renderAbilityFolderBar(); renderAbilityLevels(); renderAbilityCardView(); renderAbilityViewMode(); renderDevices(); renderInventory(); renderAutoClassFeatures(); renderFeatures(); renderShip(); renderNpc(); renderEncounter(); renderCharacterArt(); syncMaxHpDetailField(); saveLocal(); }
 
 
     function getCombatWeapons(){
@@ -8294,6 +8338,33 @@
       return weapons.main || weapons.offhand || null;
     }
 
+    function getAutoAttacksPerAction(){
+      const className = character?.className || "";
+      const level = Number(character?.level || 1);
+      const progression = classAttackProgression[className] || [];
+      return progression.reduce((total, entry) => level >= Number(entry.level || 0) ? Math.max(total, Number(entry.attacks || 1)) : total, 1);
+    }
+
+    function getAttacksPerAction(){
+      const autoValue = getAutoAttacksPerAction();
+      if (character?.attacksPerActionManual) return Math.max(1, Number(character.attacksPerAction || autoValue));
+      return autoValue;
+    }
+
+    function attacksPerActionSourceText(){
+      const autoValue = getAutoAttacksPerAction();
+      if (character?.attacksPerActionManual) return `Manual override • Auto would be ${autoValue}`;
+      const className = character?.className || "Class";
+      return `Auto from ${className} level ${Number(character?.level || 1)}`;
+    }
+
+    function resetAttacksPerActionAuto(){
+      character.attacksPerActionManual = false;
+      character.attacksPerAction = getAutoAttacksPerAction();
+      saveLocal();
+      renderDynamic();
+    }
+
     function powerReserveSummary(){
       const reserve = character.powerReserve || {};
       return [0,1,2,3,4,5].map(lvl => `L${lvl}: ${Number(reserve[lvl] || 0)}`).join(" • ");
@@ -8305,10 +8376,11 @@
       const maxHp = Number(character.maxHp || 0);
       const currentHp = Number(character.currentHp || 0);
       const tempHp = Number(character.tempHp || 0);
+      const attacksPerAction = getAttacksPerAction();
       const initiativeTotal = abilityMod("dexterity") + Number(character.initiativeBonus || 0);
       const combatWeapons = getCombatWeapons();
       const weaponLine = (label, weapon) => weapon
-        ? `<b>${label}:</b> ${escapeHtml(weapon.type || weapon.name || "Unnamed Weapon")} — ${escapeHtml(weapon.damage || "Set by category")} ${weapon.range ? `• ${escapeHtml(weapon.range)}` : ""}${weapon.properties ? `<br><small>${escapeHtml(weapon.properties)}</small>` : ""}`
+        ? `<b>${label}:</b> ${escapeHtml(weapon.type || weapon.name || "Unnamed Weapon")} — Attack ${escapeHtml(signed(weaponAttackModifier(weapon)))} • ${escapeHtml(weapon.damage || "Set by category")} ${weapon.range ? `• ${escapeHtml(weapon.range)}` : ""}<br><small>${escapeHtml(weaponAttackSummary(weapon))}${weapon.properties ? ` • ${escapeHtml(weapon.properties)}` : ""}</small>`
         : `<b>${label}:</b> Not selected`;
       const weaponText = `<strong>Equipped Weapons</strong><br>${weaponLine("Main hand", combatWeapons.main)}<br>${weaponLine("Off hand", combatWeapons.offhand)}`;
       panel.innerHTML = `
@@ -8325,6 +8397,12 @@
             <div class="combat-quick-label">Temp HP</div>
             <input class="combat-quick-stat-input single" type="number" min="0" value="${tempHp}" oninput="setQuickCombatStat('tempHp', this.value)" />
             <div class="combat-quick-small">absorbs first</div>
+          </div>
+          <div class="combat-quick-stat">
+            <div class="combat-quick-label">Attacks</div>
+            <input class="combat-quick-stat-input single" type="number" min="1" value="${attacksPerAction}" oninput="setQuickCombatStat('attacksPerAction', this.value)" />
+            <div class="combat-quick-small">${escapeHtml(attacksPerActionSourceText())}</div>
+            ${character.attacksPerActionManual ? `<button type="button" class="secondary" style="margin-top:6px; padding:6px 8px; min-height:0; font-size:11px;" onclick="resetAttacksPerActionAuto()">Reset Auto</button>` : ""}
           </div>
           <div class="combat-quick-stat"><div class="combat-quick-label">Defense</div><div class="combat-quick-value" data-combat-readout="defense">${Number(character.armorClass || 0)}</div><div class="combat-quick-small">${escapeHtml(character.protectionAppliedName || character.protectionCategory || "AC / Defense")}</div></div>
           <div class="combat-quick-stat"><div class="combat-quick-label">Initiative</div><div class="combat-quick-value" data-combat-readout="initiative">${signed(initiativeTotal)}</div><div class="combat-quick-small">total bonus</div></div>
@@ -8345,10 +8423,12 @@
     }
 
     function setQuickCombatStat(key, value){
-      const allowed = ["currentHp", "maxHp", "tempHp"];
+      const allowed = ["currentHp", "maxHp", "tempHp", "attacksPerAction"];
       if (!allowed.includes(key)) return;
-      const numeric = Math.max(0, Number(value || 0));
+      const minimum = key === "attacksPerAction" ? 1 : 0;
+      const numeric = Math.max(minimum, Number(value || minimum));
       character[key] = numeric;
+      if (key === "attacksPerAction") character.attacksPerActionManual = true;
       const linkedField = document.getElementById(key);
       if (linkedField && linkedField.value !== String(numeric)) linkedField.value = numeric;
       if (key === "maxHp" && Number(character.currentHp || 0) > numeric) {
@@ -8358,6 +8438,7 @@
       }
       saveLocal();
       renderDerived();
+      renderCombatQuickPanel();
       updateCombatQuickReadouts();
     }
 
@@ -8684,7 +8765,8 @@
         type: template?.type || type || "",
         damage: template?.damage || "",
         range: template?.range || "",
-        properties: template?.properties || ""
+        properties: template?.properties || "",
+        attackAbility: defaultWeaponAttackAbility(template?.type || type || "")
       });
       saveLocal();
       renderDynamic();
@@ -8697,20 +8779,35 @@
         const normalized = normalizeWeapon(weapon);
         if (i === index) {
           normalized.combatSlot = normalizedSlot;
-          normalized.equipped = normalizedSlot === "main";
         } else if (normalizedSlot && normalized.combatSlot === normalizedSlot) {
+          // Only one weapon can occupy each hand, but main hand and off hand are independent.
           normalized.combatSlot = "";
-          normalized.equipped = false;
-        } else {
-          normalized.equipped = normalized.combatSlot === "main";
         }
+        normalized.equipped = normalized.combatSlot === "main";
         return normalized;
       });
       saveLocal();
       renderDynamic();
     }
 
+    function equipWeaponMain(index){ setWeaponCombatSlot(index, "main"); }
+    function equipWeaponOffhand(index){ setWeaponCombatSlot(index, "offhand"); }
+    function unequipWeapon(index){ setWeaponCombatSlot(index, ""); }
     function setPrimaryWeapon(index){ setWeaponCombatSlot(index, "main"); }
+
+    function setWeaponAttackAbility(index, abilityKey){
+      if (!Array.isArray(character.weapons) || !character.weapons[index]) return;
+      character.weapons[index] = normalizeWeapon({ ...character.weapons[index], attackAbility: abilityKey || defaultWeaponAttackAbility(character.weapons[index].type || character.weapons[index].name || "") });
+      saveLocal();
+      renderDynamic();
+    }
+
+    function setWeaponAttackBonus(index, value){
+      if (!Array.isArray(character.weapons) || !character.weapons[index]) return;
+      character.weapons[index] = normalizeWeapon({ ...character.weapons[index], bonus: value === "" ? "" : Number(value || 0) });
+      saveLocal();
+      renderDynamic();
+    }
 
     function renderWeapons(){
       const list = document.getElementById("weapons");
@@ -8721,32 +8818,47 @@
         const weapon = normalizeWeapon(w);
         character.weapons[i] = weapon;
         const selected = weapon.type || weapon.name || "";
+        const attackAbility = weaponAttackAbility(weapon);
+        const attackTotal = weaponAttackModifier(weapon);
         return `<div class="weapon-row">
-          <div class="weapon-top-grid" style="grid-template-columns: 1.2fr 0.8fr 0.8fr 1fr auto;">
+          <div class="weapon-top-grid" style="grid-template-columns: 1.2fr 0.8fr 0.8fr 0.85fr 0.7fr auto;">
             <label><span class="label-text">Weapon Category</span><select onchange="updateWeaponCategory(${i}, this.value)">
               <option value="" ${selected === "" ? "selected" : ""}>Choose category</option>
               ${categories.map(type => `<option value="${escapeHtml(type)}" ${selected === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}
             </select></label>
             <label><span class="label-text">Damage</span><input readonly value="${escapeHtml(weapon.damage || "")}" placeholder="Auto" /></label>
             <label><span class="label-text">Range</span><input readonly value="${escapeHtml(weapon.range || "")}" placeholder="Auto" /></label>
-            <label><span class="label-text">Notes</span><input placeholder="Optional notes" value="${escapeHtml(weapon.description || "")}" oninput="character.weapons[${i}].description=this.value; saveLocal()" /></label>
+            <label><span class="label-text">Attack Ability</span><select onchange="setWeaponAttackAbility(${i}, this.value)">
+              ${Object.entries(abilityNames).map(([key,label]) => `<option value="${key}" ${attackAbility === key ? "selected" : ""}>${label}</option>`).join("")}
+            </select></label>
+            <label><span class="label-text">Weapon Bonus</span><input type="number" value="${escapeHtml(String(weapon.bonus ?? ""))}" placeholder="0" oninput="setWeaponAttackBonus(${i}, this.value)" /></label>
             <button class="delete-btn" onclick="deleteWeapon(${i})">Delete</button>
           </div>
           <div class="weapon-slot-grid">
-            <label><span class="label-text">Combat Card Slot</span><select onchange="setWeaponCombatSlot(${i}, this.value)">
-              <option value="" ${!weapon.combatSlot ? "selected" : ""}>Not shown</option>
+            <label><span class="label-text">Equipped Hand</span><select onchange="setWeaponCombatSlot(${i}, this.value)">
+              <option value="" ${!weapon.combatSlot ? "selected" : ""}>Not equipped</option>
               <option value="main" ${weapon.combatSlot === "main" ? "selected" : ""}>Main hand</option>
               <option value="offhand" ${weapon.combatSlot === "offhand" ? "selected" : ""}>Off hand / Dual wield</option>
             </select></label>
+            <div class="weapon-equip-buttons" style="display:flex; gap:8px; flex-wrap:wrap; align-items:end;">
+              <button type="button" class="secondary" onclick="equipWeaponMain(${i})">Equip Main</button>
+              <button type="button" class="secondary" onclick="equipWeaponOffhand(${i})">Equip Off Hand</button>
+              <button type="button" class="secondary" onclick="unequipWeapon(${i})">Unequip</button>
+            </div>
+            <div class="stat-box"><span class="label-text">Attack Modifier</span>${signed(attackTotal)}<br><small>${escapeHtml(weaponAttackSummary(weapon))}</small></div>
             <div class="stat-box"><span class="label-text">Combat Damage</span>${escapeHtml(weapon.damage || "Choose category")}</div>
-            <div class="dual-wield-note">Set one weapon as Main hand and one as Off hand to show dual wielding on the Combat card.</div>
+            <label><span class="label-text">Notes</span><input placeholder="Optional notes" value="${escapeHtml(weapon.description || "")}" oninput="character.weapons[${i}].description=this.value; saveLocal()" /></label>
+            <div class="dual-wield-note">Attack = selected ability modifier + proficiency bonus + optional weapon bonus. Dual wielding uses one Main hand and one Off hand weapon row.</div>
           </div>
         </div>`;
       }).join("");
     }
     function addWeapon(){
-      const hasMain = Array.isArray(character.weapons) && character.weapons.some(w => normalizeWeapon(w).combatSlot === "main");
-      character.weapons.push(normalizeWeapon({ name:"", type:"", damage:"", properties:"", range:"", description:"", combatSlot: hasMain ? "" : "main" }));
+      if (!Array.isArray(character.weapons)) character.weapons = [];
+      const hasMain = character.weapons.some(w => normalizeWeapon(w).combatSlot === "main");
+      const hasOffhand = character.weapons.some(w => normalizeWeapon(w).combatSlot === "offhand");
+      const nextSlot = !hasMain ? "main" : (!hasOffhand ? "offhand" : "");
+      character.weapons.push(normalizeWeapon({ name:"", type:"", damage:"", properties:"", range:"", description:"", attackAbility:"strength", combatSlot: nextSlot }));
       renderDynamic();
     }
     function deleteWeapon(i){
